@@ -8,9 +8,7 @@ import com.squareup.moshi.ToJson
 @Suppress("unused")
 class StateAdapter {
     @ToJson
-    fun toJson(state: State): String {
-        return state.value.toString()
-    }
+    fun toJson(state: State): String = state.value.toString()
 
     @FromJson
     fun fromJson(value: Int): State {
