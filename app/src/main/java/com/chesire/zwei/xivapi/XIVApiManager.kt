@@ -59,4 +59,22 @@ class XIVApiManager {
             val s = ""
         }
     }
+
+    fun requestCharacterUpdate(id: Int) {
+        val ri = interact.requestCharacterUpdate(id)
+        val r = ri.execute()
+        if (r.isSuccessful) {
+            val body = r.body()
+            val error = r.errorBody()
+            val s = ""
+
+            if (body == 1) {
+                // Moved to front of queue
+            } else {
+                // Wait longer to refresh
+            }
+        } else {
+            val s = ""
+        }
+    }
 }

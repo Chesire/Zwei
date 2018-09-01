@@ -8,7 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- * Provides a Retrofit service for xivapi.com
+ * Provides a Retrofit service for xivapi.com.
  */
 interface XIVApiService {
     /**
@@ -27,4 +27,13 @@ interface XIVApiService {
      */
     @GET("/character/{id}")
     fun getCharacter(@Path("id") id: Int): Call<GetCharacterResponse>
+
+    /**
+     * Requests character details are updated on XIVApi.
+     * XIVApi: http://xivapi.com/docs/Character#section-4
+     *
+     * @return 1 if pushed to front of queue, 0 if need to wait longer to update.
+     */
+    @GET("/character/{id}/update")
+    fun requestCharacterUpdate(@Path("id") id: Int): Call<Int>
 }
