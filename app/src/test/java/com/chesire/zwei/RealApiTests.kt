@@ -27,4 +27,9 @@ class RealApiTests {
     fun `search for character Cheshire Cat on Phoenix`() {
         manager.searchForCharacter("Cheshire Cat", "Phoenix")
     }
+
+    @Test
+    fun `get character Cheshire Cat on Phoenix`() {
+        manager.getCharacter(2839897)
+    }
 }
