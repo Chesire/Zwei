@@ -3,6 +3,7 @@ package com.chesire.zwei
 import com.chesire.zwei.xivapi.XIVApiManager
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 /**
@@ -10,6 +11,7 @@ import org.junit.Test
  *
  * These are here just to attach the debugger and see the results from the calls.
  */
+@Ignore
 class RealApiTests {
     private lateinit var manager: XIVApiManager
 
