@@ -24,6 +24,8 @@ interface XIVApiService {
     /**
      * Gets character details from XIVApi.
      * XIVApi: http://xivapi.com/docs/Character#section-2
+     *
+     * @param id character id should be passed in
      */
     @GET("/character/{id}")
     fun getCharacter(@Path("id") id: Int): Call<GetCharacterResponse>
@@ -31,6 +33,8 @@ interface XIVApiService {
     /**
      * Requests character details are updated on XIVApi.
      * XIVApi: http://xivapi.com/docs/Character#section-4
+     *
+     * @param id character id should be passed in
      *
      * @return 1 if pushed to front of queue, 0 if need to wait longer to update.
      */
