@@ -1,5 +1,6 @@
 package com.chesire.zwei.xivapi
 
+import com.chesire.zwei.xivapi.adapters.RaceAdapter
 import com.chesire.zwei.xivapi.adapters.StateAdapter
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -26,6 +27,7 @@ class XIVApiManager {
 
         val moshi = Moshi.Builder()
             .add(StateAdapter())
+            .add(RaceAdapter())
             .build()
 
         interact = Retrofit.Builder()
