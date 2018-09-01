@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class GetCharacterResponse(
     @Json(name = "Character")
-    val character: CharacterModel,
+    val character: CharacterModel?,
     @Json(name = "Info")
     val info: InfoModel
 )
