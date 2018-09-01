@@ -8,7 +8,7 @@ import com.squareup.moshi.ToJson
 @Suppress("unused")
 class RaceAdapter {
     @ToJson
-    fun toJson(race: Race): String = race.value.toString()
+    fun toJson(race: Race): Int = race.value
 
     @FromJson
     fun fromJson(value: Int): Race {
