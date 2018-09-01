@@ -69,7 +69,17 @@ class RaceAdapterTests {
     }
 
     @Test(expected = JsonDataException::class)
+    fun `-1 fromJson produces JsonDataException`() {
+        raceAdapter.fromJson(0)
+    }
+
+    @Test(expected = JsonDataException::class)
     fun `0 fromJson produces JsonDataException`() {
         raceAdapter.fromJson(0)
+    }
+
+    @Test(expected = JsonDataException::class)
+    fun `7 fromJson produces JsonDataException`() {
+        raceAdapter.fromJson(7)
     }
 }
