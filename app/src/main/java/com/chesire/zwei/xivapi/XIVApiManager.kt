@@ -2,11 +2,13 @@ package com.chesire.zwei.xivapi
 
 import com.chesire.zwei.xivapi.adapters.RaceAdapter
 import com.chesire.zwei.xivapi.adapters.StateAdapter
+import com.chesire.zwei.xivapi.interceptors.LanguageInterceptor
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.Locale
 
 private const val URL = "https://xivapi.com/"
 
@@ -23,6 +25,7 @@ class XIVApiManager {
         }
 
         httpClient.addInterceptor(interceptor)
+        httpClient.addInterceptor(LanguageInterceptor(Locale.getDefault().language))
         //}
 
         val moshi = Moshi.Builder()
