@@ -57,6 +57,12 @@ interface XIVApiService {
     fun getMounts(): Call<GetMountsResponse>
 
     /**
+     * Gets data for the title with id of [id] from XIVApi.
+     */
+    @GET("/Title?columns=ID,IsPrefix,NameFemale,Name")
+    fun getTitle(@Query("ids") id: Int): Call<GetTitlesResponse>
+
+    /**
      * Gets data for all titles from XIVApi.
      */
     @GET("/Title?columns=ID,IsPrefix,NameFemale,Name")

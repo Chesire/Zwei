@@ -51,6 +51,11 @@ class RealApiTests {
     }
 
     @Test
+    fun `gets data for title '1'`() {
+        manager.getTitle(1)
+    }
+
+    @Test
     fun `gets data for all titles`() {
         manager.getTitles()
     }
