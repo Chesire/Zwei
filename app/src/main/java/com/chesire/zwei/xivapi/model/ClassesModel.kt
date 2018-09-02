@@ -21,9 +21,9 @@ data class ClassesModel(
     @Json(name = "7_25")
     val BlackMage: ClassModel,
     @Json(name = "26_27")
-    val Summoner: ClassModel, // S - may be wrong
+    val Summoner: ClassModel,
     @Json(name = "26_28")
-    val Scholar: ClassModel, // S - may be wrong
+    val Scholar: ClassModel,
     @Json(name = "29_30")
     val Ninja: ClassModel,
     @Json(name = "31_31")
