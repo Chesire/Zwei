@@ -26,15 +26,8 @@ class LanguageInterceptorTests {
     fun `ensure adds 'cn' to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = OkHttpClient().newBuilder()
-            .addInterceptor(LanguageInterceptor("cn"))
-            .build()
-
-        okHttp.newCall(
-            Request.Builder()
-                .url(mockWebServer.url("/"))
-                .build()
-        ).execute()
+        val okHttp = getOkHttpClient("cn")
+        sendMockRequest(okHttp)
         val request = mockWebServer.takeRequest()
 
         Assert.assertTrue(request.path.contains("language=cn"))
@@ -44,15 +37,8 @@ class LanguageInterceptorTests {
     fun `ensure adds 'de' to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = OkHttpClient().newBuilder()
-            .addInterceptor(LanguageInterceptor("de"))
-            .build()
-
-        okHttp.newCall(
-            Request.Builder()
-                .url(mockWebServer.url("/"))
-                .build()
-        ).execute()
+        val okHttp = getOkHttpClient("de")
+        sendMockRequest(okHttp)
         val request = mockWebServer.takeRequest()
 
         Assert.assertTrue(request.path.contains("language=de"))
@@ -62,15 +48,8 @@ class LanguageInterceptorTests {
     fun `ensure adds 'en' to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = OkHttpClient().newBuilder()
-            .addInterceptor(LanguageInterceptor("en"))
-            .build()
-
-        okHttp.newCall(
-            Request.Builder()
-                .url(mockWebServer.url("/"))
-                .build()
-        ).execute()
+        val okHttp = getOkHttpClient("en")
+        sendMockRequest(okHttp)
         val request = mockWebServer.takeRequest()
 
         Assert.assertTrue(request.path.contains("language=en"))
@@ -80,15 +59,8 @@ class LanguageInterceptorTests {
     fun `ensure adds 'fr' to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = OkHttpClient().newBuilder()
-            .addInterceptor(LanguageInterceptor("fr"))
-            .build()
-
-        okHttp.newCall(
-            Request.Builder()
-                .url(mockWebServer.url("/"))
-                .build()
-        ).execute()
+        val okHttp = getOkHttpClient("fr")
+        sendMockRequest(okHttp)
         val request = mockWebServer.takeRequest()
 
         Assert.assertTrue(request.path.contains("language=fr"))
@@ -98,15 +70,8 @@ class LanguageInterceptorTests {
     fun `ensure adds 'ja' to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = OkHttpClient().newBuilder()
-            .addInterceptor(LanguageInterceptor("ja"))
-            .build()
-
-        okHttp.newCall(
-            Request.Builder()
-                .url(mockWebServer.url("/"))
-                .build()
-        ).execute()
+        val okHttp = getOkHttpClient("ja")
+        sendMockRequest(okHttp)
         val request = mockWebServer.takeRequest()
 
         Assert.assertTrue(request.path.contains("language=ja"))
@@ -116,17 +81,24 @@ class LanguageInterceptorTests {
     fun `ensure adds 'kr' to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = OkHttpClient().newBuilder()
-            .addInterceptor(LanguageInterceptor("kr"))
-            .build()
+        val okHttp = getOkHttpClient("kr")
+        sendMockRequest(okHttp)
+        val request = mockWebServer.takeRequest()
 
+        Assert.assertTrue(request.path.contains("language=kr"))
+    }
+
+    private fun getOkHttpClient(lang: String): OkHttpClient {
+        return OkHttpClient().newBuilder()
+            .addInterceptor(LanguageInterceptor(lang))
+            .build()
+    }
+
+    private fun sendMockRequest(okHttp: OkHttpClient) {
         okHttp.newCall(
             Request.Builder()
                 .url(mockWebServer.url("/"))
                 .build()
         ).execute()
-        val request = mockWebServer.takeRequest()
-
-        Assert.assertTrue(request.path.contains("language=kr"))
     }
 }
