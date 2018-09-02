@@ -39,4 +39,9 @@ class RealApiTests {
     fun `request character 'Cheshire Cat' on 'Phoenix' be updated`() {
         manager.requestCharacterUpdate(2839897)
     }
+
+    @Test
+    fun `gets data for all companions`() {
+        manager.getCompanions()
+    }
 }
