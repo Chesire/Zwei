@@ -49,4 +49,9 @@ class RealApiTests {
     fun `gets data for all mounts`() {
         manager.getMounts()
     }
+
+    @Test
+    fun `gets data for all titles`() {
+        manager.getTitles()
+    }
 }
