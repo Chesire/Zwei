@@ -41,13 +41,28 @@ class RealApiTests {
     }
 
     @Test
+    fun `gets data for companion '1'`() {
+        manager.getCompanion(1)
+    }
+
+    @Test
     fun `gets data for all companions`() {
         manager.getCompanions()
     }
 
     @Test
+    fun `gets data for mount '1'`() {
+        manager.getMount(1)
+    }
+
+    @Test
     fun `gets data for all mounts`() {
         manager.getMounts()
+    }
+
+    @Test
+    fun `gets data for title '1'`() {
+        manager.getTitle(1)
     }
 
     @Test
