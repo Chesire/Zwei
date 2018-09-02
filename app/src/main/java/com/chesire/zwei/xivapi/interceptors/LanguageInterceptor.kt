@@ -5,6 +5,8 @@ import okhttp3.Response
 
 /**
  * Interceptor to insert the language code `language=[lang]` into the query.
+ *
+ * Supported languages for XIVApi are documented at: http://xivapi.com/docs/Welcome
  */
 class LanguageInterceptor(private val lang: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
