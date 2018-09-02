@@ -44,4 +44,9 @@ class RealApiTests {
     fun `gets data for all companions`() {
         manager.getCompanions()
     }
+
+    @Test
+    fun `gets data for all mounts`() {
+        manager.getMounts()
+    }
 }

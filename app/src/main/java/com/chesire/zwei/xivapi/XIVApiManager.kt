@@ -94,4 +94,16 @@ class XIVApiManager {
             val s = ""
         }
     }
+
+    fun getMounts() {
+        val ri = interact.getMounts()
+        val r = ri.execute()
+        if (r.isSuccessful) {
+            val body = r.body()
+            val error = r.errorBody()
+            val s = ""
+        } else {
+            val s = ""
+        }
+    }
 }
