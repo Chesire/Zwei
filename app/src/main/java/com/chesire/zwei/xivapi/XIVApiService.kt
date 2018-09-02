@@ -1,6 +1,7 @@
 package com.chesire.zwei.xivapi
 
 import com.chesire.zwei.xivapi.response.GetCharacterResponse
+import com.chesire.zwei.xivapi.response.GetCompanionsResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -40,4 +41,10 @@ interface XIVApiService {
      */
     @GET("/character/{id}/update")
     fun requestCharacterUpdate(@Path("id") id: Int): Call<Int>
+
+    /**
+     * Gets data for all companions from XIVApi.
+     */
+    @GET("/Companion?columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
+    fun getCompanions(): Call<GetCompanionsResponse>
 }

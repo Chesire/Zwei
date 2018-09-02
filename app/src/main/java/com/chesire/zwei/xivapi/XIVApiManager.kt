@@ -82,4 +82,16 @@ class XIVApiManager {
             val s = ""
         }
     }
+
+    fun getCompanions() {
+        val ri = interact.getCompanions()
+        val r = ri.execute()
+        if (r.isSuccessful) {
+            val body = r.body()
+            val error = r.errorBody()
+            val s = ""
+        } else {
+            val s = ""
+        }
+    }
 }
