@@ -119,6 +119,18 @@ class XIVApiManager {
         }
     }
 
+    fun getMount(id: Int) {
+        val ri = interact.getMount(id)
+        val r = ri.execute()
+        if (r.isSuccessful) {
+            val body = r.body()
+            val error = r.errorBody()
+            val s = ""
+        } else {
+            val s = ""
+        }
+    }
+
     fun getTitle(id: Int) {
         val ri = interact.getTitle(id)
         val r = ri.execute()

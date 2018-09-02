@@ -51,6 +51,11 @@ class RealApiTests {
     }
 
     @Test
+    fun `gets data for mount '1'`() {
+        manager.getMount(1)
+    }
+
+    @Test
     fun `gets data for all mounts`() {
         manager.getMounts()
     }

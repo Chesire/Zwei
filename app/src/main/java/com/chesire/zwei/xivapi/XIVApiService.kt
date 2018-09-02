@@ -60,6 +60,12 @@ interface XIVApiService {
      * Gets data for all mounts from XIVApi.
      */
     @GET("/Mount?columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
+    fun getMount(@Query("ids") id: Int): Call<GetMountsResponse>
+
+    /**
+     * Gets data for all mounts from XIVApi.
+     */
+    @GET("/Mount?columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
     fun getMounts(): Call<GetMountsResponse>
 
     /**
