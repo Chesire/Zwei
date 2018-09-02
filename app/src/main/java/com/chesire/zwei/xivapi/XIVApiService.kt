@@ -3,6 +3,7 @@ package com.chesire.zwei.xivapi
 import com.chesire.zwei.xivapi.response.GetCharacterResponse
 import com.chesire.zwei.xivapi.response.GetCompanionsResponse
 import com.chesire.zwei.xivapi.response.GetMountsResponse
+import com.chesire.zwei.xivapi.response.GetTitlesResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -54,4 +55,10 @@ interface XIVApiService {
      */
     @GET("/Mount?columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
     fun getMounts(): Call<GetMountsResponse>
+
+    /**
+     * Gets data for all titles from XIVApi.
+     */
+    @GET("/Title?columns=ID,IsPrefix,NameFemale,Name")
+    fun getTitles(): Call<GetTitlesResponse>
 }

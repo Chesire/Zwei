@@ -106,4 +106,16 @@ class XIVApiManager {
             val s = ""
         }
     }
+
+    fun getTitles() {
+        val ri = interact.getTitles()
+        val r = ri.execute()
+        if (r.isSuccessful) {
+            val body = r.body()
+            val error = r.errorBody()
+            val s = ""
+        } else {
+            val s = ""
+        }
+    }
 }
