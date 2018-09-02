@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class GetMountsResponse(
+data class GetMountsResponse(
     @Json(name = "pagination")
     val pagination: PaginationModel,
     @Json(name = "results")
