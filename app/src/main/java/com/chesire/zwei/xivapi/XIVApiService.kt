@@ -2,6 +2,7 @@ package com.chesire.zwei.xivapi
 
 import com.chesire.zwei.xivapi.response.GetCharacterResponse
 import com.chesire.zwei.xivapi.response.GetCompanionsResponse
+import com.chesire.zwei.xivapi.response.GetMountsResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -47,4 +48,10 @@ interface XIVApiService {
      */
     @GET("/Companion?columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
     fun getCompanions(): Call<GetCompanionsResponse>
+
+    /**
+     * Gets data for all mounts from XIVApi.
+     */
+    @GET("/Mount?columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
+    fun getMounts(): Call<GetMountsResponse>
 }
