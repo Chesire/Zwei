@@ -45,6 +45,12 @@ interface XIVApiService {
     fun requestCharacterUpdate(@Path("id") id: Int): Call<Int>
 
     /**
+     * Gets data for the companion with id of [id] from XIVApi.
+     */
+    @GET("/Companion?columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
+    fun getCompanion(@Query("ids") id: Int): Call<GetCompanionsResponse>
+
+    /**
      * Gets data for all companions from XIVApi.
      */
     @GET("/Companion?columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
