@@ -7,8 +7,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class GetTitlesResponse(
-    @Json(name = "pagination")
+    @Json(name = "Pagination")
     val pagination: PaginationModel,
-    @Json(name = "results")
+    @Json(name = "Results")
     val titles: List<TitleModel>
 )

@@ -5,18 +5,18 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PaginationModel(
-    @Json(name = "page")
+    @Json(name = "Page")
     val page: Int,
-    @Json(name = "page_next")
+    @Json(name = "PageNext")
     val pageNext: Int?,
-    @Json(name = "page_prev")
+    @Json(name = "PagePrev")
     val pagePrev: Int?,
-    @Json(name = "page_total")
+    @Json(name = "PageTotal")
     val pageTotal: Int,
-    @Json(name = "results")
+    @Json(name = "Results")
     val results: Int,
-    @Json(name = "results_per_page")
+    @Json(name = "ResultsPerPage")
     val resultsPerPage: Int,
-    @Json(name = "results_total")
+    @Json(name = "ResultsTotal")
     val resultsTotal: Int
 )
