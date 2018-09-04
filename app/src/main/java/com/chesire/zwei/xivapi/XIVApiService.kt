@@ -47,36 +47,36 @@ interface XIVApiService {
     /**
      * Gets data for the companion with id of [id] from XIVApi.
      */
-    @GET("/Companion?columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
+    @GET("/Companion?Columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
     fun getCompanion(@Query("ids") id: Int): Call<GetCompanionsResponse>
 
     /**
      * Gets data for all companions from XIVApi.
      */
-    @GET("/Companion?columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
+    @GET("/Companion?Columns=ID,Icon,IconID,IconSmall,Name,Url,Description,Tooltip")
     fun getCompanions(): Call<GetCompanionsResponse>
 
     /**
      * Gets data for all mounts from XIVApi.
      */
-    @GET("/Mount?columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
+    @GET("/Mount?Columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
     fun getMount(@Query("ids") id: Int): Call<GetMountsResponse>
 
     /**
      * Gets data for all mounts from XIVApi.
      */
-    @GET("/Mount?columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
+    @GET("/Mount?Columns=ID,Icon,IconId,IconSmall,Order,Url,Name,Description,DescriptionEnhanced,Tooltip")
     fun getMounts(): Call<GetMountsResponse>
 
     /**
      * Gets data for the title with id of [id] from XIVApi.
      */
-    @GET("/Title?columns=ID,IsPrefix,NameFemale,Name")
+    @GET("/Title?Columns=ID,IsPrefix,NameFemale,Name")
     fun getTitle(@Query("ids") id: Int): Call<GetTitlesResponse>
 
     /**
      * Gets data for all titles from XIVApi.
      */
-    @GET("/Title?columns=ID,IsPrefix,NameFemale,Name")
+    @GET("/Title?Columns=ID,IsPrefix,NameFemale,Name")
     fun getTitles(): Call<GetTitlesResponse>
 }
