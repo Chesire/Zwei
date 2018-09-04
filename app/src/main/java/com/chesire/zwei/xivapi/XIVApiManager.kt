@@ -1,5 +1,6 @@
 package com.chesire.zwei.xivapi
 
+import com.chesire.zwei.xivapi.adapters.GenderAdapter
 import com.chesire.zwei.xivapi.adapters.RaceAdapter
 import com.chesire.zwei.xivapi.adapters.StateAdapter
 import com.chesire.zwei.xivapi.interceptors.LanguageInterceptor
@@ -31,6 +32,7 @@ class XIVApiManager {
         val moshi = Moshi.Builder()
             .add(StateAdapter())
             .add(RaceAdapter())
+            .add(GenderAdapter())
             .build()
 
         interact = Retrofit.Builder()
