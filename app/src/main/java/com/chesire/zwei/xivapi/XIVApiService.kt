@@ -30,7 +30,7 @@ interface XIVApiService {
      *
      * @param id character id should be passed in
      */
-    @GET("/character/{id}")
+    @GET("/character/{id}?data=AC,FR,FC,FCM,PVP")
     fun getCharacter(@Path("id") id: Int): Call<GetCharacterResponse>
 
     /**

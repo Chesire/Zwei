@@ -1,5 +1,6 @@
 package com.chesire.zwei.xivapi.model
 
+import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -14,6 +15,8 @@ data class CharacterModel(
     val bio: String,
     @Json(name = "ClassJobs")
     val classes: ClassesModel,
+    @Json(name = "Gender")
+    val gender: Gender,
     @Json(name = "ID")
     val id: Int,
     @Json(name = "Minions")
