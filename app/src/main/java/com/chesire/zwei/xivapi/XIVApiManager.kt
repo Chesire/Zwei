@@ -61,6 +61,7 @@ class XIVApiManager {
         if (r.isSuccessful) {
             val body = r.body()
             val error = r.errorBody()
+            val achievementIds = body!!.achievements!!.list.map { it.values.last() }
             val s = ""
         } else {
             val s = ""
