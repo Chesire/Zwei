@@ -74,32 +74,32 @@ class RaceAdapterTests {
     }
 
     @Test
-    fun `1 fromJson produces Race 'Hyur'`() {
+    fun `'1' fromJson produces Race 'Hyur'`() {
         Assert.assertEquals(Race.Hyur, raceAdapter.fromJson(1))
     }
 
     @Test
-    fun `2 fromJson produces Race 'Elezen'`() {
+    fun `'2' fromJson produces Race 'Elezen'`() {
         Assert.assertEquals(Race.Elezen, raceAdapter.fromJson(2))
     }
 
     @Test
-    fun `3 fromJson produces Race 'Lalafell'`() {
+    fun `'3' fromJson produces Race 'Lalafell'`() {
         Assert.assertEquals(Race.Lalafell, raceAdapter.fromJson(3))
     }
 
     @Test
-    fun `4 fromJson produces Race 'Miqote'`() {
+    fun `'4' fromJson produces Race 'Miqote'`() {
         Assert.assertEquals(Race.Miqote, raceAdapter.fromJson(4))
     }
 
     @Test
-    fun `5 fromJson produces Race 'Roegadyn'`() {
+    fun `'5' fromJson produces Race 'Roegadyn'`() {
         Assert.assertEquals(Race.Roegadyn, raceAdapter.fromJson(5))
     }
 
     @Test
-    fun `6 fromJson produces Race 'AuRa'`() {
+    fun `'6' fromJson produces Race 'AuRa'`() {
         Assert.assertEquals(Race.AuRa, raceAdapter.fromJson(6))
     }
 
@@ -134,17 +134,17 @@ class RaceAdapterTests {
     }
 
     @Test(expected = JsonDataException::class)
-    fun `-1 fromJson produces JsonDataException`() {
+    fun `'-1' fromJson produces JsonDataException`() {
         raceAdapter.fromJson(0)
     }
 
     @Test(expected = JsonDataException::class)
-    fun `0 fromJson produces JsonDataException`() {
+    fun `'0' fromJson produces JsonDataException`() {
         raceAdapter.fromJson(0)
     }
 
     @Test(expected = JsonDataException::class)
-    fun `7 fromJson produces JsonDataException`() {
+    fun `'7' fromJson produces JsonDataException`() {
         raceAdapter.fromJson(7)
     }
 }
