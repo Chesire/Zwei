@@ -6,7 +6,7 @@ import okhttp3.Response
 /**
  * Interceptor to insert the XIVApiKey `key=[apiKey]` into the query.
  *
- * Supported languages for XIVApi are documented at: https://xivapi.com/docs#section-4
+ * Documentation for the ApiKey can be found at: https://xivapi.com/docs#section-4
  */
 class ApiKeyInterceptor(private val apiKey: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
