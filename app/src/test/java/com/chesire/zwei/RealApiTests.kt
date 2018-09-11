@@ -17,7 +17,7 @@ class RealApiTests {
 
     @Before
     fun setup() {
-        manager = XIVApiManager()
+        manager = XIVApiManager("0000")
     }
 
     @After

@@ -3,6 +3,7 @@ package com.chesire.zwei.xivapi
 import com.chesire.zwei.xivapi.adapters.GenderAdapter
 import com.chesire.zwei.xivapi.adapters.RaceAdapter
 import com.chesire.zwei.xivapi.adapters.StateAdapter
+import com.chesire.zwei.xivapi.interceptors.ApiKeyInterceptor
 import com.chesire.zwei.xivapi.interceptors.LanguageInterceptor
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -13,21 +14,18 @@ import java.util.Locale
 
 private const val URL = "https://xivapi.com/"
 
-class XIVApiManager {
+class XIVApiManager(apiKey: String) {
     private val interact: XIVApiService
 
     init {
         val httpClient = OkHttpClient()
             .newBuilder()
 
-        //if (BuildConfig.DEBUG) {
-        val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-            this.level = HttpLoggingInterceptor.Level.BODY
-        }
-
-        httpClient.addInterceptor(interceptor)
+        httpClient.addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
         httpClient.addInterceptor(LanguageInterceptor(Locale.getDefault().language))
-        //}
+        httpClient.addInterceptor(ApiKeyInterceptor(apiKey))
 
         val moshi = Moshi.Builder()
             .add(StateAdapter())
