@@ -1,8 +1,9 @@
-package com.chesire.zwei.room
+package com.chesire.zwei.room.dao
 
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.TitleModel
 import org.junit.After
 import org.junit.Assert
