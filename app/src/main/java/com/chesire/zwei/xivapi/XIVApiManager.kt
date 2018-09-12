@@ -20,12 +20,13 @@ class XIVApiManager(apiKey: String) {
     init {
         val httpClient = OkHttpClient()
             .newBuilder()
-
-        httpClient.addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
-        httpClient.addInterceptor(LanguageInterceptor(Locale.getDefault().language))
-        httpClient.addInterceptor(ApiKeyInterceptor(apiKey))
+            .apply {
+                addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+                addInterceptor(LanguageInterceptor(Locale.getDefault().language))
+                addInterceptor(ApiKeyInterceptor(apiKey))
+            }
 
         val moshi = Moshi.Builder()
             .add(StateAdapter())
