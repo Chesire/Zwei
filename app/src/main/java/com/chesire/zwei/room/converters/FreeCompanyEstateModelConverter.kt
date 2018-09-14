@@ -8,12 +8,8 @@ class FreeCompanyEstateModelConverter {
     private val adapter = Moshi.Builder().build().adapter(FreeCompanyEstateModel::class.java)
 
     @TypeConverter
-    fun fromString(value: String): FreeCompanyEstateModel? {
-        return adapter.fromJson(value)
-    }
+    fun fromString(value: String): FreeCompanyEstateModel? = adapter.fromJson(value)
 
     @TypeConverter
-    fun fromFreeCompanyEstateModel(value: FreeCompanyEstateModel): String {
-        return adapter.toJson(value)
-    }
+    fun fromFreeCompanyEstateModel(value: FreeCompanyEstateModel): String = adapter.toJson(value)
 }

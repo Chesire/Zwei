@@ -11,12 +11,8 @@ class CollectionsConverter {
         moshi.adapter(Types.newParameterizedType(List::class.java, String::class.java))
 
     @TypeConverter
-    fun fromString(value: String): List<String>? {
-        return listOfStringAdapter.fromJson(value)
-    }
+    fun fromString(value: String): List<String>? = listOfStringAdapter.fromJson(value)
 
     @TypeConverter
-    fun fromListOfString(value: List<String>): String {
-        return listOfStringAdapter.toJson(value)
-    }
+    fun fromListOfString(value: List<String>): String = listOfStringAdapter.toJson(value)
 }
