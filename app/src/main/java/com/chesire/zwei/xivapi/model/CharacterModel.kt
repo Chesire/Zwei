@@ -1,22 +1,26 @@
 package com.chesire.zwei.xivapi.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity
 @JsonClass(generateAdapter = true)
 data class CharacterModel(
-    @Json(name = "ActiveClassJob")
-    val activeClass: ClassModel,
+    //@Json(name = "ActiveClassJob")
+    //val activeClass: ClassModel,
     @Json(name = "Avatar")
     val avatar: String,
     @Json(name = "Bio")
     val bio: String,
-    @Json(name = "ClassJobs")
-    val classes: ClassesModel,
+    //@Json(name = "ClassJobs")
+    //val classes: ClassesModel,
     @Json(name = "Gender")
     val gender: Gender,
+    @PrimaryKey
     @Json(name = "ID")
     val id: Int,
     @Json(name = "Minions")
