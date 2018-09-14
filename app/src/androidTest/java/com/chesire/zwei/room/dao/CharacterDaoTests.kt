@@ -38,6 +38,33 @@ class CharacterDaoTests {
         Assert.assertEquals(newModel, db.characterDao().get())
     }
 
+    @Test
+    fun insertingMultipleCharactersWithSameIdSavesLastOne() {
+        val newModel1 = generateCharacterModel(0)
+        val newModel2 = generateCharacterModel(0)
+
+        db.characterDao().insert(newModel1)
+        Assert.assertEquals(newModel1, db.characterDao().get())
+
+        db.characterDao().insert(newModel2)
+        Assert.assertEquals(newModel2, db.characterDao().get())
+    }
+
+    @Test
+    fun retrievingCharacterWithoutSettingReturnsNull() {
+        Assert.assertNull(db.characterDao().get())
+    }
+
+    @Test
+    fun deletingCharacterRemovesData() {
+        val newModel = generateCharacterModel()
+        db.characterDao().insert(newModel)
+
+        Assert.assertEquals(newModel, db.characterDao().get())
+        db.characterDao().delete(newModel)
+        Assert.assertNull(db.characterDao().get())
+    }
+
     private fun generateCharacterModel(id: Int = 0): CharacterModel {
         return CharacterModel(
             //emptyClass,
