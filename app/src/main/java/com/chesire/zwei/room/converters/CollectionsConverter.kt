@@ -9,10 +9,18 @@ class CollectionsConverter {
     private val moshi = Moshi.Builder().build()
     private val listOfStringAdapter: JsonAdapter<List<String>> =
         moshi.adapter(Types.newParameterizedType(List::class.java, String::class.java))
+    private val listOfIntAdapter: JsonAdapter<List<Int>> =
+        moshi.adapter(Types.newParameterizedType(List::class.java, Integer::class.java))
 
     @TypeConverter
-    fun fromString(value: String): List<String>? = listOfStringAdapter.fromJson(value)
+    fun fromStringToListOfString(value: String): List<String>? = listOfStringAdapter.fromJson(value)
 
     @TypeConverter
-    fun fromListOfString(value: List<String>): String = listOfStringAdapter.toJson(value)
+    fun fromListOfStringToString(value: List<String>): String = listOfStringAdapter.toJson(value)
+
+    @TypeConverter
+    fun fromStringToListOfInt(value: String): List<Int>? = listOfIntAdapter.fromJson(value)
+
+    @TypeConverter
+    fun fromListOfIntToString(value: List<Int>): String = listOfIntAdapter.toJson(value)
 }
