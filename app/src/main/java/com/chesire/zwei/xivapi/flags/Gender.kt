@@ -6,8 +6,6 @@ enum class Gender(val value: Int) {
     Female(2);
 
     companion object {
-        fun getGenderForValue(value: Int): Gender {
-            return Gender.values().find { it.value == value } ?: Unknown
-        }
+        fun getGenderForValue(value: Int) = Gender.values().find { it.value == value } ?: Unknown
     }
 }

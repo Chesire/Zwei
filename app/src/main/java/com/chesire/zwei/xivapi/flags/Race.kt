@@ -13,8 +13,6 @@ enum class Race(val value: Int) {
     AuRa(6);
 
     companion object {
-        fun getRaceForValue(value: Int): Race {
-            return Race.values().find { it.value == value } ?: Unknown
-        }
+        fun getRaceForValue(value: Int) = Race.values().find { it.value == value } ?: Unknown
     }
 }
