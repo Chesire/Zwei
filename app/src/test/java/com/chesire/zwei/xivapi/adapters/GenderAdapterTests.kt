@@ -33,8 +33,8 @@ class GenderAdapterTests {
     }
 
     @Test(expected = JsonDataException::class)
-    fun `'-1' produces JsonDataException`() {
-        moshiAdapter.fromJson("-1")
+    fun `'0' produces JsonDataException`() {
+        moshiAdapter.fromJson("0")
     }
 
     @Test(expected = JsonDataException::class)
