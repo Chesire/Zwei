@@ -48,3 +48,8 @@
 -keepclassmembers class kotlin.Metadata {
     public <methods>;
 }
+
+# Coroutines
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}
