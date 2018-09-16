@@ -5,7 +5,9 @@ import com.chesire.zwei.xivapi.response.GetCompanionsResponse
 import com.chesire.zwei.xivapi.response.GetMountsResponse
 import com.chesire.zwei.xivapi.response.GetTitlesResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
+import kotlinx.coroutines.experimental.Deferred
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,7 +24,7 @@ interface XIVApiService {
     fun searchForCharacter(
         @Query("name") name: String,
         @Query("server") world: String
-    ): Call<SearchCharacterResponse>
+    ): Deferred<Response<SearchCharacterResponse>>
 
     /**
      * Gets character details from XIVApi.
