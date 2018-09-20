@@ -2,10 +2,7 @@ package com.chesire.zwei.xivapi
 
 import android.arch.lifecycle.MutableLiveData
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.withContext
 
 class XIVApi(
     private val xivApiService: XIVApiService
@@ -15,30 +12,29 @@ class XIVApi(
         server: String
     ): MutableLiveData<Resource<List<SearchCharacterModel>>> {
         val result = MutableLiveData<Resource<List<SearchCharacterModel>>>()
-        result.value = Resource.loading(emptyList())
+        result.postValue(Resource.loading(emptyList()))
 
         launch {
             try {
-                val response = xivApiService.searchForCharacter(name, server).await()
+                val request = xivApiService.searchForCharacter(name, server)
+                val response = request.await()
                 if (response.isSuccessful) {
-                    withContext(Dispatchers.Main) {
-                        result.value = Resource.success(response.body()!!.characters)
-                    }
+                    result.postValue(Resource.success(response.body()!!.characters))
                 } else {
-                    withContext(Dispatchers.Main) {
-                        result.value = Resource.error(
+                    result.postValue(
+                        Resource.error(
                             "Failure to find character $name, on $server",
                             emptyList()
                         )
-                    }
-                }
-            } catch (ex: Exception) {
-                withContext(Dispatchers.Main) {
-                    result.value = Resource.error(
-                        "Failure to find character $name, on $server",
-                        emptyList()
                     )
                 }
+            } catch (ex: Exception) {
+                result.postValue(
+                    Resource.error(
+                        "Exception occurred trying to find character $name, on $server: $ex",
+                        emptyList()
+                    )
+                )
             }
         }
 
