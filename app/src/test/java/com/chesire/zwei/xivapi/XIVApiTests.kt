@@ -6,7 +6,6 @@ import com.chesire.zwei.xivapi.response.SearchCharacterResponse
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Assert
 import org.junit.Rule
@@ -19,7 +18,7 @@ class XIVApiTests {
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Test
-    fun `when XIVApi#searchForCharacter fails return Resource#error`() = runBlocking {
+    fun `when searchForCharacter fails return status error`() = runBlocking {
         val mockService = mock<XIVApiService> {
             on {
                 searchForCharacter(
@@ -33,16 +32,14 @@ class XIVApiTests {
 
         val classUnderTest = XIVApi(mockService)
 
-        launch {
-            Assert.assertEquals(
-                Status.Error,
-                classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
-            )
-        }.join()
+        Assert.assertEquals(
+            Status.Error,
+            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
+        )
     }
 
     @Test
-    fun `when searchForCharacter is successful change data to success`() = runBlocking {
+    fun `when searchForCharacter is successful return status success`() = runBlocking {
         val mockService = mock<XIVApiService> {
             on {
                 searchForCharacter(
