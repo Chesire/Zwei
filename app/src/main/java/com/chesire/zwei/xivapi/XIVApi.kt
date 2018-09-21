@@ -1,9 +1,8 @@
 package com.chesire.zwei.xivapi
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.async
 
 class XIVApi(
     private val xivApiService: XIVApiService
@@ -11,35 +10,15 @@ class XIVApi(
     fun searchForCharacter(
         name: String,
         server: String
-    ): LiveData<Resource<List<SearchCharacterModel>>> {
-        val result = MutableLiveData<Resource<List<SearchCharacterModel>>>().apply {
-            postValue(Resource.loading(emptyList()))
+    ): Deferred<Resource<List<SearchCharacterModel>>> = async {
+        val res = xivApiService.searchForCharacter(name, server).await()
+        if (res.isSuccessful) {
+            return@async Resource.success(res.body()!!.characters)
+        } else {
+            return@async Resource.error<List<SearchCharacterModel>>(
+                "Failure to find character $name, on $server",
+                emptyList()
+            )
         }
-
-        launch {
-            try {
-                val request = xivApiService.searchForCharacter(name, server)
-                val response = request.await()
-                if (response.isSuccessful) {
-                    result.postValue(Resource.success(response.body()!!.characters))
-                } else {
-                    result.postValue(
-                        Resource.error(
-                            "Failure to find character $name, on $server",
-                            emptyList()
-                        )
-                    )
-                }
-            } catch (ex: Exception) {
-                result.postValue(
-                    Resource.error(
-                        "Exception occurred trying to find character $name, on $server: $ex",
-                        emptyList()
-                    )
-                )
-            }
-        }
-
-        return result
     }
 }

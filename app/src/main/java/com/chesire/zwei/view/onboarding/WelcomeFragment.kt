@@ -1,6 +1,5 @@
 package com.chesire.zwei.view.onboarding
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +17,7 @@ import com.chesire.zwei.xivapi.interceptors.LanguageInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import kotlinx.android.synthetic.main.fragment_welcome.view.testButton
+import kotlinx.coroutines.experimental.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -37,15 +37,14 @@ class WelcomeFragment : Fragment() {
 
         return inflater.inflate(R.layout.fragment_welcome, container, false).apply {
             testButton.setOnClickListener {
-                val dat = xivApi.searchForCharacter("Cheshire Cat", "Phoenix")
-                dat.observe(this@WelcomeFragment, Observer {
-                    it?.let {
-                        Timber.e("INCOMING DATA")
-                        Timber.e("Name: $it.status.name")
-                        Timber.e("Message: $it.message")
-                        Timber.e("Found: ${it.data.count()} characters")
-                    }
-                })
+                launch {
+                    val data = xivApi.searchForCharacter("Cheshire Cat", "Phoenix").await()
+
+                    Timber.e("INCOMING DATA")
+                    Timber.e("Name: ${data.data}.name")
+                    Timber.e("Message: ${data.message}")
+                    Timber.e("Found: ${data.data.count()} characters")
+                }
             }
         }
     }

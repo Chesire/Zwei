@@ -6,8 +6,8 @@ data class Resource<out T>(
     val message: String = ""
 ) {
     companion object {
-        fun <T> success(data: T): Resource<T> = Resource(Status.SUCCESS, data)
-        fun <T> error(msg: String, data: T): Resource<T> = Resource(Status.ERROR, data, msg)
-        fun <T> loading(data: T): Resource<T> = Resource(Status.LOADING, data)
+        fun <T> success(data: T): Resource<T> = Resource(Status.Success, data)
+        fun <T> error(msg: String, data: T): Resource<T> = Resource(Status.Error, data, msg)
+        fun <T> loading(data: T): Resource<T> = Resource(Status.Loading, data)
     }
 }
