@@ -1,5 +1,6 @@
 package com.chesire.zwei.xivapi
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import kotlinx.coroutines.experimental.launch
@@ -10,9 +11,10 @@ class XIVApi(
     fun searchForCharacter(
         name: String,
         server: String
-    ): MutableLiveData<Resource<List<SearchCharacterModel>>> {
-        val result = MutableLiveData<Resource<List<SearchCharacterModel>>>()
-        result.postValue(Resource.loading(emptyList()))
+    ): LiveData<Resource<List<SearchCharacterModel>>> {
+        val result = MutableLiveData<Resource<List<SearchCharacterModel>>>().apply {
+            postValue(Resource.loading(emptyList()))
+        }
 
         launch {
             try {
