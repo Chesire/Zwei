@@ -9,7 +9,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class ApiKeyInterceptorTests {
+class InterceptorOverrideTests {
     private val mockWebServer = MockWebServer()
 
     @Before
@@ -26,16 +26,16 @@ class ApiKeyInterceptorTests {
     fun `ensure adds key to requests`() {
         mockWebServer.enqueue(MockResponse())
 
-        val okHttp = getOkHttpClient("0123456789abcdef")
+        val okHttp = getOkHttpClient("key", "0123456789abcdef")
         sendMockRequest(okHttp)
         val request = mockWebServer.takeRequest()
 
         Assert.assertTrue(request.path.contains("key=0123456789abcdef"))
     }
 
-    private fun getOkHttpClient(key: String): OkHttpClient {
+    private fun getOkHttpClient(key: String, value: String): OkHttpClient {
         return OkHttpClient().newBuilder()
-            .addInterceptor(ApiKeyInterceptor(key))
+            .addInterceptor(InterceptorOverride(key, value))
             .build()
     }
 
