@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-abstract class DatabaseModule {
+internal class DatabaseModule {
     @Provides
     fun provideDatabase(context: Context): ZweiDatabase {
         return Room

@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-abstract class ServerModule {
+internal class ServerModule {
     @Singleton
     @Provides
     fun providesHttpClient(): OkHttpClient {

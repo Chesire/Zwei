@@ -7,7 +7,7 @@ import dagger.Provides
 
 @Suppress("unused")
 @Module
-abstract class ApplicationModule {
+internal class ApplicationModule {
     @Provides
     fun provideApplicationContext(app: Application): Context = app.applicationContext
 }
