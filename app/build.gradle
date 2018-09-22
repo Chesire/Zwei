@@ -12,7 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.chesire.zwei.MockTestRunner"
     }
     buildTypes {
         debug {
@@ -68,6 +68,8 @@ dependencies {
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$daggerVersion"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$daggerVersion"
 }
 
 kotlin {
