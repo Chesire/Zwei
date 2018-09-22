@@ -17,7 +17,9 @@ import com.chesire.zwei.xivapi.model.CompanionModel
 import com.chesire.zwei.xivapi.model.FreeCompanyModel
 import com.chesire.zwei.xivapi.model.MountModel
 import com.chesire.zwei.xivapi.model.TitleModel
+import javax.inject.Singleton
 
+@Singleton
 @Database(
     entities = [
         (CompanionModel::class),
