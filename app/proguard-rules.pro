@@ -53,3 +53,6 @@
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
+
+# Dagger
+-dontwarn com.google.errorprone.annotations.**
