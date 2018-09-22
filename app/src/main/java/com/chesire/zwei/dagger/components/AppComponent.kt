@@ -1,4 +1,4 @@
-package com.chesire.zwei.dagger
+package com.chesire.zwei.dagger.components
 
 import android.app.Application
 import com.chesire.zwei.ZweiApplication
