@@ -3,8 +3,9 @@ package com.chesire.zwei.xivapi
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
+import javax.inject.Inject
 
-class XIVApi(
+class XIVApi @Inject constructor(
     private val xivApiService: XIVApiService
 ) {
     fun searchForCharacter(
