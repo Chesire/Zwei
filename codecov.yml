@@ -1,0 +1,4 @@
+ignore:
+	- "app/src/main/java/com/chesire/zwei/dagger/*"
+	- "app/src/main/java/com/chesire/zwei/dagger/**/*"
+	- "app/src/main/java/com/chesire/zwei/ZweiApplication.kt"
