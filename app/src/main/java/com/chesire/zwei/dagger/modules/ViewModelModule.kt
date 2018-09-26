@@ -1,6 +1,6 @@
 package com.chesire.zwei.dagger.modules
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import dagger.MapKey
 import dagger.Module
 import kotlin.reflect.KClass

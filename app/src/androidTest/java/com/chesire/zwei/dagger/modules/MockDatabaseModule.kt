@@ -1,6 +1,6 @@
 package com.chesire.zwei.dagger.modules
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import com.chesire.zwei.room.ZweiDatabase
 import dagger.Module

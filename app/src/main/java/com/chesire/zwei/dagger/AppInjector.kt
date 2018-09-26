@@ -3,9 +3,9 @@ package com.chesire.zwei.dagger
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.chesire.zwei.ZweiApplication
 import com.chesire.zwei.dagger.components.DaggerAppComponent
 import dagger.android.AndroidInjection

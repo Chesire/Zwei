@@ -1,6 +1,6 @@
 package com.chesire.zwei.room.converters
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.chesire.zwei.xivapi.model.FreeCompanyEstateModel
 import com.squareup.moshi.Moshi
 

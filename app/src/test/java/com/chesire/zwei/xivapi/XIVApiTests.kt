@@ -1,6 +1,6 @@
 package com.chesire.zwei.xivapi
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
 import com.nhaarman.mockitokotlin2.doReturn
