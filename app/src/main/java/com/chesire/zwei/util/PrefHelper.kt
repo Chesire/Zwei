@@ -34,8 +34,7 @@ class PrefHelper @Inject constructor(
     }
 
     private fun SharedPreferences.Editor.put(pair: Pair<String, Any>) {
-        val key = pair.first
-        val value = pair.second
+        val (key, value) = pair
 
         when (value) {
             is Boolean -> putBoolean(key, value)
