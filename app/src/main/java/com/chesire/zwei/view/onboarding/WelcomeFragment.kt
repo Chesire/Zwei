@@ -24,6 +24,7 @@ class WelcomeFragment : Fragment() {
         }
     }
 
+    @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         onboardingInteractor = context as OnboardingInteractor
