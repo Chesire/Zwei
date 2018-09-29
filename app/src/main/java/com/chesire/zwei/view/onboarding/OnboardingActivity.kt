@@ -10,7 +10,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, OnboardingInteractor {
     @Inject
     lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject
@@ -32,20 +32,45 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 
-    private fun getInitialFragment(): Pair<String, Fragment> {
-        val fragment: Fragment
-        val tag: String
-        if (!prefHelper.hasBypassedWelcome) {
-            fragment = WelcomeFragment.newInstance()
-            tag = WelcomeFragment.tag
-        } else if (!prefHelper.hasBypassedRequest) {
-            fragment = RequestFragment.newInstance()
-            tag = RequestFragment.tag
-        } else {
-            fragment = SelectWorldFragment.newInstance()
-            tag = SelectWorldFragment.tag
-        }
+    override fun completeWelcome() {
+        prefHelper.hasBypassedWelcome = true
+        val (tag, fragment) = getFragmentDetails(RequestFragment.tag)
+        loadFragment(tag, fragment)
+    }
 
-        return tag to fragment
+    override fun completeRequest() {
+        prefHelper.hasBypassedRequest = true
+        val (tag, fragment) = getFragmentDetails(SelectWorldFragment.tag)
+        loadFragment(tag, fragment)
+    }
+
+    private fun getInitialFragment(): Pair<String, Fragment> {
+        return if (!prefHelper.hasBypassedWelcome) {
+            getFragmentDetails(WelcomeFragment.tag)
+        } else if (!prefHelper.hasBypassedRequest) {
+            getFragmentDetails(RequestFragment.tag)
+        } else {
+            getFragmentDetails(SelectWorldFragment.tag)
+        }
+    }
+
+    private fun getFragmentDetails(tag: String): Pair<String, Fragment> {
+        return when (tag) {
+            WelcomeFragment.tag -> WelcomeFragment.tag to WelcomeFragment.newInstance()
+            RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
+            SelectWorldFragment.tag -> SelectWorldFragment.tag to SelectWorldFragment.newInstance()
+            else -> error("Unexpected tag $tag requested")
+        }
+    }
+
+    private fun loadFragment(tag: String, fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.activityOnboardingFrame,
+                fragment,
+                tag
+            )
+            .addToBackStack(null)
+            .commit()
     }
 }
