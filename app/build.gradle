@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'jacoco'
+apply from: 'jacoco.gradle'
 
 android {
     compileSdkVersion 28
@@ -76,45 +76,4 @@ kotlin {
     experimental {
         coroutines "enable"
     }
-}
-
-jacoco {
-    toolVersion = "$jacocoVersion"
-}
-
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
-
-task jacocoTestReport(
-        type: JacocoReport,
-        group: 'verification',
-        dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']
-) {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def coverageExcludes = ['**/R.class',
-                            '**/R$*.class',
-                            '**/BuildConfig.*',
-                            '**/Manifest*.*',
-                            '**/*Test*.*',
-                            '**/*$$ViewBinder*.*',
-                            '**/inject/*',
-                            '**/*$InjectAdapter.*',
-                            '**/Dagger*.*',
-                            '**/*_Provide*Factory.*',
-                            '**/*_Member*Injector.*',
-                            '**/*_Factory.*',
-                            'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: coverageExcludes)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
-    ])
 }
