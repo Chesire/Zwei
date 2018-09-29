@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.chesire.zwei.R
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import org.junit.Ignore
 import org.junit.Test
 
 private const val bypassedWelcome = "bypassedWelcome"
@@ -48,5 +49,18 @@ class PrefHelperTests {
         classUnderTest.hasBypassedRequest = true
 
         verify(mockPrefEditor).putBoolean(bypassedRequest, true)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    @Ignore("Can't test this for now, as using properties stops invalid data being passed in")
+    fun `invalid data causes an IllegalStateException`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor> { }
+        val mockPreferences = mock<SharedPreferences> {
+            on {
+                edit()
+            }.thenReturn(mockPrefEditor)
+        }
+
+        val classUnderTest = PrefHelper(mockContext, mockPreferences)
     }
 }
