@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.chesire.zwei.R
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 
@@ -49,6 +50,86 @@ class PrefHelperTests {
         classUnderTest.hasBypassedRequest = true
 
         verify(mockPrefEditor).putBoolean(bypassedRequest, true)
+    }
+
+    @Test
+    fun `shouldDisplayOnboarding returns true if have not bypassedWelcome`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor> { }
+        val mockPreferences = mock<SharedPreferences> {
+            on {
+                edit()
+            }.thenReturn(mockPrefEditor)
+            on {
+                getBoolean(bypassedWelcome, false)
+            }.thenReturn(false)
+            on {
+                getBoolean(bypassedRequest, false)
+            }.thenReturn(true)
+        }
+
+        val classUnderTest = PrefHelper(mockContext, mockPreferences)
+
+        Assert.assertTrue(classUnderTest.shouldDisplayOnboarding)
+    }
+
+    @Test
+    fun `shouldDisplayOnboarding returns true if have not bypassedRequest`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor> { }
+        val mockPreferences = mock<SharedPreferences> {
+            on {
+                edit()
+            }.thenReturn(mockPrefEditor)
+            on {
+                getBoolean(bypassedWelcome, false)
+            }.thenReturn(true)
+            on {
+                getBoolean(bypassedRequest, false)
+            }.thenReturn(false)
+        }
+
+        val classUnderTest = PrefHelper(mockContext, mockPreferences)
+
+        Assert.assertTrue(classUnderTest.shouldDisplayOnboarding)
+    }
+
+    @Test
+    fun `shouldDisplayOnboarding returns true if have not bypassedWelcome and bypassedRequest`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor> { }
+        val mockPreferences = mock<SharedPreferences> {
+            on {
+                edit()
+            }.thenReturn(mockPrefEditor)
+            on {
+                getBoolean(bypassedWelcome, false)
+            }.thenReturn(false)
+            on {
+                getBoolean(bypassedRequest, false)
+            }.thenReturn(false)
+        }
+
+        val classUnderTest = PrefHelper(mockContext, mockPreferences)
+
+        Assert.assertTrue(classUnderTest.shouldDisplayOnboarding)
+    }
+
+    @Test
+    fun `shouldDisplayOnboarding returns false if have bypassedWelcome and bypassedRequest`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor> { }
+        val mockPreferences = mock<SharedPreferences> {
+            on {
+                edit()
+            }.thenReturn(mockPrefEditor)
+            on {
+                getBoolean(bypassedWelcome, false)
+            }.thenReturn(true)
+            on {
+                getBoolean(bypassedRequest, false)
+            }.thenReturn(true)
+        }
+
+        val classUnderTest = PrefHelper(mockContext, mockPreferences)
+
+        Assert.assertFalse(classUnderTest.shouldDisplayOnboarding)
     }
 
     @Test(expected = IllegalStateException::class)

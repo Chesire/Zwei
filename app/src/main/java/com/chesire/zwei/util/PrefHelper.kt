@@ -26,6 +26,9 @@ class PrefHelper @Inject constructor(
             sharedPreferences.edit { it.put(bypassedRequestKey to value) }
         }
 
+    val shouldDisplayOnboarding: Boolean
+        get() = !hasBypassedWelcome || !hasBypassedRequest
+
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
         edit().apply { operation(this) }.apply()
     }
