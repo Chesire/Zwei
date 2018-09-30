@@ -13,6 +13,7 @@ import com.chesire.zwei.R
 import com.chesire.zwei.dagger.Injectable
 import com.chesire.zwei.databinding.FragmentEnterworldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
+import kotlinx.android.synthetic.main.fragment_enterworld.buttonNext
 import javax.inject.Inject
 
 class EnterWorldFragment : Fragment(), Injectable {
@@ -35,6 +36,7 @@ class EnterWorldFragment : Fragment(), Injectable {
         ).apply {
             binding = this
             setLifecycleOwner(this@EnterWorldFragment)
+            buttonNext.setOnClickListener { searchInteractor.completeEnterWorld() }
         }.root
     }
 

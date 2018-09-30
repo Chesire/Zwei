@@ -29,7 +29,7 @@ class EnterCharacterFragment : Fragment(), Injectable {
     ): View? {
         return DataBindingUtil.inflate<FragmentEntercharacterBinding>(
             inflater,
-            R.layout.fragment_enterworld,
+            R.layout.fragment_entercharacter,
             container,
             false
         ).apply {
