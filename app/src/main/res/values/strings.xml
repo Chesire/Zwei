@@ -1,3 +1,91 @@
 <resources>
     <string name="app_name">Zwei</string>
+
+    <string name="onboard_enter_world">Enter World</string>
+    <!--
+    Data Centers
+    <string name="data_centre_any" translatable="false">Any</string>
+    <string name="data_centre_elemental" translatable="false">Elemental</string>
+    <string name="data_centre_gaia" translatable="false">Gaia</string>
+    <string name="data_centre_mana" translatable="false">Mana</string>
+    <string name="data_centre_aether" translatable="false">Aether</string>
+    <string name="data_centre_primal" translatable="false">Primal</string>
+    <string name="data_centre_chaos" translatable="false">Chaos</string>
+
+    Elemental Servers
+    <string name="server_elemental_aegis" translatable="false">Aegis</string>
+    <string name="server_elemental_atomos" translatable="false">Atomos</string>
+    <string name="server_elemental_carbuncle" translatable="false">Carbuncle</string>
+    <string name="server_elemental_garuda" translatable="false">Garuda</string>
+    <string name="server_elemental_gungnir" translatable="false">Gungnir</string>
+    <string name="server_elemental_kujata" translatable="false">Kujata</string>
+    <string name="server_elemental_ramuh" translatable="false">Ramuh</string>
+    <string name="server_elemental_tonberry" translatable="false">Tonberry</string>
+    <string name="server_elemental_typhon" translatable="false">Typhon</string>
+    <string name="server_elemental_unicorn" translatable="false">Unicorn</string>
+
+    Gaia Servers
+    <string name="server_gaia_alexander" translatable="false">Alexander</string>
+    <string name="server_gaia_bahamut" translatable="false">Bahamut</string>
+    <string name="server_gaia_durandal" translatable="false">Durandal</string>
+    <string name="server_gaia_fenrir" translatable="false">Fenrir</string>
+    <string name="server_gaia_ifrit" translatable="false">Ifrit</string>
+    <string name="server_gaia_ridill" translatable="false">Ridill</string>
+    <string name="server_gaia_tiamat" translatable="false">Tiamat</string>
+    <string name="server_gaia_ultima" translatable="false">Ultima</string>
+    <string name="server_gaia_valefor" translatable="false">Valefor</string>
+    <string name="server_gaia_yojimbo" translatable="false">Yojimbo</string>
+    <string name="server_gaia_zeromus" translatable="false">Zeromus</string>
+
+    Mana Servers
+    <string name="server_mana_anima" translatable="false">Anima</string>
+    <string name="server_mana_asura" translatable="false">Asura</string>
+    <string name="server_mana_belias" translatable="false">Belias</string>
+    <string name="server_mana_chocobo" translatable="false">Chocobo</string>
+    <string name="server_mana_hades" translatable="false">Hades</string>
+    <string name="server_mana_ixion" translatable="false">Ixion</string>
+    <string name="server_mana_mandragora" translatable="false">Mandragora</string>
+    <string name="server_mana_masamune" translatable="false">Masamune</string>
+    <string name="server_mana_pandaemonium" translatable="false">Pandaemonium</string>
+    <string name="server_mana_shinryu" translatable="false">Shinryu</string>
+    <string name="server_mana_titan" translatable="false">Titan</string>
+
+    Aether Servers
+    <string name="server_aether_adamantoise" translatable="false">Adamantoise</string>
+    <string name="server_aether_balmung" translatable="false">Balmung</string>
+    <string name="server_aether_cactuar" translatable="false">Cactuar</string>
+    <string name="server_aether_coeurl" translatable="false">Coeurl</string>
+    <string name="server_aether_faerie" translatable="false">Faerie</string>
+    <string name="server_aether_gilgamesh" translatable="false">Gilgamesh</string>
+    <string name="server_aether_goblin" translatable="false">Goblin</string>
+    <string name="server_aether_jenova" translatable="false">Jenova</string>
+    <string name="server_aether_mateus" translatable="false">Mateus</string>
+    <string name="server_aether_midgardsormr" translatable="false">Midgardsormr</string>
+    <string name="server_aether_sargatanas" translatable="false">Sargatanas</string>
+    <string name="server_aether_siren" translatable="false">Siren</string>
+    <string name="server_aether_zalera" translatable="false">Zalera</string>
+
+    Primal Servers
+    <string name="server_primal_behemoth" translatable="false">Behemoth</string>
+    <string name="server_primal_brynhildr" translatable="false">Brynhildr</string>
+    <string name="server_primal_diabolos" translatable="false">Diabolos</string>
+    <string name="server_primal_excalibur" translatable="false">Excalibur</string>
+    <string name="server_primal_exodus" translatable="false">Exodus</string>
+    <string name="server_primal_famfrit" translatable="false">Famfrit</string>
+    <string name="server_primal_hyperion" translatable="false">Hyperion</string>
+    <string name="server_primal_lamia" translatable="false">Lamia</string>
+    <string name="server_primal_leviathan" translatable="false">Leviathan</string>
+    <string name="server_primal_malboro" translatable="false">Malboro</string>
+    <string name="server_primal_ultros" translatable="false">Ultros</string>
+
+    Chaos Servers
+    <string name="server_chaos_cerberus" translatable="false">Cerberus</string>
+    <string name="server_chaos_lich" translatable="false">Lich</string>
+    <string name="server_chaos_moogle" translatable="false">Moogle</string>
+    <string name="server_chaos_odin" translatable="false">Odin</string>
+    <string name="server_chaos_phoenix" translatable="false">Phoenix</string>
+    <string name="server_chaos_ragnarok" translatable="false">Ragnarok</string>
+    <string name="server_chaos_shiva" translatable="false">Shiva</string>
+    <string name="server_chaos_zodiark" translatable="false">Zodiark</string>
+    -->
 </resources>
