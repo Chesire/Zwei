@@ -1,5 +1,6 @@
-package com.chesire.zwei.view.onboarding
+package com.chesire.zwei.view.onboarding.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,28 +11,30 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.dagger.Injectable
-import com.chesire.zwei.databinding.FragmentEntercharacterBinding
+import com.chesire.zwei.databinding.FragmentEnterworldBinding
+import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import javax.inject.Inject
 
-class EnterCharacterFragment : Fragment(), Injectable {
+class EnterWorldFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: OnboardingViewModel
-    private lateinit var binding: FragmentEntercharacterBinding
+    private lateinit var binding: FragmentEnterworldBinding
+    private lateinit var searchInteractor: SearchInteractor
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentEntercharacterBinding>(
+        return DataBindingUtil.inflate<FragmentEnterworldBinding>(
             inflater,
             R.layout.fragment_enterworld,
             container,
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@EnterCharacterFragment)
+            setLifecycleOwner(this@EnterWorldFragment)
         }.root
     }
 
@@ -44,10 +47,16 @@ class EnterCharacterFragment : Fragment(), Injectable {
         binding.vm = viewModel
     }
 
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        searchInteractor = context as SearchInteractor
+    }
+
     companion object {
-        const val tag = "EnterCharacterFragment"
-        fun newInstance(): EnterCharacterFragment {
-            return EnterCharacterFragment().apply {
+        const val tag = "EnterWorldFragment"
+        fun newInstance(): EnterWorldFragment {
+            return EnterWorldFragment().apply {
                 arguments = Bundle()
             }
         }

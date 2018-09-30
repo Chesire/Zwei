@@ -5,12 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
 import com.chesire.zwei.util.PrefHelper
+import com.chesire.zwei.view.onboarding.initial.InitialInteractor
+import com.chesire.zwei.view.onboarding.initial.RequestFragment
+import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
+import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
+import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
+import com.chesire.zwei.view.onboarding.search.SearchInteractor
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, OnboardingInteractor {
+class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector,
+    InitialInteractor, SearchInteractor {
+
     @Inject
     lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject
@@ -42,6 +50,15 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, Onbo
         prefHelper.hasBypassedRequest = true
         val (tag, fragment) = getFragmentDetails(EnterWorldFragment.tag)
         loadFragment(tag, fragment)
+    }
+
+    override fun completeEnterWorld() {
+        val (tag, fragment) = getFragmentDetails(EnterCharacterFragment.tag)
+        loadFragment(tag, fragment)
+    }
+
+    override fun completeEnterCharacter() {
+        // Nothing yet
     }
 
     private fun getInitialFragment(): Pair<String, Fragment> {
