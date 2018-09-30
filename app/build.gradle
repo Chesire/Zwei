@@ -25,6 +25,9 @@ android {
             buildConfigField 'String', "XIVApiKey", System.getenv("zwei_xivapi_key") ?: zwei_xivapi_key
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
