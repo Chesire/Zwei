@@ -10,28 +10,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.dagger.Injectable
-import com.chesire.zwei.databinding.FragmentSelectworldBinding
+import com.chesire.zwei.databinding.FragmentEnterworldBinding
 import javax.inject.Inject
 
-class SelectWorldFragment : Fragment(), Injectable {
+class EnterWorldFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: OnboardingViewModel
-    private lateinit var binding: FragmentSelectworldBinding
+    private lateinit var binding: FragmentEnterworldBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentSelectworldBinding>(
+        return DataBindingUtil.inflate<FragmentEnterworldBinding>(
             inflater,
-            R.layout.fragment_selectworld,
+            R.layout.fragment_enterworld,
             container,
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@SelectWorldFragment)
+            setLifecycleOwner(this@EnterWorldFragment)
         }.root
     }
 
@@ -45,9 +45,9 @@ class SelectWorldFragment : Fragment(), Injectable {
     }
 
     companion object {
-        const val tag = "SelectWorldFragment"
-        fun newInstance(): SelectWorldFragment {
-            return SelectWorldFragment().apply {
+        const val tag = "EnterWorldFragment"
+        fun newInstance(): EnterWorldFragment {
+            return EnterWorldFragment().apply {
                 arguments = Bundle()
             }
         }

@@ -40,7 +40,7 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, Onbo
 
     override fun completeRequest() {
         prefHelper.hasBypassedRequest = true
-        val (tag, fragment) = getFragmentDetails(SelectWorldFragment.tag)
+        val (tag, fragment) = getFragmentDetails(EnterWorldFragment.tag)
         loadFragment(tag, fragment)
     }
 
@@ -50,7 +50,7 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, Onbo
         } else if (!prefHelper.hasBypassedRequest) {
             getFragmentDetails(RequestFragment.tag)
         } else {
-            getFragmentDetails(SelectWorldFragment.tag)
+            getFragmentDetails(EnterWorldFragment.tag)
         }
     }
 
@@ -58,7 +58,7 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, Onbo
         return when (tag) {
             WelcomeFragment.tag -> WelcomeFragment.tag to WelcomeFragment.newInstance()
             RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
-            SelectWorldFragment.tag -> SelectWorldFragment.tag to SelectWorldFragment.newInstance()
+            EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
     }
