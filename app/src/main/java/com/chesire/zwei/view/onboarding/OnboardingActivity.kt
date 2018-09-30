@@ -59,6 +59,7 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector, Onbo
             WelcomeFragment.tag -> WelcomeFragment.tag to WelcomeFragment.newInstance()
             RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
+            EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
     }

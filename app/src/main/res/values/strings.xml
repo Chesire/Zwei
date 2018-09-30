@@ -2,6 +2,7 @@
     <string name="app_name">Zwei</string>
 
     <string name="onboard_enter_world">Enter World</string>
+    <string name="onboard_enter_character">Enter Character Name</string>
     <!--
     Data Centers
     <string name="data_centre_any" translatable="false">Any</string>
