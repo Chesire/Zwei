@@ -21,5 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.onboarding.OnboardingActivity" />
+        <activity android:name=".view.profile.ProfileActivity" />
     </application>
 </manifest>
