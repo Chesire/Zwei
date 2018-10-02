@@ -1,17 +1,11 @@
 package com.chesire.zwei
 
-import android.app.Activity
-import android.app.Application
 import android.os.StrictMode
-import com.chesire.zwei.dagger.AppInjector
 import com.chesire.zwei.dagger.components.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
 import timber.log.Timber
-import javax.inject.Inject
 
 @Suppress("Unused")
 class ZweiApplication : DaggerApplication() {
