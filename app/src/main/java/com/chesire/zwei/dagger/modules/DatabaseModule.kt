@@ -1,7 +1,7 @@
 package com.chesire.zwei.dagger.modules
 
-import android.content.Context
 import androidx.room.Room
+import android.content.Context
 import com.chesire.zwei.room.ZweiDatabase
 import dagger.Module
 import dagger.Provides
@@ -9,10 +9,9 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-internal open class DatabaseModule {
-    @Singleton
+internal class DatabaseModule {
     @Provides
-    open fun provideDatabase(context: Context): ZweiDatabase {
+    fun provideDatabase(context: Context): ZweiDatabase {
         return Room
             .databaseBuilder(context, ZweiDatabase::class.java, "zweidb.db")
             .fallbackToDestructiveMigration()
