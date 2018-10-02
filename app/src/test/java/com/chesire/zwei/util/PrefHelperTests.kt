@@ -186,6 +186,26 @@ class PrefHelperTests {
         Assert.assertFalse(classUnderTest.shouldDisplayOnboarding)
     }
 
+    @Test
+    fun `calling clear clears shared preferences data`() {
+        val mockPrefEditor = mock<SharedPreferences.Editor> {
+            on {
+                clear()
+            }.thenReturn(mock)
+        }
+        val mockPreferences = mock<SharedPreferences> {
+            on {
+                edit()
+            }.thenReturn(mockPrefEditor)
+        }
+
+        val classUnderTest = PrefHelper(mockContext, mockPreferences)
+
+        classUnderTest.clear()
+
+        verify(mockPrefEditor).clear()
+    }
+
     @Test(expected = IllegalStateException::class)
     @Ignore("Can't test this for now, as using properties stops invalid data being passed in")
     fun `invalid data causes an IllegalStateException`() {

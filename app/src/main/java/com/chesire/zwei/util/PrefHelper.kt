@@ -37,7 +37,7 @@ class PrefHelper @Inject constructor(
         get() = !hasBypassedWelcome || !hasBypassedRequest || !hasAcquiredCharacter
 
     fun clear() {
-        sharedPreferences.edit { clear() }
+        sharedPreferences.edit().clear().apply()
     }
 
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
