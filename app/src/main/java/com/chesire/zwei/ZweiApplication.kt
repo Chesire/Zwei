@@ -4,18 +4,17 @@ import android.app.Activity
 import android.app.Application
 import android.os.StrictMode
 import com.chesire.zwei.dagger.AppInjector
+import com.chesire.zwei.dagger.components.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
 import javax.inject.Inject
 
 @Suppress("Unused")
-class ZweiApplication : Application(), HasActivityInjector {
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-
+class ZweiApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
 
@@ -30,11 +29,14 @@ class ZweiApplication : Application(), HasActivityInjector {
             Timber.plant(Timber.DebugTree())
             startStrictMode()
         }
-
-        AppInjector.init(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent
+            .builder()
+            .create(this)
+            .build()
+    }
 
     private fun startStrictMode() {
         StrictMode.setThreadPolicy(
