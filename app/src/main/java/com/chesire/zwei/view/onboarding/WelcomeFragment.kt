@@ -1,19 +1,18 @@
 package com.chesire.zwei.view.onboarding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.chesire.zwei.R
-import com.chesire.zwei.dagger.Injectable
 import com.chesire.zwei.xivapi.XIVApi
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_welcome.testButton
 import kotlinx.coroutines.experimental.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class WelcomeFragment : Fragment(), Injectable {
+class WelcomeFragment : DaggerFragment() {
     @Inject
     lateinit var xivApi: XIVApi
 

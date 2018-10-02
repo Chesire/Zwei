@@ -10,7 +10,7 @@ import com.chesire.zwei.dagger.modules.ServerModule
 import com.chesire.zwei.dagger.modules.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
@@ -18,7 +18,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         (ActivityModule::class),
-        (AndroidInjectionModule::class),
         (AndroidSupportInjectionModule::class),
         (ApplicationModule::class),
         (DatabaseModule::class),
@@ -27,14 +26,12 @@ import javax.inject.Singleton
         (ViewModelModule::class)
     ]
 )
-interface AppComponent {
+interface AppComponent : AndroidInjector<ZweiApplication> {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: Application): Builder
+        fun create(application: Application): Builder
 
         fun build(): AppComponent
     }
-
-    fun inject(zweiApp: ZweiApplication)
 }
