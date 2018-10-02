@@ -1,11 +1,11 @@
 package com.chesire.zwei.view
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.chesire.zwei.view.onboarding.OnboardingActivity
+import dagger.android.support.DaggerAppCompatActivity
 
-class PrimingActivity : Activity() {
+class PrimingActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Later will add a check if onboarding has been complete
