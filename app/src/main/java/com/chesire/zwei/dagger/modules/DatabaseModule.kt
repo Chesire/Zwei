@@ -1,7 +1,7 @@
 package com.chesire.zwei.dagger.modules
 
-import androidx.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.chesire.zwei.room.ZweiDatabase
 import dagger.Module
 import dagger.Provides
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-internal class DatabaseModule {
+class DatabaseModule {
     @Provides
     fun provideDatabase(context: Context): ZweiDatabase {
         return Room
