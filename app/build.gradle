@@ -64,7 +64,16 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.22.0'
 
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test:rules:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0-alpha4'
+    androidTestImplementation 'com.github.fabioCollini:daggermock:0.8.4'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
+    androidTestImplementation('com.schibsted.spain:barista:2.5.0') {
+        exclude group: 'com.android.support'
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    androidTestImplementation 'org.mockito:mockito-android:2.22.0'
 
     kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
     kapt 'androidx.room:room-compiler:2.0.0-rc01'
