@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -12,7 +13,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.chesire.zwei.MockTestRunner"
+        testInstrumentationRunner 'com.chesire.zwei.MockTestRunner'
     }
     buildTypes {
         debug {
@@ -28,6 +29,10 @@ android {
     dataBinding {
         enabled = true
     }
+}
+
+allOpen {
+    annotation('com.chesire.zwei.AllOpen')
 }
 
 dependencies {
@@ -67,8 +72,9 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0-alpha4'
-    androidTestImplementation 'com.github.fabioCollini:daggermock:0.8.4'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
     androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
+    androidTestImplementation 'com.github.tmurakami:dexopener:1.0.4'
     androidTestImplementation('com.schibsted.spain:barista:2.5.0') {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin'
