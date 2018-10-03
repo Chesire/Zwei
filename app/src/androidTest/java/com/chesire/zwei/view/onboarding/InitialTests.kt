@@ -10,11 +10,11 @@ import com.chesire.zwei.R
 import com.chesire.zwei.dagger.espressoDaggerMockRule
 import com.chesire.zwei.util.PrefHelper
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
 
 @RunWith(AndroidJUnit4::class)
 class InitialTests {
@@ -27,11 +27,6 @@ class InitialTests {
     @Mock
     private lateinit var prefHelper: PrefHelper
 
-    @Before
-    fun setUp() {
-        prefHelper.clear()
-    }
-
     @Test
     fun initialApplicationStartLaunchesIntoWelcome() {
         activityRule.launchActivity(null)
@@ -40,14 +35,31 @@ class InitialTests {
 
     @Test
     fun fromWelcomeCanNavigateToRequest() {
+        activityRule.launchActivity(null)
         clickOn(R.id.buttonNext)
         onView(withId(R.id.textRequest)).check(matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun fromRequestCanNavigateToEnterCharacterFlow() {
+        activityRule.launchActivity(null)
         clickOn(R.id.buttonNext)
         clickOn(R.id.buttonNext)
+        onView(withId(R.id.editWorld)).check(matches(ViewMatchers.isDisplayed()))
+    }
+
+    @Test
+    fun ifWelcomeIsDoneStartInRequest() {
+        `when`(prefHelper.hasBypassedWelcome).thenReturn(true)
+        activityRule.launchActivity(null)
+        onView(withId(R.id.textRequest)).check(matches(ViewMatchers.isDisplayed()))
+    }
+
+    @Test
+    fun ifRequestIsDoneStartInEnterCharacterFlow() {
+        `when`(prefHelper.hasBypassedWelcome).thenReturn(true)
+        `when`(prefHelper.hasBypassedRequest).thenReturn(true)
+        activityRule.launchActivity(null)
         onView(withId(R.id.editWorld)).check(matches(ViewMatchers.isDisplayed()))
     }
 }
