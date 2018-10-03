@@ -8,5 +8,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class MockActivityModule {
     @ContributesAndroidInjector
+    internal abstract fun contributesPrimingActivity(): PrimingActivity
+
+    @ContributesAndroidInjector
     internal abstract fun contributesOnboardingActivity(): OnboardingActivity
 }
