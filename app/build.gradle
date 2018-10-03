@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: "kotlin-allopen"
+apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -29,7 +29,7 @@ android {
 }
 
 allOpen {
-    annotation("com.chesire.zwei.AllOpen")
+    annotation('com.chesire.zwei.AllOpen')
 }
 
 dependencies {
