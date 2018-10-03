@@ -1,15 +1,14 @@
 package com.chesire.zwei.view
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.chesire.zwei.dagger.Injectable
 import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.OnboardingActivity
 import com.chesire.zwei.view.profile.ProfileActivity
+import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class PrimingActivity : Activity(), Injectable {
+class PrimingActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var prefHelper: PrefHelper
 

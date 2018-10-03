@@ -1,7 +1,6 @@
 package com.chesire.zwei.view.onboarding
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
 import com.chesire.zwei.util.PrefHelper
@@ -11,16 +10,10 @@ import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector,
-    InitialInteractor, SearchInteractor {
-
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchInteractor {
     @Inject
     lateinit var prefHelper: PrefHelper
 
@@ -37,8 +30,6 @@ class OnboardingActivity : AppCompatActivity(), HasSupportFragmentInjector,
             )
             .commit()
     }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 
     override fun completeWelcome() {
         prefHelper.hasBypassedWelcome = true

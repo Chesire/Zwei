@@ -6,15 +6,17 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-internal class ApplicationModule {
+class ApplicationModule {
     @Provides
     fun provideApplicationContext(app: Application): Context = app.applicationContext
 
     @Provides
-    fun provideSharedPreferences(context: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+    @Singleton
+    fun provideSharedPreferences(app: Application): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(app)
     }
 }

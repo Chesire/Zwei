@@ -11,6 +11,7 @@ import com.chesire.zwei.dagger.modules.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
@@ -27,14 +28,12 @@ import javax.inject.Singleton
         (ViewModelModule::class)
     ]
 )
-interface MockComponent {
+interface MockComponent : AndroidInjector<MockApplication> {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: Application): Builder
+        fun create(application: Application): Builder
 
         fun build(): MockComponent
     }
-
-    fun inject(mockApp: MockApplication)
 }
