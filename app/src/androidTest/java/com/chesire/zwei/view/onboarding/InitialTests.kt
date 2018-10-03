@@ -8,15 +8,15 @@ import org.junit.Rule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 
-@RunWith(AndroidJUnit4::class)
-class InitialTests {
-    @get:Rule
-    var daggerRule = espressoDaggerMockRule()
-
-    @get:Rule
-    val activityRule = ActivityTestRule(OnboardingActivity::class.java, false, false)
-
-    @Mock
-    private lateinit var prefHelper: PrefHelper
-
-}
+//@RunWith(AndroidJUnit4::class)
+//class InitialTests {
+//    @get:Rule
+//    var daggerRule = espressoDaggerMockRule()
+//
+//    @get:Rule
+//    val activityRule = ActivityTestRule(OnboardingActivity::class.java, false, false)
+//
+//    @Mock
+//    private lateinit var prefHelper: PrefHelper
+//
+//}
