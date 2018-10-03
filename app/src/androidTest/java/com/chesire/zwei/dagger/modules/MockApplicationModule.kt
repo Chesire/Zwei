@@ -1,6 +1,7 @@
 package com.chesire.zwei.dagger.modules
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.chesire.zwei.OpenForTesting
@@ -13,8 +14,8 @@ import javax.inject.Singleton
 @OpenForTesting
 @Module
 class MockApplicationModule {
-    //@Provides
-    //fun provideApplicationContext(app: Application): Context = app.applicationContext
+    @Provides
+    fun provideApplicationContext(app: Application): Context = app.applicationContext
 
     @Provides
     @Singleton
@@ -24,7 +25,7 @@ class MockApplicationModule {
 
     @Provides
     @Singleton
-    fun providePrefHelper(sharedPref: SharedPreferences): PrefHelper {
-        return PrefHelper(sharedPref)
+    fun providePrefHelper(app: Application, sharedPref: SharedPreferences): PrefHelper {
+        return PrefHelper(app, sharedPref)
     }
 }
