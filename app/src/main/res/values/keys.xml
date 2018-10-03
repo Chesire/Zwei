@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key_bypassed_welcome">bypassed_welcome</string>
+    <string name="key_bypassed_request">bypassed_request</string>
+    <string name="key_acquired_character">acquired_character</string>
+</resources>
