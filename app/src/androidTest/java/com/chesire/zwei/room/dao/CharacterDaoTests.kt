@@ -67,10 +67,10 @@ class CharacterDaoTests {
 
     private fun generateCharacterModel(id: Int = 0): CharacterModel {
         return CharacterModel(
-            //emptyClass,
+            // emptyClass,
             "avatar",
             "bio",
-            //classes,
+            // classes,
             Gender.Female,
             id,
             emptyList(),

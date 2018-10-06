@@ -10,14 +10,14 @@ import com.squareup.moshi.JsonClass
 @Entity
 @JsonClass(generateAdapter = true)
 data class CharacterModel(
-    //@Json(name = "ActiveClassJob")
-    //val activeClass: ClassModel,
+    // @Json(name = "ActiveClassJob")
+    // val activeClass: ClassModel,
     @Json(name = "Avatar")
     val avatar: String,
     @Json(name = "Bio")
     val bio: String,
-    //@Json(name = "ClassJobs")
-    //val classes: ClassesModel,
+    // @Json(name = "ClassJobs")
+    // val classes: ClassesModel,
     @Json(name = "Gender")
     val gender: Gender,
     @PrimaryKey
