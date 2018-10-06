@@ -1,7 +1,7 @@
 package com.chesire.zwei.dagger.modules
 
-import androidx.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.chesire.zwei.room.ZweiDatabase
 import dagger.Module
 import dagger.Provides
