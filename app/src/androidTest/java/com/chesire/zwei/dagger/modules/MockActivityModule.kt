@@ -5,6 +5,7 @@ import com.chesire.zwei.view.onboarding.OnboardingActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
+@Suppress("unused")
 @Module
 abstract class MockActivityModule {
     @ContributesAndroidInjector
