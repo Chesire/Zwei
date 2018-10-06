@@ -1,6 +1,7 @@
 package com.chesire.zwei.dagger.modules
 
-import com.chesire.zwei.view.onboarding.WelcomeFragment
+import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
+import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,5 +9,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    internal abstract fun contributesWelcomeFragment(): WelcomeFragment
+    internal abstract fun contributesEnterCharacterFragment(): EnterCharacterFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun contributesEnterWorldFragment(): EnterWorldFragment
 }
