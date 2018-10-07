@@ -9,6 +9,7 @@ import com.chesire.zwei.view.onboarding.initial.RequestFragment
 import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
+import com.chesire.zwei.view.onboarding.search.GuessCharacterFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -49,7 +50,8 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
     }
 
     override fun completeEnterCharacter() {
-        // Nothing yet
+        val (tag, fragment) = getFragmentDetails(GuessCharacterFragment.tag)
+        loadFragment(tag, fragment)
     }
 
     private fun getInitialFragment(): Pair<String, Fragment> {
@@ -68,6 +70,7 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
             RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
+            GuessCharacterFragment.tag -> GuessCharacterFragment.tag to GuessCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
     }
