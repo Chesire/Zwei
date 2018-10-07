@@ -23,6 +23,7 @@ class OnboardingViewModel @Inject constructor(
         get() = _searchStatus
     val foundCharacters: LiveData<List<SearchCharacterModel>>
         get() = _foundCharacters
+    val currentCharacter = MutableLiveData<SearchCharacterModel>()
 
     fun searchForCharacter() = launch(UI) {
         _searchStatus.value = Status.Loading
@@ -39,7 +40,7 @@ class OnboardingViewModel @Inject constructor(
                     Timber.d("Found ${result.data.count()} characters")
                     _searchStatus.value = Status.Success
                     _foundCharacters.value = result.data
-                    setCurrentSelectedCharacter(result.data.first())
+                    currentCharacter.value = result.data.first()
                 }
             }
             else -> {
@@ -47,10 +48,5 @@ class OnboardingViewModel @Inject constructor(
                 _searchStatus.value = Status.Error
             }
         }
-    }
-
-    fun setCurrentSelectedCharacter(model: SearchCharacterModel) {
-        // set current model data, will be displayed to user
-        Timber.d("currentSelectedCharacter set to $model")
     }
 }

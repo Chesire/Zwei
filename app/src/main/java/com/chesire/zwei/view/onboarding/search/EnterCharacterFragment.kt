@@ -67,9 +67,7 @@ class EnterCharacterFragment : DaggerFragment() {
             Status.Error -> {
                 // Display appropriate error state
             }
-            Status.Success -> {
-                searchInteractor.completeEnterCharacter()
-            }
+            Status.Success -> searchInteractor.completeEnterCharacter()
         }
     }
 
