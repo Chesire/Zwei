@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentGuesscharacterBinding
+import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_guesscharacter.imageAvatar
 import javax.inject.Inject
 
 class GuessCharacterFragment : DaggerFragment() {
@@ -42,6 +44,10 @@ class GuessCharacterFragment : DaggerFragment() {
             .get(OnboardingViewModel::class.java)
 
         binding.vm = viewModel
+
+        GlideApp.with(requireContext())
+            .load(viewModel.currentCharacter.value!!.avatar)
+            .into(imageAvatar)
     }
 
     companion object {
