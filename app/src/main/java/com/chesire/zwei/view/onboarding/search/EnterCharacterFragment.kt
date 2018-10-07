@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEntercharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
+import com.chesire.zwei.xivapi.Status
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -42,6 +44,11 @@ class EnterCharacterFragment : DaggerFragment() {
         viewModel = ViewModelProviders
             .of(activity!!, viewModelFactory)
             .get(OnboardingViewModel::class.java)
+            .apply {
+                searchStatus.observe(
+                    this@EnterCharacterFragment,
+                    Observer { onSearchStatusChange(it) })
+            }
 
         binding.vm = viewModel
     }
@@ -50,6 +57,20 @@ class EnterCharacterFragment : DaggerFragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         searchInteractor = context as SearchInteractor
+    }
+
+    private fun onSearchStatusChange(status: Status) {
+        when (status) {
+            Status.Loading -> {
+                // display loading indicator
+            }
+            Status.Error -> {
+                // Display appropriate error state
+            }
+            Status.Success -> {
+                searchInteractor.completeEnterCharacter()
+            }
+        }
     }
 
     companion object {

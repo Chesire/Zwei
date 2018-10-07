@@ -1,9 +1,12 @@
 package com.chesire.zwei.view.onboarding
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chesire.zwei.xivapi.Status
 import com.chesire.zwei.xivapi.XIVApi
+import com.chesire.zwei.xivapi.model.SearchCharacterModel
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -11,30 +14,43 @@ import javax.inject.Inject
 class OnboardingViewModel @Inject constructor(
     private val xivApi: XIVApi
 ) : ViewModel() {
-    val characterName: MutableLiveData<String> = MutableLiveData()
-    val world: MutableLiveData<String> = MutableLiveData()
+    private val _searchStatus = MutableLiveData<Status>()
+    private val _foundCharacters = MutableLiveData<List<SearchCharacterModel>>()
 
-    fun searchForCharacter() = launch {
+    val characterName = MutableLiveData<String>()
+    val world = MutableLiveData<String>()
+    val searchStatus: LiveData<Status>
+        get() = _searchStatus
+    val foundCharacters: LiveData<List<SearchCharacterModel>>
+        get() = _foundCharacters
+
+    fun searchForCharacter() = launch(UI) {
+        _searchStatus.value = Status.Loading
         val searchRequest = xivApi.searchForCharacter(characterName.value!!, world.value!!)
         val result = searchRequest.await()
+
         when (result.status) {
-            Status.Loading -> {
-                // change fragment from the UI on click? Then can perform action during animation?
-                // Show loading indicator
-            }
-            Status.Error -> {
-                // Display error to user, act on error
-            }
+            Status.Error -> _searchStatus.value = Status.Error
             Status.Success -> {
-                // Act on the specific success and go to relevant screen
                 if (result.data.isEmpty()) {
-                    // display an error
-                    Timber.w("Failure no data")
+                    Timber.d("Could not find character - failure no data")
+                    _searchStatus.value = Status.Error
                 } else {
-                    // mutate some live data to show the new characters list
-                    Timber.w("Results - ${result.data.count()}")
+                    Timber.d("Found ${result.data.count()} characters")
+                    _searchStatus.value = Status.Success
+                    _foundCharacters.value = result.data
+                    setCurrentSelectedCharacter(result.data.first())
                 }
             }
+            else -> {
+                Timber.w("Got unexpected branch ${result.status}")
+                _searchStatus.value = Status.Error
+            }
         }
+    }
+
+    fun setCurrentSelectedCharacter(model: SearchCharacterModel) {
+        // set current model data, will be displayed to user
+        Timber.d("currentSelectedCharacter set to $model")
     }
 }
