@@ -7,9 +7,9 @@ import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
 import com.chesire.zwei.view.onboarding.initial.RequestFragment
 import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
+import com.chesire.zwei.view.onboarding.search.ChooseCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
-import com.chesire.zwei.view.onboarding.search.GuessCharacterFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -50,8 +50,12 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
     }
 
     override fun completeEnterCharacter() {
-        val (tag, fragment) = getFragmentDetails(GuessCharacterFragment.tag)
+        val (tag, fragment) = getFragmentDetails(ChooseCharacterFragment.tag)
         loadFragment(tag, fragment)
+    }
+
+    override fun completeChooseCharacter() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun getInitialFragment(): Pair<String, Fragment> {
@@ -70,7 +74,7 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
             RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
-            GuessCharacterFragment.tag -> GuessCharacterFragment.tag to GuessCharacterFragment.newInstance()
+            ChooseCharacterFragment.tag -> ChooseCharacterFragment.tag to ChooseCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
     }
