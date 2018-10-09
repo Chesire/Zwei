@@ -33,7 +33,7 @@ interface XIVApiService {
      * @param id character id should be passed in
      */
     @GET("/character/{id}?data=AC,FR,FC,FCM,PVP")
-    fun getCharacter(@Path("id") id: Int): Call<GetCharacterResponse>
+    fun getCharacter(@Path("id") id: Int): Deferred<Response<GetCharacterResponse>>
 
     /**
      * Requests character details are updated on XIVApi.

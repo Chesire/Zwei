@@ -8,7 +8,7 @@ import com.squareup.moshi.JsonClass
 data class StateModel(
     @Json(name = "State")
     val state: State,
-    // This looks it can be a Bool or an Int
+    // This looks it can be a Bool, an Int, or null
     @Json(name = "Updated")
-    val updated: Any
+    val updated: Any?
 )
