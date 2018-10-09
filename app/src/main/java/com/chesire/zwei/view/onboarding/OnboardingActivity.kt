@@ -1,5 +1,6 @@
 package com.chesire.zwei.view.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
@@ -13,6 +14,7 @@ import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
+import com.chesire.zwei.view.profile.ProfileActivity
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -60,6 +62,12 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
     override fun completeChooseCharacter() {
         val (tag, fragment) = getFragmentDetails(LoadingCharacterFragment.tag)
         loadFragment(tag, fragment)
+    }
+
+    override fun completeLoadingCharacter() {
+        // prefHelper.hasAcquiredCharacter should be set at this point
+        startActivity(Intent(this, ProfileActivity::class.java))
+        finish()
     }
 
     private fun getInitialFragment(): Pair<String, Fragment> {

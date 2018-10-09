@@ -50,11 +50,13 @@ class ChooseCharacterFragment : DaggerFragment() {
             .of(activity!!, viewModelFactory)
             .get(OnboardingViewModel::class.java)
             .apply {
-                currentCharacter.observe(this@ChooseCharacterFragment, Observer {
-                    GlideApp.with(requireContext())
-                        .load(viewModel.currentCharacter.value!!.avatar)
-                        .into(imageAvatar)
-                })
+                currentCharacter.observe(
+                    this@ChooseCharacterFragment,
+                    Observer {
+                        GlideApp.with(requireContext())
+                            .load(viewModel.currentCharacter.value!!.avatar)
+                            .into(imageAvatar)
+                    })
             }
 
         binding.vm = viewModel

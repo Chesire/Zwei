@@ -64,7 +64,7 @@ class LoadingCharacterFragment : DaggerFragment() {
             GetCharacterStatus.Loading -> {
                 // Display loading UI
             }
-            GetCharacterStatus.GotCharacter -> characterInteractor.completeChooseCharacter()
+            GetCharacterStatus.GotCharacter -> characterInteractor.completeLoadingCharacter()
             GetCharacterStatus.GotInfo -> {
                 // Request successful, but character is being added to the api
             }
