@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.search
+package com.chesire.zwei.view.onboarding.character
 
 import android.content.Context
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
@@ -21,7 +22,7 @@ class ChooseCharacterFragment : DaggerFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: OnboardingViewModel
     private lateinit var binding: FragmentChoosecharacterBinding
-    private lateinit var searchInteractor: SearchInteractor
+    private lateinit var characterInteractor: CharacterInteractor
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,9 +37,9 @@ class ChooseCharacterFragment : DaggerFragment() {
         ).apply {
             binding = this
             setLifecycleOwner(this@ChooseCharacterFragment)
-            buttonYes.setOnClickListener { searchInteractor.completeChooseCharacter() }
+            buttonYes.setOnClickListener { characterInteractor.completeChooseCharacter() }
             buttonNo.setOnClickListener {
-                // load selection of character
+                // load ui to select character
             }
         }.root
     }
@@ -48,18 +49,21 @@ class ChooseCharacterFragment : DaggerFragment() {
         viewModel = ViewModelProviders
             .of(activity!!, viewModelFactory)
             .get(OnboardingViewModel::class.java)
+            .apply {
+                currentCharacter.observe(this@ChooseCharacterFragment, Observer {
+                    GlideApp.with(requireContext())
+                        .load(viewModel.currentCharacter.value!!.avatar)
+                        .into(imageAvatar)
+                })
+            }
 
         binding.vm = viewModel
-
-        GlideApp.with(requireContext())
-            .load(viewModel.currentCharacter.value!!.avatar)
-            .into(imageAvatar)
     }
 
     @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        searchInteractor = context as SearchInteractor
+        characterInteractor = context as CharacterInteractor
     }
 
     companion object {

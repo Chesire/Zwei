@@ -1,8 +1,9 @@
 package com.chesire.zwei.dagger.modules
 
+import com.chesire.zwei.view.onboarding.character.ChooseCharacterFragment
+import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
-import com.chesire.zwei.view.onboarding.search.ChooseCharacterFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -16,5 +17,8 @@ abstract class FragmentModule {
     internal abstract fun contributesEnterWorldFragment(): EnterWorldFragment
 
     @ContributesAndroidInjector
-    internal abstract fun contributesGuessCharacterFragment(): ChooseCharacterFragment
+    internal abstract fun contributesChooseCharacterFragment(): ChooseCharacterFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun contributesLoadingCharacterFragment(): LoadingCharacterFragment
 }

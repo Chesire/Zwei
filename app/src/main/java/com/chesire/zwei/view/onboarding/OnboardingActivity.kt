@@ -4,17 +4,20 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
 import com.chesire.zwei.util.PrefHelper
+import com.chesire.zwei.view.onboarding.character.CharacterInteractor
+import com.chesire.zwei.view.onboarding.character.ChooseCharacterFragment
+import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
 import com.chesire.zwei.view.onboarding.initial.RequestFragment
 import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
-import com.chesire.zwei.view.onboarding.search.ChooseCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchInteractor {
+class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchInteractor,
+    CharacterInteractor {
     @Inject
     lateinit var prefHelper: PrefHelper
 
@@ -55,7 +58,8 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
     }
 
     override fun completeChooseCharacter() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val (tag, fragment) = getFragmentDetails(LoadingCharacterFragment.tag)
+        loadFragment(tag, fragment)
     }
 
     private fun getInitialFragment(): Pair<String, Fragment> {
@@ -75,6 +79,7 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
             ChooseCharacterFragment.tag -> ChooseCharacterFragment.tag to ChooseCharacterFragment.newInstance()
+            LoadingCharacterFragment.tag -> LoadingCharacterFragment.tag to LoadingCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
     }
