@@ -3,6 +3,7 @@ package com.chesire.zwei.view.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.chesire.zwei.view.SingleLiveEvent
 import com.chesire.zwei.view.onboarding.character.GetCharacterStatus
 import com.chesire.zwei.xivapi.Status
 import com.chesire.zwei.xivapi.XIVApi
@@ -19,8 +20,8 @@ import javax.inject.Inject
 class OnboardingViewModel @Inject constructor(
     private val xivApi: XIVApi
 ) : ViewModel() {
-    private val _searchStatus = MutableLiveData<Status>()
-    private val _getCharacterStatus = MutableLiveData<GetCharacterStatus>()
+    private val _searchStatus = SingleLiveEvent<Status>()
+    private val _getCharacterStatus = SingleLiveEvent<GetCharacterStatus>()
     private val _foundCharacters = MutableLiveData<List<SearchCharacterModel>>()
 
     val characterName = MutableLiveData<String>()
@@ -79,6 +80,7 @@ class OnboardingViewModel @Inject constructor(
                     _getCharacterStatus.value = GetCharacterStatus.GotInfo
                 }
                 result.status == Status.Success && result.data is CharacterModel -> {
+                    // save to the DB / Repository
                     _getCharacterStatus.value = GetCharacterStatus.GotCharacter
                 }
                 else -> {
