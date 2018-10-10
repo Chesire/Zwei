@@ -94,7 +94,7 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
     }
 
     override fun completeLoadingCharacter() {
-        // prefHelper.hasAcquiredCharacter should be set at this point
+        prefHelper.hasAcquiredCharacter = true
         startActivity(Intent(this, ProfileActivity::class.java))
         finish()
     }
