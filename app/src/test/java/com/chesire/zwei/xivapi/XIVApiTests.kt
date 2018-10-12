@@ -39,6 +39,27 @@ class XIVApiTests {
     }
 
     @Test
+    fun `when searchForCharacter has empty body return status error`() = runBlocking {
+        val mockService = mock<XIVApiService> {
+            on {
+                searchForCharacter(
+                    "Cheshire Cat",
+                    "Phoenix"
+                )
+            } doReturn async {
+                Response.success<SearchCharacterResponse>(null)
+            }
+        }
+
+        val classUnderTest = XIVApi(mockService)
+
+        Assert.assertEquals(
+            Status.Error,
+            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
+        )
+    }
+
+    @Test
     fun `when searchForCharacter is successful return status success`() = runBlocking {
         val mockService = mock<XIVApiService> {
             on {
