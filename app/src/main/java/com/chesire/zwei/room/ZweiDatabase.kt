@@ -12,7 +12,7 @@ import com.chesire.zwei.room.dao.CompanionDao
 import com.chesire.zwei.room.dao.FreeCompanyDao
 import com.chesire.zwei.room.dao.MountDao
 import com.chesire.zwei.room.dao.TitleDao
-import com.chesire.zwei.xivapi.model.CharacterModel
+import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.CompanionModel
 import com.chesire.zwei.xivapi.model.FreeCompanyModel
 import com.chesire.zwei.xivapi.model.MountModel
@@ -26,7 +26,7 @@ import javax.inject.Singleton
         (MountModel::class),
         (TitleModel::class),
         (FreeCompanyModel::class),
-        (CharacterModel::class)
+        (CharacterDetailModel::class)
     ],
     version = 1
 )
