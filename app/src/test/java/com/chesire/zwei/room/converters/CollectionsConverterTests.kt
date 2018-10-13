@@ -1,49 +1,44 @@
 package com.chesire.zwei.room.converters
 
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.it
 import org.junit.Assert
-import org.junit.Test
 
-class CollectionsConverterTests {
-    private val converter = CollectionsConverter()
+class CollectionsConverterTests : Spek({
+    val converter by memoized { CollectionsConverter() }
 
-    @Test
-    fun `can convert listOf string into json string`() {
-        val string1 = "string1"
-        val string2 = "string2"
-        val string3 = "string3"
+    val string1 = "string1"
+    val string2 = "string2"
+    val string3 = "string3"
+    val int1 = 1
+    val int2 = 2
+    val int3 = 3
 
-        val jsonString = converter.fromListOfStringToString(listOf(string1, string2, string3))
-        Assert.assertEquals("[\"$string1\",\"$string2\",\"$string3\"]", jsonString)
+    val stringJson = "[\"$string1\",\"$string2\",\"$string3\"]"
+    val intJson = "[$int1,$int2,$int3]"
+    val stringList = listOf(string1, string2, string3)
+    val intList = listOf(int1, int2, int3)
+
+    given("listOf string") {
+        it("can convert into json string") {
+            Assert.assertEquals(stringJson, converter.fromListOfStringToString(stringList))
+        }
     }
 
-    @Test
-    fun `can convert json string into listOf string`() {
-        val string1 = "string1"
-        val string2 = "string2"
-        val string3 = "string3"
-
-        val stringList =
-            converter.fromStringToListOfString("[\"$string1\",\"$string2\",\"$string3\"]")
-        Assert.assertEquals(listOf(string1, string2, string3), stringList)
+    given("listOf int") {
+        it("can convert into json string") {
+            Assert.assertEquals(intJson, converter.fromListOfIntToString(intList))
+        }
     }
 
-    @Test
-    fun `can convert listOf int into json string`() {
-        val int1 = 1
-        val int2 = 2
-        val int3 = 3
+    given("valid json string") {
+        it("can convert into listOf string") {
+            Assert.assertEquals(stringList, converter.fromStringToListOfString(stringJson))
+        }
 
-        val jsonString = converter.fromListOfIntToString(listOf(int1, int2, int3))
-        Assert.assertEquals("[1,2,3]", jsonString)
+        it("can convert into listOf int") {
+            Assert.assertEquals(intList, converter.fromStringToListOfInt(intJson))
+        }
     }
-
-    @Test
-    fun `can convert json string into listOf int`() {
-        val int1 = 1
-        val int2 = 2
-        val int3 = 3
-
-        val stringList = converter.fromStringToListOfInt("[1,2,3]")
-        Assert.assertEquals(listOf(int1, int2, int3), stringList)
-    }
-}
+})
