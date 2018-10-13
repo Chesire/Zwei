@@ -7,11 +7,10 @@ import com.chesire.zwei.view.SingleLiveEvent
 import com.chesire.zwei.view.onboarding.character.GetCharacterStatus
 import com.chesire.zwei.xivapi.Status
 import com.chesire.zwei.xivapi.XIVApi
-import com.chesire.zwei.xivapi.flags.State
+import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.CharacterModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
-import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import timber.log.Timber
 import java.util.concurrent.TimeoutException
@@ -34,7 +33,12 @@ class OnboardingViewModel @Inject constructor(
     val foundCharacters: LiveData<List<SearchCharacterModel>>
         get() = _foundCharacters
 
-    fun searchForCharacter() = launch(UI) {
+    fun searchForCharacter() = launch {
+        if (characterName.value == null || world.value == null) {
+            _searchStatus.value = Status.Error
+            return@launch
+        }
+
         _searchStatus.value = Status.Loading
 
         try {
@@ -65,7 +69,12 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-    fun getCharacter() = launch(UI) {
+    fun getCharacter() = launch {
+        if (currentCharacter.value == null) {
+            _getCharacterStatus.value = GetCharacterStatus.Error
+            return@launch
+        }
+
         _getCharacterStatus.value = GetCharacterStatus.Loading
 
         try {
@@ -79,7 +88,7 @@ class OnboardingViewModel @Inject constructor(
                 result.status == Status.Success && result.data is InfoModel -> {
                     _getCharacterStatus.value = GetCharacterStatus.GotInfo
                 }
-                result.status == Status.Success && result.data is CharacterModel -> {
+                result.status == Status.Success && result.data is CharacterDetailModel -> {
                     // save to the DB / Repository
                     _getCharacterStatus.value = GetCharacterStatus.GotCharacter
                 }
@@ -92,10 +101,5 @@ class OnboardingViewModel @Inject constructor(
             Timber.e("Operation timeout $e")
             _getCharacterStatus.value = GetCharacterStatus.Error
         }
-    }
-
-    private fun isCharacterReady(infoModel: InfoModel): Boolean {
-        return infoModel.achievements.state == State.Cached &&
-                infoModel.character.state == State.Cached
     }
 }
