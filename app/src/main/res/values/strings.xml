@@ -3,6 +3,9 @@
 
     <string name="onboard_enter_world">Enter World</string>
     <string name="onboard_enter_character">Enter Character Name</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <!--
     Data Centers
     <string name="data_centre_any" translatable="false">Any</string>

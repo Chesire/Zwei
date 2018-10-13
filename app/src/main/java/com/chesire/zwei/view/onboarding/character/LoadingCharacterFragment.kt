@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.search
+package com.chesire.zwei.view.onboarding.character
 
 import android.content.Context
 import android.os.Bundle
@@ -10,32 +10,31 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentEntercharacterBinding
+import com.chesire.zwei.databinding.FragmentLoadingcharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
-import com.chesire.zwei.xivapi.Status
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class EnterCharacterFragment : DaggerFragment() {
+class LoadingCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: OnboardingViewModel
-    private lateinit var binding: FragmentEntercharacterBinding
-    private lateinit var searchInteractor: SearchInteractor
+    private lateinit var binding: FragmentLoadingcharacterBinding
+    private lateinit var characterInteractor: CharacterInteractor
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentEntercharacterBinding>(
+        return DataBindingUtil.inflate<FragmentLoadingcharacterBinding>(
             inflater,
-            R.layout.fragment_entercharacter,
+            R.layout.fragment_loadingcharacter,
             container,
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@EnterCharacterFragment)
+            setLifecycleOwner(this@LoadingCharacterFragment)
         }.root
     }
 
@@ -45,36 +44,40 @@ class EnterCharacterFragment : DaggerFragment() {
             .of(activity!!, viewModelFactory)
             .get(OnboardingViewModel::class.java)
             .apply {
-                searchStatus.observe(
-                    this@EnterCharacterFragment,
-                    Observer { onSearchStatusChange(it) })
+                getCharacterStatus.observe(
+                    this@LoadingCharacterFragment,
+                    Observer { onGetCharacterStatusChange(it) })
             }
 
         binding.vm = viewModel
+        viewModel.getCharacter()
     }
 
     @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        searchInteractor = context as SearchInteractor
+        characterInteractor = context as CharacterInteractor
     }
 
-    private fun onSearchStatusChange(status: Status) {
+    private fun onGetCharacterStatusChange(status: GetCharacterStatus) {
         when (status) {
-            Status.Loading -> {
-                // display loading indicator
+            GetCharacterStatus.Loading -> {
+                // Display loading UI
             }
-            Status.Error -> {
-                // Display appropriate error state
+            GetCharacterStatus.GotCharacter -> characterInteractor.completeLoadingCharacter()
+            GetCharacterStatus.GotInfo -> {
+                // Request successful, but character is being added to the api
             }
-            Status.Success -> searchInteractor.completeEnterCharacter()
+            GetCharacterStatus.Error -> {
+                // Request failed
+            }
         }
     }
 
     companion object {
-        const val tag = "EnterCharacterFragment"
-        fun newInstance(): EnterCharacterFragment {
-            return EnterCharacterFragment().apply {
+        const val tag = "LoadingCharacterFragment"
+        fun newInstance(): LoadingCharacterFragment {
+            return LoadingCharacterFragment().apply {
                 arguments = Bundle()
             }
         }

@@ -6,7 +6,7 @@ import androidx.test.runner.AndroidJUnit4
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
-import com.chesire.zwei.xivapi.model.CharacterModel
+import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -65,12 +65,11 @@ class CharacterDaoTests {
         Assert.assertNull(db.characterDao().get())
     }
 
-    private fun generateCharacterModel(id: Int = 0): CharacterModel {
-        return CharacterModel(
-            // emptyClass,
+    private fun generateCharacterModel(id: Int = 0): CharacterDetailModel {
+        return CharacterDetailModel(
+            emptyList(),
             "avatar",
             "bio",
-            // classes,
             Gender.Female,
             id,
             emptyList(),

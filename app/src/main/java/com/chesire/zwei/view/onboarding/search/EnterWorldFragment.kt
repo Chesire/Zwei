@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.chesire.zwei.BuildConfig
 import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEnterworldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
@@ -45,6 +46,11 @@ class EnterWorldFragment : DaggerFragment() {
             .get(OnboardingViewModel::class.java)
 
         binding.vm = viewModel
+
+        if (BuildConfig.DEBUG) {
+            viewModel.world.value = "Phoenix"
+            viewModel.characterName.value = "Cheshire Cat"
+        }
     }
 
     @Suppress("UnsafeCast")

@@ -20,7 +20,7 @@ class MockXIVApiService : XIVApiService {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getCharacter(id: Int): Call<GetCharacterResponse> {
+    override fun getCharacter(id: Int): Deferred<Response<GetCharacterResponse>> {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 

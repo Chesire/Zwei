@@ -1,19 +1,30 @@
 package com.chesire.zwei.view.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
 import com.chesire.zwei.util.PrefHelper
+import com.chesire.zwei.view.onboarding.character.CharacterInteractor
+import com.chesire.zwei.view.onboarding.character.ChooseCharacterFragment
+import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
 import com.chesire.zwei.view.onboarding.initial.RequestFragment
 import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
+import com.chesire.zwei.view.profile.ProfileActivity
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchInteractor {
+private const val FRAGMENT_KEY = "onboarding_fragment_key"
+
+@Suppress("TooManyFunctions")
+class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchInteractor,
+    CharacterInteractor {
+    private lateinit var currentFragment: Fragment
+
     @Inject
     lateinit var prefHelper: PrefHelper
 
@@ -21,14 +32,39 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        val (tag, fragment) = getInitialFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.activityOnboardingFrame,
-                fragment,
-                tag
-            )
+        val tag: String
+        val fragment: Fragment
+        val savedFragment: Fragment? = if (savedInstanceState != null) {
+            supportFragmentManager.getFragment(savedInstanceState, FRAGMENT_KEY)
+        } else {
+            null
+        }
+
+        if (savedFragment == null) {
+            val fragmentData = getInitialFragment()
+            tag = fragmentData.first
+            fragment = fragmentData.second
+        } else {
+            fragment = savedFragment
+            tag = getTagForFragment(fragment)
+        }
+
+        currentFragment = fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.activityOnboardingFrame, fragment, tag)
             .commit()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            currentFragment = supportFragmentManager.fragments.last()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.let {
+            supportFragmentManager.putFragment(it, FRAGMENT_KEY, currentFragment)
+        }
     }
 
     override fun completeWelcome() {
@@ -49,7 +85,19 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
     }
 
     override fun completeEnterCharacter() {
-        // Nothing yet
+        val (tag, fragment) = getFragmentDetails(ChooseCharacterFragment.tag)
+        loadFragment(tag, fragment)
+    }
+
+    override fun completeChooseCharacter() {
+        val (tag, fragment) = getFragmentDetails(LoadingCharacterFragment.tag)
+        loadFragment(tag, fragment)
+    }
+
+    override fun completeLoadingCharacter() {
+        prefHelper.hasAcquiredCharacter = true
+        startActivity(Intent(this, ProfileActivity::class.java))
+        finish()
     }
 
     private fun getInitialFragment(): Pair<String, Fragment> {
@@ -68,17 +116,29 @@ class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchI
             RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
+            ChooseCharacterFragment.tag -> ChooseCharacterFragment.tag to ChooseCharacterFragment.newInstance()
+            LoadingCharacterFragment.tag -> LoadingCharacterFragment.tag to LoadingCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
     }
 
+    private fun getTagForFragment(fragment: Fragment): String {
+        return when (fragment) {
+            is WelcomeFragment -> WelcomeFragment.tag
+            is RequestFragment -> RequestFragment.tag
+            is EnterWorldFragment -> EnterWorldFragment.tag
+            is EnterCharacterFragment -> EnterCharacterFragment.tag
+            is ChooseCharacterFragment -> ChooseCharacterFragment.tag
+            is LoadingCharacterFragment -> LoadingCharacterFragment.tag
+            else -> error("Unexpected fragment tag requested - $fragment")
+        }
+    }
+
     private fun loadFragment(tag: String, fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(
-                R.id.activityOnboardingFrame,
-                fragment,
-                tag
-            )
+        currentFragment = fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.activityOnboardingFrame, fragment, tag)
             .addToBackStack(null)
             .commit()
     }

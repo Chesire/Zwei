@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.search
+package com.chesire.zwei.view.onboarding.character
 
 import android.content.Context
 import android.os.Bundle
@@ -10,32 +10,37 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentEntercharacterBinding
+import com.chesire.zwei.databinding.FragmentChoosecharacterBinding
+import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
-import com.chesire.zwei.xivapi.Status
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_choosecharacter.imageAvatar
 import javax.inject.Inject
 
-class EnterCharacterFragment : DaggerFragment() {
+class ChooseCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: OnboardingViewModel
-    private lateinit var binding: FragmentEntercharacterBinding
-    private lateinit var searchInteractor: SearchInteractor
+    private lateinit var binding: FragmentChoosecharacterBinding
+    private lateinit var characterInteractor: CharacterInteractor
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentEntercharacterBinding>(
+        return DataBindingUtil.inflate<FragmentChoosecharacterBinding>(
             inflater,
-            R.layout.fragment_entercharacter,
+            R.layout.fragment_choosecharacter,
             container,
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@EnterCharacterFragment)
+            setLifecycleOwner(this@ChooseCharacterFragment)
+            buttonYes.setOnClickListener { characterInteractor.completeChooseCharacter() }
+            buttonNo.setOnClickListener {
+                // load ui to select character
+            }
         }.root
     }
 
@@ -45,9 +50,13 @@ class EnterCharacterFragment : DaggerFragment() {
             .of(activity!!, viewModelFactory)
             .get(OnboardingViewModel::class.java)
             .apply {
-                searchStatus.observe(
-                    this@EnterCharacterFragment,
-                    Observer { onSearchStatusChange(it) })
+                currentCharacter.observe(
+                    this@ChooseCharacterFragment,
+                    Observer {
+                        GlideApp.with(requireContext())
+                            .load(viewModel.currentCharacter.value!!.avatar)
+                            .into(imageAvatar)
+                    })
             }
 
         binding.vm = viewModel
@@ -56,25 +65,13 @@ class EnterCharacterFragment : DaggerFragment() {
     @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        searchInteractor = context as SearchInteractor
-    }
-
-    private fun onSearchStatusChange(status: Status) {
-        when (status) {
-            Status.Loading -> {
-                // display loading indicator
-            }
-            Status.Error -> {
-                // Display appropriate error state
-            }
-            Status.Success -> searchInteractor.completeEnterCharacter()
-        }
+        characterInteractor = context as CharacterInteractor
     }
 
     companion object {
-        const val tag = "EnterCharacterFragment"
-        fun newInstance(): EnterCharacterFragment {
-            return EnterCharacterFragment().apply {
+        const val tag = "ChooseCharacterFragment"
+        fun newInstance(): ChooseCharacterFragment {
+            return ChooseCharacterFragment().apply {
                 arguments = Bundle()
             }
         }
