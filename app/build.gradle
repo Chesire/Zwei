@@ -3,6 +3,7 @@ apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'de.mannodermaus.android-junit5'
 apply from: 'jacoco.gradle'
 apply from: 'ktlint.gradle'
 
@@ -30,6 +31,15 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek'
+                }
+            }
+        }
+    }
 }
 
 allOpen {
@@ -40,6 +50,7 @@ dependencies {
     // Leave on 2.16 for now, as there is a bug with jetifier and dagger 2.17
     ext.daggerVersion = '2.16'
     ext.retrofitVersion = '2.4.0'
+    ext.spekVersion = '1.1.5'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -68,6 +79,10 @@ dependencies {
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC2'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.11.0'
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    testImplementation "org.jetbrains.spek:spek-api:$spekVersion"
+    testImplementation "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"
+    testImplementation 'org.junit.platform:junit-platform-engine:1.2.0'
     testImplementation 'org.mockito:mockito-core:2.22.0'
 
     androidTestImplementation 'androidx.test:runner:1.1.0-beta01'
