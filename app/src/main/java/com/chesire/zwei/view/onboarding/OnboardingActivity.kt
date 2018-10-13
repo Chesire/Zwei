@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 private const val FRAGMENT_KEY = "onboarding_fragment_key"
 
+@Suppress("TooManyFunctions")
 class OnboardingActivity : DaggerAppCompatActivity(), InitialInteractor, SearchInteractor,
     CharacterInteractor {
     private lateinit var currentFragment: Fragment

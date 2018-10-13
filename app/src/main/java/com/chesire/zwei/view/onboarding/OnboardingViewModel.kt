@@ -8,7 +8,6 @@ import com.chesire.zwei.view.onboarding.character.GetCharacterStatus
 import com.chesire.zwei.xivapi.Status
 import com.chesire.zwei.xivapi.XIVApi
 import com.chesire.zwei.xivapi.model.CharacterDetailModel
-import com.chesire.zwei.xivapi.model.CharacterModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import kotlinx.coroutines.experimental.launch
@@ -47,16 +46,14 @@ class OnboardingViewModel @Inject constructor(
 
             when (result.status) {
                 Status.Error -> _searchStatus.value = Status.Error
-                Status.Success -> {
-                    if (result.data.isEmpty()) {
-                        Timber.d("Could not find character - failure no data")
-                        _searchStatus.value = Status.Error
-                    } else {
-                        Timber.d("Found ${result.data.count()} characters")
-                        _searchStatus.value = Status.Success
-                        _foundCharacters.value = result.data
-                        currentCharacter.value = result.data.first()
-                    }
+                Status.Success -> if (result.data.isEmpty()) {
+                    Timber.d("Could not find character - failure no data")
+                    _searchStatus.value = Status.Error
+                } else {
+                    Timber.d("Found ${result.data.count()} characters")
+                    _searchStatus.value = Status.Success
+                    _foundCharacters.value = result.data
+                    currentCharacter.value = result.data.first()
                 }
                 else -> {
                     Timber.w("Got unexpected branch ${result.status}")
@@ -69,6 +66,7 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
+    @Suppress("OptionalWhenBraces")
     fun getCharacter() = launch {
         if (currentCharacter.value == null) {
             _getCharacterStatus.value = GetCharacterStatus.Error
