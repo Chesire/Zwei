@@ -15,24 +15,16 @@ private const val acquiredCharacter = "acquiredCharacter"
 
 class PrefHelperTests {
     private val mockContext = mock<Context> {
-        on {
-            getString(R.string.key_bypassed_welcome)
-        }.thenReturn(bypassedWelcome)
-        on {
-            getString(R.string.key_bypassed_request)
-        }.thenReturn(bypassedRequest)
-        on {
-            getString(R.string.key_acquired_character)
-        }.thenReturn(acquiredCharacter)
+        on { getString(R.string.key_bypassed_welcome) }.thenReturn(bypassedWelcome)
+        on { getString(R.string.key_bypassed_request) }.thenReturn(bypassedRequest)
+        on { getString(R.string.key_acquired_character) }.thenReturn(acquiredCharacter)
     }
 
     @Test
     fun `hasBypassedWelcome set() changes value in SharedPreferences`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
+            on { edit() }.thenReturn(mockPrefEditor)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -45,9 +37,7 @@ class PrefHelperTests {
     fun `hasBypassedRequest set() changes value in SharedPreferences`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
+            on { edit() }.thenReturn(mockPrefEditor)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -60,9 +50,7 @@ class PrefHelperTests {
     fun `hasAcquiredCharacter set() changes value in SharedPreferences`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
+            on { edit() }.thenReturn(mockPrefEditor)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -75,18 +63,10 @@ class PrefHelperTests {
     fun `shouldDisplayOnboarding returns true if have not bypassedWelcome`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
-            on {
-                getBoolean(bypassedWelcome, false)
-            }.thenReturn(false)
-            on {
-                getBoolean(bypassedRequest, false)
-            }.thenReturn(true)
-            on {
-                getBoolean(acquiredCharacter, false)
-            }.thenReturn(true)
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { getBoolean(bypassedWelcome, false) }.thenReturn(false)
+            on { getBoolean(bypassedRequest, false) }.thenReturn(true)
+            on { getBoolean(acquiredCharacter, false) }.thenReturn(true)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -98,18 +78,10 @@ class PrefHelperTests {
     fun `shouldDisplayOnboarding returns true if have not bypassedRequest`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
-            on {
-                getBoolean(bypassedWelcome, false)
-            }.thenReturn(true)
-            on {
-                getBoolean(bypassedRequest, false)
-            }.thenReturn(false)
-            on {
-                getBoolean(acquiredCharacter, false)
-            }.thenReturn(true)
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { getBoolean(bypassedWelcome, false) }.thenReturn(true)
+            on { getBoolean(bypassedRequest, false) }.thenReturn(false)
+            on { getBoolean(acquiredCharacter, false) }.thenReturn(true)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -121,18 +93,10 @@ class PrefHelperTests {
     fun `shouldDisplayOnboarding returns true if have not acquiredCharacter`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
-            on {
-                getBoolean(bypassedWelcome, false)
-            }.thenReturn(true)
-            on {
-                getBoolean(bypassedRequest, false)
-            }.thenReturn(true)
-            on {
-                getBoolean(acquiredCharacter, false)
-            }.thenReturn(false)
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { getBoolean(bypassedWelcome, false) }.thenReturn(true)
+            on { getBoolean(bypassedRequest, false) }.thenReturn(true)
+            on { getBoolean(acquiredCharacter, false) }.thenReturn(false)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -144,18 +108,10 @@ class PrefHelperTests {
     fun `shouldDisplayOnboarding returns true if have not bypassedWelcome && bypassedRequest && acquiredCharacter`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
-            on {
-                getBoolean(bypassedWelcome, false)
-            }.thenReturn(false)
-            on {
-                getBoolean(bypassedRequest, false)
-            }.thenReturn(false)
-            on {
-                getBoolean(acquiredCharacter, false)
-            }.thenReturn(false)
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { getBoolean(bypassedWelcome, false) }.thenReturn(false)
+            on { getBoolean(bypassedRequest, false) }.thenReturn(false)
+            on { getBoolean(acquiredCharacter, false) }.thenReturn(false)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -167,18 +123,10 @@ class PrefHelperTests {
     fun `shouldDisplayOnboarding returns false if have bypassedWelcome && bypassedRequest && acquiredCharacter`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
-            on {
-                getBoolean(bypassedWelcome, false)
-            }.thenReturn(true)
-            on {
-                getBoolean(bypassedRequest, false)
-            }.thenReturn(true)
-            on {
-                getBoolean(acquiredCharacter, false)
-            }.thenReturn(true)
+            on { edit() }.thenReturn(mockPrefEditor)
+            on { getBoolean(bypassedWelcome, false) }.thenReturn(true)
+            on { getBoolean(bypassedRequest, false) }.thenReturn(true)
+            on { getBoolean(acquiredCharacter, false) }.thenReturn(true)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -189,14 +137,10 @@ class PrefHelperTests {
     @Test
     fun `calling clear clears shared preferences data`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> {
-            on {
-                clear()
-            }.thenReturn(mock)
+            on { clear() }.thenReturn(mock)
         }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
+            on { edit() }.thenReturn(mockPrefEditor)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
@@ -211,9 +155,7 @@ class PrefHelperTests {
     fun `invalid data causes an IllegalStateException`() {
         val mockPrefEditor = mock<SharedPreferences.Editor> { }
         val mockPreferences = mock<SharedPreferences> {
-            on {
-                edit()
-            }.thenReturn(mockPrefEditor)
+            on { edit() }.thenReturn(mockPrefEditor)
         }
 
         val classUnderTest = PrefHelper(mockContext, mockPreferences)
