@@ -1,25 +1,29 @@
 package com.chesire.zwei.room.converters
 
 import com.chesire.zwei.xivapi.model.FreeCompanyEstateModel
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.it
 import org.junit.Assert
-import org.junit.Test
 
-class FreeCompanyEstateModelConverterTests {
-    private val converter = FreeCompanyEstateModelConverter()
-    private val estateModelJson = "{\"Greeting\":\"Greeting\",\"Name\":\"Name\",\"Plot\":\"Plot\"}"
-    private val estateModel = FreeCompanyEstateModel(
+class FreeCompanyEstateModelConverterTests : Spek({
+    val converter by memoized { FreeCompanyEstateModelConverter() }
+    val estateModelJson = "{\"Greeting\":\"Greeting\",\"Name\":\"Name\",\"Plot\":\"Plot\"}"
+    val estateModel = FreeCompanyEstateModel(
         "Greeting",
         "Name",
         "Plot"
     )
 
-    @Test
-    fun `can convert FreeCompanyEstateModel into json string`() {
-        Assert.assertEquals(estateModelJson, converter.fromFreeCompanyEstateModel(estateModel))
+    given("a FreeCompanyEstateModel") {
+        it("can convert into a json string") {
+            Assert.assertEquals(estateModelJson, converter.fromFreeCompanyEstateModel(estateModel))
+        }
     }
 
-    @Test
-    fun `can convert json string into FreeCompanyEstateModel`() {
-        Assert.assertEquals(estateModel, converter.fromString(estateModelJson))
+    given("a json string") {
+        it("can convert into a FreeCompanyEstateModel") {
+            Assert.assertEquals(estateModel, converter.fromString(estateModelJson))
+        }
     }
-}
+})
