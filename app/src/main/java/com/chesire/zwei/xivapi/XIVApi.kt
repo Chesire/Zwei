@@ -6,6 +6,7 @@ import com.chesire.zwei.xivapi.model.CharacterModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class XIVApi @Inject constructor(
     fun searchForCharacter(
         name: String,
         server: String
-    ): Deferred<Resource<List<SearchCharacterModel>>> = async {
+    ): Deferred<Resource<List<SearchCharacterModel>>> = GlobalScope.async {
         val res = xivApiService.searchForCharacter(name, server).await()
         if (res.isSuccessful && res.body() != null) {
             return@async Resource.success(res.body()!!.characters)
@@ -31,7 +32,7 @@ class XIVApi @Inject constructor(
      * Gets the details for the character with id of [id], if it is not yet added to the database
      * then a [InfoModel] will be returned, if it is added then a [CharacterDetailModel] will be returned.
      */
-    fun getCharacter(id: Int): Deferred<Resource<Any>> = async {
+    fun getCharacter(id: Int): Deferred<Resource<Any>> = GlobalScope.async {
         val res = xivApiService.getCharacter(id).await()
         if (res.isSuccessful && res.body() != null) {
             val body = res.body()!!

@@ -10,6 +10,7 @@ import com.chesire.zwei.xivapi.XIVApi
 import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeoutException
@@ -32,7 +33,7 @@ class OnboardingViewModel @Inject constructor(
     val foundCharacters: LiveData<List<SearchCharacterModel>>
         get() = _foundCharacters
 
-    fun searchForCharacter() = launch {
+    fun searchForCharacter() = GlobalScope.launch {
         if (characterName.value == null || world.value == null) {
             _searchStatus.value = Status.Error
             return@launch
@@ -67,7 +68,7 @@ class OnboardingViewModel @Inject constructor(
     }
 
     @Suppress("OptionalWhenBraces")
-    fun getCharacter() = launch {
+    fun getCharacter() = GlobalScope.launch {
         if (currentCharacter.value == null) {
             _getCharacterStatus.value = GetCharacterStatus.Error
             return@launch
