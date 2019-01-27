@@ -6,7 +6,7 @@ import com.chesire.zwei.xivapi.adapters.GenderAdapter
 import com.chesire.zwei.xivapi.adapters.RaceAdapter
 import com.chesire.zwei.xivapi.adapters.StateAdapter
 import com.chesire.zwei.xivapi.interceptors.InterceptorOverride
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
