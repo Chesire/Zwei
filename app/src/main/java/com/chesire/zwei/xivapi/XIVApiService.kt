@@ -5,7 +5,7 @@ import com.chesire.zwei.xivapi.response.GetCompanionsResponse
 import com.chesire.zwei.xivapi.response.GetMountsResponse
 import com.chesire.zwei.xivapi.response.GetTitlesResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET

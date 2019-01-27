@@ -10,7 +10,7 @@ import com.chesire.zwei.xivapi.XIVApi
 import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeoutException
 import javax.inject.Inject

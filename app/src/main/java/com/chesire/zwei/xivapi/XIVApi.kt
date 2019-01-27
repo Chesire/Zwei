@@ -5,8 +5,8 @@ import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.CharacterModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 class XIVApi @Inject constructor(
