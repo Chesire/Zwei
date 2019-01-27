@@ -17,13 +17,13 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        (ActivityModule::class),
-        (AndroidSupportInjectionModule::class),
-        (ApplicationModule::class),
-        (DatabaseModule::class),
-        (FragmentModule::class),
-        (ServerModule::class),
-        (ViewModelModule::class)
+        ActivityModule::class,
+        AndroidSupportInjectionModule::class,
+        ApplicationModule::class,
+        DatabaseModule::class,
+        FragmentModule::class,
+        ServerModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent : AndroidInjector<ZweiApplication> {
