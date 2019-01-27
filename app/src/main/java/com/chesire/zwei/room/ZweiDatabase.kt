@@ -22,11 +22,11 @@ import javax.inject.Singleton
 @Singleton
 @Database(
     entities = [
-        (CompanionModel::class),
-        (MountModel::class),
-        (TitleModel::class),
-        (FreeCompanyModel::class),
-        (CharacterDetailModel::class)
+        CompanionModel::class,
+        MountModel::class,
+        TitleModel::class,
+        FreeCompanyModel::class,
+        CharacterDetailModel::class
     ],
     version = 1
 )
