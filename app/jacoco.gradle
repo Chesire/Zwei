@@ -18,25 +18,14 @@ task jacocoTestReport(
         html.enabled = true
     }
 
-    def coverageExcludes = ['**/R.class',
-                            '**/R$*.class',
-                            '**/BuildConfig.*',
-                            '**/Manifest*.*',
-                            '**/*Test*.*',
-                            '**/*$$ViewBinder*.*',
-                            '**/inject/*',
-                            '**/*$InjectAdapter.*',
-                            '**/Dagger*.*',
-                            '**/*_Provide*Factory.*',
-                            '**/*_Member*Injector.*',
-                            '**/*_Factory.*',
-                            'android/**/*.*']
+    def coverageExcludes = []
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: coverageExcludes)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories = files([mainSrc])
     classDirectories = files([debugTree])
     executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+            'jacoco/testDebugUnitTest.exec',
+            'outputs/code-coverage/connected/*coverage.ec'
     ])
 }
