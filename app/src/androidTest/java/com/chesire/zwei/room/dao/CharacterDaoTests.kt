@@ -1,14 +1,16 @@
 package com.chesire.zwei.room.dao
 
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
 import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import org.junit.After
 import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +22,7 @@ class CharacterDaoTests {
     @Before
     fun setup() {
         db = Room.inMemoryDatabaseBuilder(
-            InstrumentationRegistry.getContext(),
+            InstrumentationRegistry.getInstrumentation().context,
             ZweiDatabase::class.java
         ).build()
     }
@@ -35,7 +37,7 @@ class CharacterDaoTests {
         val newModel = generateCharacterModel()
         db.characterDao().insert(newModel)
 
-        Assert.assertEquals(newModel, db.characterDao().get())
+        assertEquals(newModel, db.characterDao().get())
     }
 
     @Test
@@ -44,15 +46,15 @@ class CharacterDaoTests {
         val newModel2 = generateCharacterModel(0)
 
         db.characterDao().insert(newModel1)
-        Assert.assertEquals(newModel1, db.characterDao().get())
+        assertEquals(newModel1, db.characterDao().get())
 
         db.characterDao().insert(newModel2)
-        Assert.assertEquals(newModel2, db.characterDao().get())
+        assertEquals(newModel2, db.characterDao().get())
     }
 
     @Test
     fun retrievingCharacterWithoutSettingReturnsNull() {
-        Assert.assertNull(db.characterDao().get())
+        assertNull(db.characterDao().get())
     }
 
     @Test
@@ -60,9 +62,9 @@ class CharacterDaoTests {
         val newModel = generateCharacterModel()
         db.characterDao().insert(newModel)
 
-        Assert.assertEquals(newModel, db.characterDao().get())
+        assertEquals(newModel, db.characterDao().get())
         db.characterDao().delete(newModel)
-        Assert.assertNull(db.characterDao().get())
+        assertNull(db.characterDao().get())
     }
 
     private fun generateCharacterModel(id: Int = 0): CharacterDetailModel {

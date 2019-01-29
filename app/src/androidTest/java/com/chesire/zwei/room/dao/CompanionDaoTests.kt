@@ -1,12 +1,14 @@
 package com.chesire.zwei.room.dao
 
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.CompanionModel
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +20,7 @@ class CompanionDaoTests {
     @Before
     fun setup() {
         db = Room.inMemoryDatabaseBuilder(
-            InstrumentationRegistry.getContext(),
+            InstrumentationRegistry.getInstrumentation().context,
             ZweiDatabase::class.java
         ).build()
     }
@@ -33,7 +35,7 @@ class CompanionDaoTests {
         val newModel = generateCompanionModel(0)
         db.companionDao().insert(newModel)
 
-        Assert.assertTrue(db.companionDao().getAll().contains(newModel))
+        assertTrue(db.companionDao().getAll().contains(newModel))
     }
 
     @Test
@@ -45,12 +47,12 @@ class CompanionDaoTests {
         )
         db.companionDao().insertAll(models)
 
-        Assert.assertEquals(models, db.companionDao().getAll())
+        assertEquals(models, db.companionDao().getAll())
     }
 
     @Test
     fun findByIdWithNoMatchingCompanionsReturnsNull() {
-        Assert.assertNull(db.companionDao().findById(0))
+        assertNull(db.companionDao().findById(0))
     }
 
     @Test
@@ -63,17 +65,17 @@ class CompanionDaoTests {
         )
         db.companionDao().insertAll(models)
 
-        Assert.assertEquals(expectedModel, db.companionDao().findById(1))
+        assertEquals(expectedModel, db.companionDao().findById(1))
     }
 
     @Test
     fun getAllWithNoItemsReturnsEmptyList() {
-        Assert.assertTrue(db.companionDao().getAll().isEmpty())
+        assertTrue(db.companionDao().getAll().isEmpty())
     }
 
     @Test
     fun getAllWithIdsNoItemsReturnsEmptyList() {
-        Assert.assertTrue(db.companionDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
+        assertTrue(db.companionDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
     }
 
     @Test
@@ -84,7 +86,7 @@ class CompanionDaoTests {
             generateCompanionModel(2)
         )
         db.companionDao().insertAll(models)
-        Assert.assertTrue(db.companionDao().getAllByIds(listOf(0, 1, 3)).count() == 2)
+        assertTrue(db.companionDao().getAllByIds(listOf(0, 1, 3)).count() == 2)
     }
 
     @Test
@@ -95,7 +97,7 @@ class CompanionDaoTests {
             generateCompanionModel(2)
         )
         db.companionDao().insertAll(models)
-        Assert.assertEquals(models, db.companionDao().getAllByIds(listOf(0, 1, 2)))
+        assertEquals(models, db.companionDao().getAllByIds(listOf(0, 1, 2)))
     }
 
     private fun generateCompanionModel(

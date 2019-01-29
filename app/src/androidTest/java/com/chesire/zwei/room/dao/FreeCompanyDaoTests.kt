@@ -1,13 +1,14 @@
 package com.chesire.zwei.room.dao
 
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.FreeCompanyEstateModel
 import com.chesire.zwei.xivapi.model.FreeCompanyModel
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,7 +20,7 @@ class FreeCompanyDaoTests {
     @Before
     fun setup() {
         db = Room.inMemoryDatabaseBuilder(
-            InstrumentationRegistry.getContext(),
+            InstrumentationRegistry.getInstrumentation().context,
             ZweiDatabase::class.java
         ).build()
     }
@@ -34,7 +35,7 @@ class FreeCompanyDaoTests {
         val newModel = generateFreeCompanyModel(0)
         db.freeCompanyDao().insert(newModel)
 
-        Assert.assertEquals(newModel, db.freeCompanyDao().get())
+        assertEquals(newModel, db.freeCompanyDao().get())
     }
 
     @Test
@@ -43,15 +44,15 @@ class FreeCompanyDaoTests {
         val newModel2 = generateFreeCompanyModel(0)
 
         db.freeCompanyDao().insert(newModel1)
-        Assert.assertEquals(newModel1, db.freeCompanyDao().get())
+        assertEquals(newModel1, db.freeCompanyDao().get())
 
         db.freeCompanyDao().insert(newModel2)
-        Assert.assertEquals(newModel2, db.freeCompanyDao().get())
+        assertEquals(newModel2, db.freeCompanyDao().get())
     }
 
     @Test
     fun retrievingFreeCompanyWithoutSettingReturnsNull() {
-        Assert.assertNull(db.freeCompanyDao().get())
+        assertNull(db.freeCompanyDao().get())
     }
 
     @Test
@@ -59,9 +60,9 @@ class FreeCompanyDaoTests {
         val newModel = generateFreeCompanyModel(0)
         db.freeCompanyDao().insert(newModel)
 
-        Assert.assertEquals(newModel, db.freeCompanyDao().get())
+        assertEquals(newModel, db.freeCompanyDao().get())
         db.freeCompanyDao().delete(newModel)
-        Assert.assertNull(db.freeCompanyDao().get())
+        assertNull(db.freeCompanyDao().get())
     }
 
     private fun generateFreeCompanyModel(id: Int): FreeCompanyModel {
