@@ -1,7 +1,6 @@
 package com.chesire.zwei.room.converters
 
 import com.chesire.zwei.xivapi.model.FreeCompanyEstateModel
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

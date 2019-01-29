@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.chesire.zwei.R
 import dagger.Reusable
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @Reusable
 class PrefHelper @Inject constructor(

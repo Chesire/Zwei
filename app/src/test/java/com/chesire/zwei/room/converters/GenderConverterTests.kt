@@ -1,7 +1,6 @@
 package com.chesire.zwei.room.converters
 
 import com.chesire.zwei.xivapi.flags.Gender
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
