@@ -3,10 +3,11 @@ package com.chesire.zwei.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.chesire.zwei.R
+import dagger.Reusable
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+@Reusable
 class PrefHelper @Inject constructor(
     context: Context,
     private val sharedPreferences: SharedPreferences
