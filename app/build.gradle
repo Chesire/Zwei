@@ -66,10 +66,9 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
     testImplementation 'androidx.arch.core:core-testing:2.0.0'
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.11.0'
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'io.mockk:mockk:1.9.kotlin12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.1'
@@ -83,6 +82,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
     androidTestImplementation 'org.mockito:mockito-android:2.22.0'
+    androidTestImplementation 'io.mockk:mockk-android:1.9.kotlin12'
 
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
     kapt 'androidx.room:room-compiler:2.0.0'
