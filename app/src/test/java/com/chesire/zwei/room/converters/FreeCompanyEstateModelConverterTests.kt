@@ -1,7 +1,7 @@
 package com.chesire.zwei.room.converters
 
 import com.chesire.zwei.xivapi.model.FreeCompanyEstateModel
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class FreeCompanyEstateModelConverterTests {
@@ -15,11 +15,11 @@ class FreeCompanyEstateModelConverterTests {
 
     @Test
     fun `can convert FreeCompanyEstateModel into json string`() {
-        Assert.assertEquals(estateModelJson, converter.fromFreeCompanyEstateModel(estateModel))
+        assertEquals(estateModelJson, converter.fromFreeCompanyEstateModel(estateModel))
     }
 
     @Test
     fun `can convert json string into FreeCompanyEstateModel`() {
-        Assert.assertEquals(estateModel, converter.fromString(estateModelJson))
+        assertEquals(estateModel, converter.fromString(estateModelJson))
     }
 }

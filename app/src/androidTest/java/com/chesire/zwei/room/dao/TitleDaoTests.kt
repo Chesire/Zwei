@@ -1,12 +1,14 @@
 package com.chesire.zwei.room.dao
 
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.TitleModel
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +20,7 @@ class TitleDaoTests {
     @Before
     fun setup() {
         db = Room.inMemoryDatabaseBuilder(
-            InstrumentationRegistry.getContext(),
+            InstrumentationRegistry.getInstrumentation().context,
             ZweiDatabase::class.java
         ).build()
     }
@@ -33,7 +35,7 @@ class TitleDaoTests {
         val newModel = generateTitleModel(0)
         db.titleDao().insert(newModel)
 
-        Assert.assertTrue(db.titleDao().getAll().contains(newModel))
+        assertTrue(db.titleDao().getAll().contains(newModel))
     }
 
     @Test
@@ -45,12 +47,12 @@ class TitleDaoTests {
         )
         db.titleDao().insertAll(models)
 
-        Assert.assertEquals(models, db.titleDao().getAll())
+        assertEquals(models, db.titleDao().getAll())
     }
 
     @Test
     fun findByIdWithNoMatchingTitlesReturnsNull() {
-        Assert.assertNull(db.titleDao().findById(0))
+        assertNull(db.titleDao().findById(0))
     }
 
     @Test
@@ -63,17 +65,17 @@ class TitleDaoTests {
         )
         db.titleDao().insertAll(models)
 
-        Assert.assertEquals(expectedModel, db.titleDao().findById(1))
+        assertEquals(expectedModel, db.titleDao().findById(1))
     }
 
     @Test
     fun getAllWithNoItemsReturnsEmptyList() {
-        Assert.assertTrue(db.titleDao().getAll().isEmpty())
+        assertTrue(db.titleDao().getAll().isEmpty())
     }
 
     @Test
     fun getAllWithIdsNoItemsReturnsEmptyList() {
-        Assert.assertTrue(db.titleDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
+        assertTrue(db.titleDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
     }
 
     @Test
@@ -84,7 +86,7 @@ class TitleDaoTests {
             generateTitleModel(2)
         )
         db.titleDao().insertAll(models)
-        Assert.assertTrue(db.titleDao().getAllByIds(listOf(0, 1, 3)).count() == 2)
+        assertTrue(db.titleDao().getAllByIds(listOf(0, 1, 3)).count() == 2)
     }
 
     @Test
@@ -95,7 +97,7 @@ class TitleDaoTests {
             generateTitleModel(2)
         )
         db.titleDao().insertAll(models)
-        Assert.assertEquals(models, db.titleDao().getAllByIds(listOf(0, 1, 2)))
+        assertEquals(models, db.titleDao().getAllByIds(listOf(0, 1, 2)))
     }
 
     private fun generateTitleModel(

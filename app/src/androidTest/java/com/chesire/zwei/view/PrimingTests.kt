@@ -3,8 +3,8 @@ package com.chesire.zwei.view
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import com.chesire.zwei.dagger.espressoDaggerMockRule
 import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.OnboardingActivity

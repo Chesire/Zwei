@@ -1,6 +1,6 @@
 package com.chesire.zwei.dagger
 
-import androidx.test.InstrumentationRegistry.getInstrumentation
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.chesire.zwei.MockApplication
 import com.chesire.zwei.dagger.components.MockComponent
 import com.chesire.zwei.dagger.modules.MockApplicationModule
