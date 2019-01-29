@@ -10,11 +10,12 @@ import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import com.chesire.zwei.xivapi.response.GetCharacterResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -27,17 +28,17 @@ class XIVApiTests {
 
     @Test
     fun `when searchForCharacter fails return status error`() = runBlocking {
-        val mockService = mock<XIVApiService> {
-            on {
+        val mockService = mockk<XIVApiService> {
+            every {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } doReturn async {
-                Response.error<SearchCharacterResponse>(404, mock {})
+            } returns async {
+                Response.error<SearchCharacterResponse>(404, mockk())
             }
         }
 
         val classUnderTest = XIVApi(mockService)
 
-        Assert.assertEquals(
+        assertEquals(
             Status.Error,
             classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
         )
@@ -45,17 +46,17 @@ class XIVApiTests {
 
     @Test
     fun `when searchForCharacter has empty body return status error`() = runBlocking {
-        val mockService = mock<XIVApiService> {
-            on {
+        val mockService = mockk<XIVApiService> {
+            every {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } doReturn async {
+            } returns async {
                 Response.success<SearchCharacterResponse>(null)
             }
         }
 
         val classUnderTest = XIVApi(mockService)
 
-        Assert.assertEquals(
+        assertEquals(
             Status.Error,
             classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
         )
@@ -63,17 +64,19 @@ class XIVApiTests {
 
     @Test
     fun `when searchForCharacter is successful return status success`() = runBlocking {
-        val mockService = mock<XIVApiService> {
-            on {
+        val mockService = mockk<XIVApiService> {
+            every {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } doReturn async {
-                Response.success<SearchCharacterResponse>(mock {})
+            } returns async {
+                Response.success<SearchCharacterResponse>(mockk {
+                    every { characters } returns mockk()
+                })
             }
         }
 
         val classUnderTest = XIVApi(mockService)
 
-        Assert.assertEquals(
+        assertEquals(
             Status.Success,
             classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
         )
@@ -82,17 +85,17 @@ class XIVApiTests {
     @Test
     fun `when searchForCharacter is successful returns listOfSearchCharacterModel`() = runBlocking {
         val characterModels = listOf(SearchCharacterModel(0, "name", "server", "avatar"))
-        val mockService = mock<XIVApiService> {
-            on {
+        val mockService = mockk<XIVApiService> {
+            every {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } doReturn async {
-                Response.success(SearchCharacterResponse(mock {}, characterModels))
+            } returns async {
+                Response.success(SearchCharacterResponse(mockk(), characterModels))
             }
         }
 
         val classUnderTest = XIVApi(mockService)
 
-        Assert.assertEquals(
+        assertEquals(
             characterModels,
             classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().data
         )
@@ -100,45 +103,45 @@ class XIVApiTests {
 
     @Test
     fun `when getCharacter fails return status error`() = runBlocking {
-        val mockService = mock<XIVApiService> {
-            on {
+        val mockService = mockk<XIVApiService> {
+            every {
                 getCharacter(anyInt())
-            } doReturn async {
-                Response.error<GetCharacterResponse>(404, mock {})
+            } returns async {
+                Response.error<GetCharacterResponse>(404, mockk())
             }
         }
 
         val classUnderTest = XIVApi(mockService)
 
-        Assert.assertEquals(Status.Error, classUnderTest.getCharacter(0).await().status)
+        assertEquals(Status.Error, classUnderTest.getCharacter(0).await().status)
     }
 
     @Test
     fun `when getCharacter has empty body return status error`() = runBlocking {
-        val mockService = mock<XIVApiService> {
-            on {
+        val mockService = mockk<XIVApiService> {
+            every {
                 getCharacter(anyInt())
-            } doReturn async {
+            } returns async {
                 Response.success<GetCharacterResponse>(null)
             }
         }
 
         val classUnderTest = XIVApi(mockService)
 
-        Assert.assertEquals(Status.Error, classUnderTest.getCharacter(0).await().status)
+        assertEquals(Status.Error, classUnderTest.getCharacter(0).await().status)
     }
 
     @Test
     fun `when getCharacter is successful, with null character, return status success with Info`() =
         runBlocking {
-            val mockService = mock<XIVApiService> {
-                on {
+            val mockService = mockk<XIVApiService> {
+                every {
                     getCharacter(anyInt())
-                } doReturn async {
-                    Response.success<GetCharacterResponse>(mock {
-                        on { info }.thenReturn(mock { })
-                        on { character }.thenReturn(null)
-                        on { achievements }.thenReturn(getAchievementsModel())
+                } returns async {
+                    Response.success<GetCharacterResponse>(mockk {
+                        every { info } returns mockk()
+                        every { character } returns null
+                        every { achievements } returns getAchievementsModel()
                     })
                 }
             }
@@ -146,21 +149,21 @@ class XIVApiTests {
             val classUnderTest = XIVApi(mockService)
 
             val result = classUnderTest.getCharacter(0).await()
-            Assert.assertEquals(Status.Success, result.status)
-            Assert.assertTrue(result.data is InfoModel)
+            assertEquals(Status.Success, result.status)
+            assertTrue(result.data is InfoModel)
         }
 
     @Test
     fun `when getCharacter is successful, with null achievements, return status success with Info`() =
         runBlocking {
-            val mockService = mock<XIVApiService> {
-                on {
+            val mockService = mockk<XIVApiService> {
+                every {
                     getCharacter(anyInt())
-                } doReturn async {
-                    Response.success<GetCharacterResponse>(mock {
-                        on { info }.thenReturn(mock { })
-                        on { character }.thenReturn(getCharacterModel())
-                        on { achievements }.thenReturn(null)
+                } returns async {
+                    Response.success<GetCharacterResponse>(mockk {
+                        every { info } returns mockk()
+                        every { character } returns getCharacterModel()
+                        every { achievements } returns null
                     })
                 }
             }
@@ -168,21 +171,21 @@ class XIVApiTests {
             val classUnderTest = XIVApi(mockService)
 
             val result = classUnderTest.getCharacter(0).await()
-            Assert.assertEquals(Status.Success, result.status)
-            Assert.assertTrue(result.data is InfoModel)
+            assertEquals(Status.Success, result.status)
+            assertTrue(result.data is InfoModel)
         }
 
     @Test
     fun `when getCharacter is successful, with null character and achievements, return status success with Info`() =
         runBlocking {
-            val mockService = mock<XIVApiService> {
-                on {
+            val mockService = mockk<XIVApiService> {
+                every {
                     getCharacter(anyInt())
-                } doReturn async {
-                    Response.success<GetCharacterResponse>(mock {
-                        on { info }.thenReturn(mock { })
-                        on { character }.thenReturn(null)
-                        on { achievements }.thenReturn(null)
+                } returns async {
+                    Response.success<GetCharacterResponse>(mockk {
+                        every { info } returns mockk()
+                        every { character } returns null
+                        every { achievements } returns null
                     })
                 }
             }
@@ -190,21 +193,21 @@ class XIVApiTests {
             val classUnderTest = XIVApi(mockService)
 
             val result = classUnderTest.getCharacter(0).await()
-            Assert.assertEquals(Status.Success, result.status)
-            Assert.assertTrue(result.data is InfoModel)
+            assertEquals(Status.Success, result.status)
+            assertTrue(result.data is InfoModel)
         }
 
     @Test
     fun `when getCharacter is successful, with detailed character and achievements, return status success with characterDetailModel`() =
         runBlocking {
-            val mockService = mock<XIVApiService> {
-                on {
+            val mockService = mockk<XIVApiService> {
+                every {
                     getCharacter(anyInt())
-                } doReturn async {
-                    Response.success<GetCharacterResponse>(mock {
-                        on { info }.thenReturn(mock { })
-                        on { character }.thenReturn(getCharacterModel())
-                        on { achievements }.thenReturn(getAchievementsModel())
+                } returns async {
+                    Response.success<GetCharacterResponse>(mockk {
+                        every { info } returns mockk()
+                        every { character } returns getCharacterModel()
+                        every { achievements } returns getAchievementsModel()
                     })
                 }
             }
@@ -212,8 +215,8 @@ class XIVApiTests {
             val classUnderTest = XIVApi(mockService)
 
             val result = classUnderTest.getCharacter(0).await()
-            Assert.assertEquals(Status.Success, result.status)
-            Assert.assertTrue(result.data is CharacterDetailModel)
+            assertEquals(Status.Success, result.status)
+            assertTrue(result.data is CharacterDetailModel)
         }
 
     private fun getCharacterModel(): CharacterModel {
