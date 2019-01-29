@@ -1,6 +1,6 @@
 package com.chesire.zwei.room.converters
 
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class CollectionsConverterTests {
@@ -13,7 +13,7 @@ class CollectionsConverterTests {
         val string3 = "string3"
 
         val jsonString = converter.fromListOfStringToString(listOf(string1, string2, string3))
-        Assert.assertEquals("[\"$string1\",\"$string2\",\"$string3\"]", jsonString)
+        assertEquals("[\"$string1\",\"$string2\",\"$string3\"]", jsonString)
     }
 
     @Test
@@ -24,7 +24,7 @@ class CollectionsConverterTests {
 
         val stringList =
             converter.fromStringToListOfString("[\"$string1\",\"$string2\",\"$string3\"]")
-        Assert.assertEquals(listOf(string1, string2, string3), stringList)
+        assertEquals(listOf(string1, string2, string3), stringList)
     }
 
     @Test
@@ -34,7 +34,7 @@ class CollectionsConverterTests {
         val int3 = 3
 
         val jsonString = converter.fromListOfIntToString(listOf(int1, int2, int3))
-        Assert.assertEquals("[1,2,3]", jsonString)
+        assertEquals("[1,2,3]", jsonString)
     }
 
     @Test
@@ -44,6 +44,6 @@ class CollectionsConverterTests {
         val int3 = 3
 
         val stringList = converter.fromStringToListOfInt("[1,2,3]")
-        Assert.assertEquals(listOf(int1, int2, int3), stringList)
+        assertEquals(listOf(int1, int2, int3), stringList)
     }
 }
