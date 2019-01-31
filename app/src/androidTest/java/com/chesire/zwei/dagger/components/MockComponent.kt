@@ -2,8 +2,8 @@ package com.chesire.zwei.dagger.components
 
 import android.app.Application
 import com.chesire.zwei.MockApplication
+import com.chesire.zwei.dagger.modules.ActivityModule
 import com.chesire.zwei.dagger.modules.FragmentModule
-import com.chesire.zwei.dagger.modules.MockActivityModule
 import com.chesire.zwei.dagger.modules.MockApplicationModule
 import com.chesire.zwei.dagger.modules.MockDatabaseModule
 import com.chesire.zwei.dagger.modules.MockServerModule
@@ -17,13 +17,13 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        (AndroidSupportInjectionModule::class),
-        (FragmentModule::class),
-        (MockActivityModule::class),
-        (MockApplicationModule::class),
-        (MockDatabaseModule::class),
-        (MockServerModule::class),
-        (ViewModelModule::class)
+        ActivityModule::class,
+        AndroidSupportInjectionModule::class,
+        FragmentModule::class,
+        MockApplicationModule::class,
+        MockDatabaseModule::class,
+        MockServerModule::class,
+        ViewModelModule::class
     ]
 )
 interface MockComponent : AndroidInjector<MockApplication> {
