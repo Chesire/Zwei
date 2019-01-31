@@ -14,6 +14,7 @@ class ApplicationModule {
     @Provides
     fun provideApplicationContext(app: Application): Context = app.applicationContext
 
+    @Suppress("ExpressionBodySyntax")
     @Provides
     @Reusable
     fun provideSharedPrefs(app: Application): SharedPreferences {
