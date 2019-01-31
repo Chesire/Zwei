@@ -11,6 +11,6 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     internal abstract fun contributesPrimingActivity(): PrimingActivity
 
-    @ContributesAndroidInjector(modules = [FragmentModule::class])
+    @ContributesAndroidInjector
     internal abstract fun contributesOnboardingActivity(): OnboardingActivity
 }
