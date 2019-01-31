@@ -5,8 +5,8 @@ import com.chesire.zwei.xivapi.flags.Race
 
 class RaceConverter {
     @TypeConverter
-    fun fromRaceToInt(race: Race): Int = race.value
+    fun fromRaceToInt(race: Race) = race.value
 
     @TypeConverter
-    fun fromIntToRace(value: Int): Race = Race.getRaceForValue(value)
+    fun fromIntToRace(value: Int) = Race.getRaceForValue(value)
 }

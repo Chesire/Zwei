@@ -5,8 +5,8 @@ import com.chesire.zwei.xivapi.flags.Gender
 
 class GenderConverter {
     @TypeConverter
-    fun fromGenderToInt(gender: Gender): Int = gender.value
+    fun fromGenderToInt(gender: Gender) = gender.value
 
     @TypeConverter
-    fun fromIntToGender(value: Int): Gender = Gender.getGenderForValue(value)
+    fun fromIntToGender(value: Int) = Gender.getGenderForValue(value)
 }
