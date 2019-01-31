@@ -8,7 +8,7 @@ import com.chesire.zwei.OpenForTesting
 import com.chesire.zwei.util.PrefHelper
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
+import dagger.Reusable
 
 @Suppress("unused")
 @OpenForTesting
@@ -18,13 +18,13 @@ class MockApplicationModule {
     fun provideApplicationContext(app: Application): Context = app.applicationContext
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideSharedPreferences(app: Application): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(app)
     }
 
     @Provides
-    @Singleton
+    @Reusable
     fun providePrefHelper(app: Application, sharedPref: SharedPreferences): PrefHelper {
         return PrefHelper(app, sharedPref)
     }
