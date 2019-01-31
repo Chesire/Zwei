@@ -13,14 +13,26 @@ import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEnterworldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_request.buttonNext
 import javax.inject.Inject
 
 class EnterWorldFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: OnboardingViewModel
     private lateinit var binding: FragmentEnterworldBinding
-    private lateinit var searchInteractor: SearchInteractor
+    private var searchInteractor: SearchInteractor? = null
+    private val viewModel: OnboardingViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(OnboardingViewModel::class.java)
+    }
+
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        searchInteractor = context as SearchInteractor
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,15 +47,17 @@ class EnterWorldFragment : DaggerFragment() {
         ).apply {
             binding = this
             setLifecycleOwner(viewLifecycleOwner)
-            buttonNext.setOnClickListener { searchInteractor.completeEnterWorld() }
         }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonNext.setOnClickListener { searchInteractor?.completeEnterWorld() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders
-            .of(activity!!, viewModelFactory)
-            .get(OnboardingViewModel::class.java)
 
         binding.vm = viewModel
 
@@ -53,18 +67,9 @@ class EnterWorldFragment : DaggerFragment() {
         }
     }
 
-    @Suppress("UnsafeCast")
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        searchInteractor = context as SearchInteractor
-    }
-
     companion object {
         const val tag = "EnterWorldFragment"
-        fun newInstance(): EnterWorldFragment {
-            return EnterWorldFragment().apply {
-                arguments = Bundle()
-            }
-        }
+
+        fun newInstance() = EnterWorldFragment()
     }
 }

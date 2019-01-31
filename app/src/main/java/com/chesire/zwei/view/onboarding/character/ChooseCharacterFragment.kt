@@ -14,15 +14,28 @@ import com.chesire.zwei.databinding.FragmentChoosecharacterBinding
 import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_choosecharacter.buttonNo
+import kotlinx.android.synthetic.main.fragment_choosecharacter.buttonYes
 import kotlinx.android.synthetic.main.fragment_choosecharacter.imageAvatar
 import javax.inject.Inject
 
 class ChooseCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: OnboardingViewModel
     private lateinit var binding: FragmentChoosecharacterBinding
-    private lateinit var characterInteractor: CharacterInteractor
+    private var characterInteractor: CharacterInteractor? = null
+    private val viewModel: OnboardingViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(OnboardingViewModel::class.java)
+    }
+
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        characterInteractor = context as CharacterInteractor
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,43 +50,36 @@ class ChooseCharacterFragment : DaggerFragment() {
         ).apply {
             binding = this
             setLifecycleOwner(viewLifecycleOwner)
-            buttonYes.setOnClickListener { characterInteractor.completeChooseCharacter() }
-            buttonNo.setOnClickListener {
-                // load ui to select character
-            }
         }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonYes.setOnClickListener { characterInteractor?.completeChooseCharacter() }
+        buttonNo.setOnClickListener {
+            // load ui to select character
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders
-            .of(activity!!, viewModelFactory)
-            .get(OnboardingViewModel::class.java)
-            .apply {
-                currentCharacter.observe(
-                    viewLifecycleOwner,
-                    Observer {
-                        GlideApp.with(requireContext())
-                            .load(viewModel.currentCharacter.value!!.avatar)
-                            .into(imageAvatar)
-                    })
+
+        viewModel.currentCharacter.observe(
+            viewLifecycleOwner,
+            Observer { characterModel ->
+                GlideApp.with(requireContext())
+                    .load(characterModel.avatar)
+                    .into(imageAvatar)
             }
+        )
 
         binding.vm = viewModel
     }
 
-    @Suppress("UnsafeCast")
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        characterInteractor = context as CharacterInteractor
-    }
-
     companion object {
         const val tag = "ChooseCharacterFragment"
-        fun newInstance(): ChooseCharacterFragment {
-            return ChooseCharacterFragment().apply {
-                arguments = Bundle()
-            }
-        }
+
+        fun newInstance() = ChooseCharacterFragment()
     }
 }

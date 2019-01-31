@@ -19,9 +19,20 @@ import javax.inject.Inject
 class EnterCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: OnboardingViewModel
     private lateinit var binding: FragmentEntercharacterBinding
-    private lateinit var searchInteractor: SearchInteractor
+    private var searchInteractor: SearchInteractor? = null
+    private val viewModel: OnboardingViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(OnboardingViewModel::class.java)
+    }
+
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        searchInteractor = context as SearchInteractor
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,22 +52,14 @@ class EnterCharacterFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders
-            .of(activity!!, viewModelFactory)
-            .get(OnboardingViewModel::class.java)
-            .apply {
-                searchStatus.observe(
-                    viewLifecycleOwner,
-                    Observer { onSearchStatusChange(it) })
+        viewModel.searchStatus.observe(
+            viewLifecycleOwner,
+            Observer {
+                onSearchStatusChange(it)
             }
+        )
 
         binding.vm = viewModel
-    }
-
-    @Suppress("UnsafeCast")
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        searchInteractor = context as SearchInteractor
     }
 
     private fun onSearchStatusChange(status: Status) {
@@ -67,16 +70,13 @@ class EnterCharacterFragment : DaggerFragment() {
             Status.Error -> {
                 // Display appropriate error state
             }
-            Status.Success -> searchInteractor.completeEnterCharacter()
+            Status.Success -> searchInteractor?.completeEnterCharacter()
         }
     }
 
     companion object {
         const val tag = "EnterCharacterFragment"
-        fun newInstance(): EnterCharacterFragment {
-            return EnterCharacterFragment().apply {
-                arguments = Bundle()
-            }
-        }
+
+        fun newInstance() = EnterCharacterFragment()
     }
 }

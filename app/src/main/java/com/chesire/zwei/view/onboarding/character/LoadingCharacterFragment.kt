@@ -18,9 +18,20 @@ import javax.inject.Inject
 class LoadingCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: OnboardingViewModel
     private lateinit var binding: FragmentLoadingcharacterBinding
-    private lateinit var characterInteractor: CharacterInteractor
+    private var characterInteractor: CharacterInteractor? = null
+    private val viewModel: OnboardingViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(OnboardingViewModel::class.java)
+    }
+
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        characterInteractor = context as CharacterInteractor
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,23 +51,16 @@ class LoadingCharacterFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders
-            .of(activity!!, viewModelFactory)
-            .get(OnboardingViewModel::class.java)
-            .apply {
-                getCharacterStatus.observe(
-                    viewLifecycleOwner,
-                    Observer { onGetCharacterStatusChange(it) })
+
+        viewModel.getCharacterStatus.observe(
+            viewLifecycleOwner,
+            Observer {
+                onGetCharacterStatusChange(it)
             }
+        )
 
         binding.vm = viewModel
         viewModel.getCharacter()
-    }
-
-    @Suppress("UnsafeCast")
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        characterInteractor = context as CharacterInteractor
     }
 
     private fun onGetCharacterStatusChange(status: GetCharacterStatus) {
@@ -64,7 +68,7 @@ class LoadingCharacterFragment : DaggerFragment() {
             GetCharacterStatus.Loading -> {
                 // Display loading UI
             }
-            GetCharacterStatus.GotCharacter -> characterInteractor.completeLoadingCharacter()
+            GetCharacterStatus.GotCharacter -> characterInteractor?.completeLoadingCharacter()
             GetCharacterStatus.GotInfo -> {
                 // Request successful, but character is being added to the api
             }
@@ -76,10 +80,7 @@ class LoadingCharacterFragment : DaggerFragment() {
 
     companion object {
         const val tag = "LoadingCharacterFragment"
-        fun newInstance(): LoadingCharacterFragment {
-            return LoadingCharacterFragment().apply {
-                arguments = Bundle()
-            }
-        }
+
+        fun newInstance() = LoadingCharacterFragment()
     }
 }
