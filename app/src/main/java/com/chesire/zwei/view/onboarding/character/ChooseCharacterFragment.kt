@@ -10,70 +10,76 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentChoosecharacterBinding
+import com.chesire.zwei.databinding.FragmentChooseCharacterBinding
 import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_choosecharacter.imageAvatar
+import kotlinx.android.synthetic.main.fragment_choose_character.buttonNo
+import kotlinx.android.synthetic.main.fragment_choose_character.buttonYes
+import kotlinx.android.synthetic.main.fragment_choose_character.imageAvatar
 import javax.inject.Inject
 
 class ChooseCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: OnboardingViewModel
-    private lateinit var binding: FragmentChoosecharacterBinding
-    private lateinit var characterInteractor: CharacterInteractor
+    private lateinit var binding: FragmentChooseCharacterBinding
+    private var characterInteractor: CharacterInteractor? = null
+    private val viewModel: OnboardingViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(OnboardingViewModel::class.java)
+    }
+
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        characterInteractor = context as CharacterInteractor
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentChoosecharacterBinding>(
+        return DataBindingUtil.inflate<FragmentChooseCharacterBinding>(
             inflater,
-            R.layout.fragment_choosecharacter,
+            R.layout.fragment_choose_character,
             container,
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@ChooseCharacterFragment)
-            buttonYes.setOnClickListener { characterInteractor.completeChooseCharacter() }
-            buttonNo.setOnClickListener {
-                // load ui to select character
-            }
+            setLifecycleOwner(viewLifecycleOwner)
         }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonYes.setOnClickListener { characterInteractor?.completeChooseCharacter() }
+        buttonNo.setOnClickListener {
+            // load ui to select character
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders
-            .of(activity!!, viewModelFactory)
-            .get(OnboardingViewModel::class.java)
-            .apply {
-                currentCharacter.observe(
-                    this@ChooseCharacterFragment,
-                    Observer {
-                        GlideApp.with(requireContext())
-                            .load(viewModel.currentCharacter.value!!.avatar)
-                            .into(imageAvatar)
-                    })
+
+        viewModel.currentCharacter.observe(
+            viewLifecycleOwner,
+            Observer { characterModel ->
+                GlideApp.with(requireContext())
+                    .load(characterModel.avatar)
+                    .into(imageAvatar)
             }
+        )
 
         binding.vm = viewModel
     }
 
-    @Suppress("UnsafeCast")
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        characterInteractor = context as CharacterInteractor
-    }
-
     companion object {
         const val tag = "ChooseCharacterFragment"
-        fun newInstance(): ChooseCharacterFragment {
-            return ChooseCharacterFragment().apply {
-                arguments = Bundle()
-            }
-        }
+
+        fun newInstance() = ChooseCharacterFragment()
     }
 }

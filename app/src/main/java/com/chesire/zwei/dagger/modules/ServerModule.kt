@@ -10,17 +10,17 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.Locale
-import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
 class ServerModule {
-    @Singleton
+    @Reusable
     @Provides
     fun providesHttpClient(): OkHttpClient {
         return OkHttpClient()
@@ -37,7 +37,7 @@ class ServerModule {
             .build()
     }
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesMoshi(): Moshi {
         return Moshi.Builder()
@@ -47,7 +47,7 @@ class ServerModule {
             .build()
     }
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesXIVApiService(httpClient: OkHttpClient, moshi: Moshi): XIVApiService {
         return Retrofit.Builder()

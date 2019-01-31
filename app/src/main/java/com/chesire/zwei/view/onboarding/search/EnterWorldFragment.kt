@@ -10,40 +10,54 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.BuildConfig
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentEnterworldBinding
+import com.chesire.zwei.databinding.FragmentEnterWorldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_request.buttonNext
 import javax.inject.Inject
 
 class EnterWorldFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: OnboardingViewModel
-    private lateinit var binding: FragmentEnterworldBinding
-    private lateinit var searchInteractor: SearchInteractor
+    private lateinit var binding: FragmentEnterWorldBinding
+    private var searchInteractor: SearchInteractor? = null
+    private val viewModel: OnboardingViewModel by lazy {
+        ViewModelProviders
+            .of(requireActivity(), viewModelFactory)
+            .get(OnboardingViewModel::class.java)
+    }
+
+    @Suppress("UnsafeCast")
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        searchInteractor = context as SearchInteractor
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentEnterworldBinding>(
+        return DataBindingUtil.inflate<FragmentEnterWorldBinding>(
             inflater,
-            R.layout.fragment_enterworld,
+            R.layout.fragment_enter_world,
             container,
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@EnterWorldFragment)
-            buttonNext.setOnClickListener { searchInteractor.completeEnterWorld() }
+            setLifecycleOwner(viewLifecycleOwner)
         }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonNext.setOnClickListener { searchInteractor?.completeEnterWorld() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders
-            .of(activity!!, viewModelFactory)
-            .get(OnboardingViewModel::class.java)
 
         binding.vm = viewModel
 
@@ -53,18 +67,9 @@ class EnterWorldFragment : DaggerFragment() {
         }
     }
 
-    @Suppress("UnsafeCast")
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        searchInteractor = context as SearchInteractor
-    }
-
     companion object {
         const val tag = "EnterWorldFragment"
-        fun newInstance(): EnterWorldFragment {
-            return EnterWorldFragment().apply {
-                arguments = Bundle()
-            }
-        }
+
+        fun newInstance() = EnterWorldFragment()
     }
 }
