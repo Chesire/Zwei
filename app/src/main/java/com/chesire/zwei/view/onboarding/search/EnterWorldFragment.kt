@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.BuildConfig
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentEnterworldBinding
+import com.chesire.zwei.databinding.FragmentEnterWorldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_request.buttonNext
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class EnterWorldFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentEnterworldBinding
+    private lateinit var binding: FragmentEnterWorldBinding
     private var searchInteractor: SearchInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -39,9 +39,9 @@ class EnterWorldFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentEnterworldBinding>(
+        return DataBindingUtil.inflate<FragmentEnterWorldBinding>(
             inflater,
-            R.layout.fragment_enterworld,
+            R.layout.fragment_enter_world,
             container,
             false
         ).apply {

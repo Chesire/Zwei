@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentEntercharacterBinding
+import com.chesire.zwei.databinding.FragmentEnterCharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import com.chesire.zwei.xivapi.Status
 import dagger.android.support.DaggerFragment
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class EnterCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentEntercharacterBinding
+    private lateinit var binding: FragmentEnterCharacterBinding
     private var searchInteractor: SearchInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -39,9 +39,9 @@ class EnterCharacterFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentEntercharacterBinding>(
+        return DataBindingUtil.inflate<FragmentEnterCharacterBinding>(
             inflater,
-            R.layout.fragment_entercharacter,
+            R.layout.fragment_enter_character,
             container,
             false
         ).apply {

@@ -10,19 +10,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentChoosecharacterBinding
+import com.chesire.zwei.databinding.FragmentChooseCharacterBinding
 import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_choosecharacter.buttonNo
-import kotlinx.android.synthetic.main.fragment_choosecharacter.buttonYes
-import kotlinx.android.synthetic.main.fragment_choosecharacter.imageAvatar
+import kotlinx.android.synthetic.main.fragment_choose_character.buttonNo
+import kotlinx.android.synthetic.main.fragment_choose_character.buttonYes
+import kotlinx.android.synthetic.main.fragment_choose_character.imageAvatar
 import javax.inject.Inject
 
 class ChooseCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentChoosecharacterBinding
+    private lateinit var binding: FragmentChooseCharacterBinding
     private var characterInteractor: CharacterInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -42,9 +42,9 @@ class ChooseCharacterFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentChoosecharacterBinding>(
+        return DataBindingUtil.inflate<FragmentChooseCharacterBinding>(
             inflater,
-            R.layout.fragment_choosecharacter,
+            R.layout.fragment_choose_character,
             container,
             false
         ).apply {
