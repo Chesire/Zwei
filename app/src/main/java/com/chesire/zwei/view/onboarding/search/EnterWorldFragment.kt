@@ -34,7 +34,7 @@ class EnterWorldFragment : DaggerFragment() {
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@EnterWorldFragment)
+            setLifecycleOwner(viewLifecycleOwner)
             buttonNext.setOnClickListener { searchInteractor.completeEnterWorld() }
         }.root
     }

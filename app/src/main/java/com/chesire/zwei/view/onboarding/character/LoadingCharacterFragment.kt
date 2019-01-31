@@ -34,7 +34,7 @@ class LoadingCharacterFragment : DaggerFragment() {
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@LoadingCharacterFragment)
+            setLifecycleOwner(viewLifecycleOwner)
         }.root
     }
 
@@ -45,7 +45,7 @@ class LoadingCharacterFragment : DaggerFragment() {
             .get(OnboardingViewModel::class.java)
             .apply {
                 getCharacterStatus.observe(
-                    this@LoadingCharacterFragment,
+                    viewLifecycleOwner,
                     Observer { onGetCharacterStatusChange(it) })
             }
 

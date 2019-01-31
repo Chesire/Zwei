@@ -35,7 +35,7 @@ class EnterCharacterFragment : DaggerFragment() {
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@EnterCharacterFragment)
+            setLifecycleOwner(viewLifecycleOwner)
         }.root
     }
 
@@ -46,7 +46,7 @@ class EnterCharacterFragment : DaggerFragment() {
             .get(OnboardingViewModel::class.java)
             .apply {
                 searchStatus.observe(
-                    this@EnterCharacterFragment,
+                    viewLifecycleOwner,
                     Observer { onSearchStatusChange(it) })
             }
 

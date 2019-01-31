@@ -36,7 +36,7 @@ class ChooseCharacterFragment : DaggerFragment() {
             false
         ).apply {
             binding = this
-            setLifecycleOwner(this@ChooseCharacterFragment)
+            setLifecycleOwner(viewLifecycleOwner)
             buttonYes.setOnClickListener { characterInteractor.completeChooseCharacter() }
             buttonNo.setOnClickListener {
                 // load ui to select character
@@ -51,7 +51,7 @@ class ChooseCharacterFragment : DaggerFragment() {
             .get(OnboardingViewModel::class.java)
             .apply {
                 currentCharacter.observe(
-                    this@ChooseCharacterFragment,
+                    viewLifecycleOwner,
                     Observer {
                         GlideApp.with(requireContext())
                             .load(viewModel.currentCharacter.value!!.avatar)
