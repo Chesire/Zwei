@@ -9,8 +9,8 @@ import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import com.chesire.zwei.view.onboarding.character.ChooseCharacterFragment
 import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
-import com.chesire.zwei.view.onboarding.initial.RequestFragment
-import com.chesire.zwei.view.onboarding.initial.WelcomeFragment
+import com.chesire.zwei.view.onboarding.initial.request.RequestFragment
+import com.chesire.zwei.view.onboarding.initial.welcome.WelcomeFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
 import com.chesire.zwei.view.onboarding.search.SearchInteractor
