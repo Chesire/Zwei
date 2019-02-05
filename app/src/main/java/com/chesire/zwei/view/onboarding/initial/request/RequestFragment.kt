@@ -5,13 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
+import com.chesire.zwei.databinding.FragmentRequestBinding
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
-import kotlinx.android.synthetic.main.fragment_request.buttonNext
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class RequestFragment : Fragment() {
+class RequestFragment : DaggerFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private var initialInteractor: InitialInteractor? = null
+    private val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(RequestViewModel::class.java)
+    }
 
     @Suppress("UnsafeCast")
     override fun onAttach(context: Context?) {
@@ -24,12 +35,20 @@ class RequestFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_request, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        buttonNext.setOnClickListener { initialInteractor?.completeRequest() }
+    ): View? {
+        return DataBindingUtil.inflate<FragmentRequestBinding>(
+            inflater,
+            R.layout.fragment_request,
+            container,
+            false
+        ).apply {
+            setLifecycleOwner(viewLifecycleOwner)
+            vm = viewModel
+            fragmentRequestNext.setOnClickListener {
+                viewModel.saveAnalyticsChoices()
+                initialInteractor?.completeRequest()
+            }
+        }.root
     }
 
     companion object {
