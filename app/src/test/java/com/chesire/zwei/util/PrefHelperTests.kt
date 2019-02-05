@@ -94,7 +94,6 @@ class PrefHelperTests {
         verify { mockPrefEditor.putBoolean(allowAnalytics, true) }
     }
 
-
     @Test
     fun `allowCrashReporting set() changes value in SharedPreferences`() {
         val mockPrefEditor = mockk<SharedPreferences.Editor> {
