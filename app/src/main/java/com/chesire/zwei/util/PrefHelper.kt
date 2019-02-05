@@ -32,10 +32,6 @@ class PrefHelper @Inject constructor(
         set(value) {
             sharedPreferences.edit { it.put(acquiredCharacterKey to value) }
         }
-
-    val shouldDisplayOnboarding: Boolean
-        get() = !hasBypassedWelcome || !hasBypassedRequest || !hasAcquiredCharacter
-
     fun clear() {
         sharedPreferences.edit().clear().apply()
     }
