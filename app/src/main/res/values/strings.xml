@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">Zwei</string>
 
+    <string name="request_title">Request Title</string>
+    <string name="request_body">Request body</string>
+    <string name="request_allow_analytics">Allow anonymous analytics?</string>
+    <string name="request_allow_crash_reporting">Allow anonymous crash reporting?</string>
+    <string name="request_privacy_policy">Privacy Policy</string>
+
     <string name="onboard_enter_world">Enter World</string>
     <string name="onboard_enter_character">Enter Character Name</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="next">Next</string>
     <!--
     Data Centers
     <string name="data_centre_any" translatable="false">Any</string>
