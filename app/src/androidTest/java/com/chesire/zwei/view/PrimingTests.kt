@@ -5,10 +5,12 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.chesire.zwei.R
 import com.chesire.zwei.dagger.espressoDaggerMockRule
 import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.OnboardingActivity
 import com.chesire.zwei.view.profile.ProfileActivity
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -39,17 +41,42 @@ class PrimingTests {
     }
 
     @Test
-    fun startInOnboardingFlow() {
-        `when`(prefHelper.shouldDisplayOnboarding).thenReturn(true)
+    fun startOnboardingFlowInWelcomeIfNotDoneWelcome() {
+        `when`(prefHelper.hasBypassedWelcome).thenReturn(false)
 
         activityRule.launchActivity(null)
 
         intended(hasComponent(OnboardingActivity::class.java.name))
+        assertDisplayed(R.id.textWelcome)
+    }
+
+    @Test
+    fun startOnboardingFlowInRequestIfNotDoneRequest() {
+        `when`(prefHelper.hasBypassedWelcome).thenReturn(true)
+        `when`(prefHelper.hasBypassedRequest).thenReturn(false)
+
+        activityRule.launchActivity(null)
+
+        intended(hasComponent(OnboardingActivity::class.java.name))
+        assertDisplayed(R.id.fragmentRequestTitle)
+    }
+
+    @Test
+    fun startOnboardingFlowPastInitialIfCompletedWelcomeAndRequest() {
+        `when`(prefHelper.hasBypassedWelcome).thenReturn(true)
+        `when`(prefHelper.hasBypassedRequest).thenReturn(true)
+
+        activityRule.launchActivity(null)
+
+        intended(hasComponent(OnboardingActivity::class.java.name))
+        assertDisplayed(R.id.editWorld)
     }
 
     @Test
     fun ifOnboardingCompleteStartInMainActivity() {
-        `when`(prefHelper.shouldDisplayOnboarding).thenReturn(false)
+        `when`(prefHelper.hasBypassedWelcome).thenReturn(true)
+        `when`(prefHelper.hasBypassedRequest).thenReturn(true)
+        `when`(prefHelper.hasAcquiredCharacter).thenReturn(true)
 
         activityRule.launchActivity(null)
 

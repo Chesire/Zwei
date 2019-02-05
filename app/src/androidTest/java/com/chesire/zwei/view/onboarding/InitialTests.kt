@@ -34,7 +34,7 @@ class InitialTests {
     fun fromWelcomeCanNavigateToRequest() {
         activityRule.launchActivity(null)
         clickOn(R.id.buttonNext)
-        assertDisplayed(R.id.textRequest)
+        assertDisplayed(R.id.fragmentRequestTitle)
     }
 
     @Test
@@ -49,7 +49,7 @@ class InitialTests {
     fun ifWelcomeIsDoneStartInRequest() {
         `when`(prefHelper.hasBypassedWelcome).thenReturn(true)
         activityRule.launchActivity(null)
-        assertDisplayed(R.id.textRequest)
+        assertDisplayed(R.id.fragmentRequestTitle)
     }
 
     @Test
