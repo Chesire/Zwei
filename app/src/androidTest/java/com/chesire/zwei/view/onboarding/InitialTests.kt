@@ -41,7 +41,7 @@ class InitialTests {
     fun fromRequestCanNavigateToEnterCharacterFlow() {
         activityRule.launchActivity(null)
         clickOn(R.id.buttonNext)
-        clickOn(R.id.buttonNext)
+        clickOn(R.id.fragmentRequestNext)
         assertDisplayed(R.id.editWorld)
     }
 
