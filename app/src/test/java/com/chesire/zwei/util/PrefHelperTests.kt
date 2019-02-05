@@ -8,20 +8,22 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
 
 private const val bypassedWelcome = "bypassedWelcome"
 private const val bypassedRequest = "bypassedRequest"
 private const val acquiredCharacter = "acquiredCharacter"
+private const val allowAnalytics = "allowAnalytics"
+private const val allowCrashReporting = "allowCrashReporting"
 
 class PrefHelperTests {
     private val mockContext = mockk<Context> {
         every { getString(R.string.key_bypassed_welcome) } returns bypassedWelcome
         every { getString(R.string.key_bypassed_request) } returns bypassedRequest
         every { getString(R.string.key_acquired_character) } returns acquiredCharacter
+        every { getString(R.string.key_allow_analytics) } returns allowAnalytics
+        every { getString(R.string.key_allow_crash_reporting) } returns allowCrashReporting
     }
 
     @Test
@@ -76,78 +78,38 @@ class PrefHelperTests {
     }
 
     @Test
-    fun `shouldDisplayOnboarding returns true if have not bypassedWelcome`() {
-        val mockPrefEditor = mockk<SharedPreferences.Editor> { }
+    fun `allowAnalytics set() changes value in SharedPreferences`() {
+        val mockPrefEditor = mockk<SharedPreferences.Editor> {
+            every { putBoolean(allowAnalytics, true) } returns this
+            every { apply() } just Runs
+        }
         val mockPreferences = mockk<SharedPreferences> {
             every { edit() } returns mockPrefEditor
-            every { getBoolean(bypassedWelcome, false) } returns false
-            every { getBoolean(bypassedRequest, false) } returns true
-            every { getBoolean(acquiredCharacter, false) } returns true
         }
 
         with(PrefHelper(mockContext, mockPreferences)) {
-            assertTrue(shouldDisplayOnboarding)
+            allowAnalytics = true
         }
+
+        verify { mockPrefEditor.putBoolean(allowAnalytics, true) }
     }
 
+
     @Test
-    fun `shouldDisplayOnboarding returns true if have not bypassedRequest`() {
-        val mockPrefEditor = mockk<SharedPreferences.Editor> { }
+    fun `allowCrashReporting set() changes value in SharedPreferences`() {
+        val mockPrefEditor = mockk<SharedPreferences.Editor> {
+            every { putBoolean(allowCrashReporting, true) } returns this
+            every { apply() } just Runs
+        }
         val mockPreferences = mockk<SharedPreferences> {
             every { edit() } returns mockPrefEditor
-            every { getBoolean(bypassedWelcome, false) } returns true
-            every { getBoolean(bypassedRequest, false) } returns false
-            every { getBoolean(acquiredCharacter, false) } returns true
         }
 
         with(PrefHelper(mockContext, mockPreferences)) {
-            assertTrue(shouldDisplayOnboarding)
-        }
-    }
-
-    @Test
-    fun `shouldDisplayOnboarding returns true if have not acquiredCharacter`() {
-        val mockPrefEditor = mockk<SharedPreferences.Editor> { }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockPrefEditor
-            every { getBoolean(bypassedWelcome, false) } returns true
-            every { getBoolean(bypassedRequest, false) } returns true
-            every { getBoolean(acquiredCharacter, false) } returns false
+            allowCrashReporting = true
         }
 
-        with(PrefHelper(mockContext, mockPreferences)) {
-            assertTrue(shouldDisplayOnboarding)
-        }
-    }
-
-    @Test
-    fun `shouldDisplayOnboarding returns true if have not bypassedWelcome && bypassedRequest && acquiredCharacter`() {
-        val mockPrefEditor = mockk<SharedPreferences.Editor> { }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockPrefEditor
-            every { getBoolean(bypassedWelcome, false) } returns false
-            every { getBoolean(bypassedRequest, false) } returns false
-            every { getBoolean(acquiredCharacter, false) } returns false
-        }
-
-        with(PrefHelper(mockContext, mockPreferences)) {
-            assertTrue(shouldDisplayOnboarding)
-        }
-    }
-
-    @Test
-    fun `shouldDisplayOnboarding returns false if have bypassedWelcome && bypassedRequest && acquiredCharacter`() {
-        val mockPrefEditor = mockk<SharedPreferences.Editor> { }
-        val mockPreferences = mockk<SharedPreferences> {
-            every { edit() } returns mockPrefEditor
-            every { getBoolean(bypassedWelcome, false) } returns true
-            every { getBoolean(bypassedRequest, false) } returns true
-            every { getBoolean(acquiredCharacter, false) } returns true
-        }
-
-        with(PrefHelper(mockContext, mockPreferences)) {
-            assertFalse(shouldDisplayOnboarding)
-        }
+        verify { mockPrefEditor.putBoolean(allowCrashReporting, true) }
     }
 
     @Test
