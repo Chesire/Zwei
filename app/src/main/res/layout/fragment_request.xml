@@ -1,18 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/textRequest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Request View" />
+    <data>
 
-    <Button
-        android:id="@+id/buttonNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next" />
+        <variable
+            name="vm"
+            type="com.chesire.zwei.view.onboarding.initial.request.RequestViewModel" />
+    </data>
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragmentRequestTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/request_title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragmentRequestBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/request_body"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentRequestTitle" />
+
+        <TextView
+            android:id="@+id/fragmentRequestAnalyticsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/request_allow_analytics"
+            app:layout_constraintEnd_toStartOf="@+id/fragmentRequestAnalyticsSwitch"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentRequestBody" />
+
+        <Switch
+            android:id="@+id/fragmentRequestAnalyticsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:checked="@={vm.analyticsEnabled}"
+            app:layout_constraintBottom_toBottomOf="@+id/fragmentRequestAnalyticsText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragmentRequestAnalyticsText" />
+
+        <TextView
+            android:id="@+id/fragmentRequestCrashReportingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/request_allow_crash_reporting"
+            app:layout_constraintEnd_toStartOf="@+id/fragmentRequestCrashReportingSwitch"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentRequestAnalyticsText" />
+
+        <Switch
+            android:id="@+id/fragmentRequestCrashReportingSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:checked="@={vm.crashReportingEnabled}"
+            app:layout_constraintBottom_toBottomOf="@+id/fragmentRequestCrashReportingText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragmentRequestCrashReportingText" />
+
+        <TextView
+            android:id="@+id/fragmentRequestPrivacyPolicy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/request_privacy_policy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentRequestCrashReportingText" />
+
+        <Button
+            android:id="@+id/fragmentRequestNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

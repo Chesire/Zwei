@@ -15,11 +15,15 @@ class PrimingActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (prefHelper.shouldDisplayOnboarding) {
+        if (shouldDisplayOnboarding()) {
             startActivity(Intent(this, OnboardingActivity::class.java))
         } else {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
         finish()
     }
+
+    private fun shouldDisplayOnboarding() = !prefHelper.hasBypassedWelcome ||
+            !prefHelper.hasBypassedRequest ||
+            !prefHelper.hasAcquiredCharacter
 }

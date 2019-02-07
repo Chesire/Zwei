@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.initial
+package com.chesire.zwei.view.onboarding.initial.welcome
 
 import android.content.Context
 import android.os.Bundle
@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
-import kotlinx.android.synthetic.main.fragment_request.buttonNext
+import com.chesire.zwei.view.onboarding.initial.InitialInteractor
+import kotlinx.android.synthetic.main.fragment_welcome.buttonNext
 
-class RequestFragment : Fragment() {
+class WelcomeFragment : Fragment() {
     private var initialInteractor: InitialInteractor? = null
 
     @Suppress("UnsafeCast")
@@ -23,17 +24,17 @@ class RequestFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_request, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_welcome, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonNext.setOnClickListener { initialInteractor?.completeRequest() }
+        buttonNext.setOnClickListener { initialInteractor?.completeWelcome() }
     }
 
     companion object {
-        const val tag = "RequestFragment"
+        const val tag = "WelcomeFragment"
 
-        fun newInstance() = RequestFragment()
+        fun newInstance() = WelcomeFragment()
     }
 }

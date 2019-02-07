@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="key_bypassed_welcome">bypassed_welcome</string>
-    <string name="key_bypassed_request">bypassed_request</string>
-    <string name="key_acquired_character">acquired_character</string>
+    <string name="key_bypassed_welcome" translatable="false">bypassed_welcome</string>
+    <string name="key_bypassed_request" translatable="false">bypassed_request</string>
+    <string name="key_acquired_character" translatable="false">acquired_character</string>
+    <string name="key_allow_analytics" translatable="false">allow_analytics</string>
+    <string name="key_allow_crash_reporting" translatable="false">allow_crash_reporting</string>
 </resources>

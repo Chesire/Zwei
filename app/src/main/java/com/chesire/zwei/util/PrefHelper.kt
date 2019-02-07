@@ -14,6 +14,8 @@ class PrefHelper @Inject constructor(
     private val bypassedWelcomeKey = context.getString(R.string.key_bypassed_welcome)
     private val bypassedRequestKey = context.getString(R.string.key_bypassed_request)
     private val acquiredCharacterKey = context.getString(R.string.key_acquired_character)
+    private val allowAnalyticsKey = context.getString(R.string.key_allow_analytics)
+    private val allowCrashReportingKey = context.getString(R.string.key_allow_crash_reporting)
 
     var hasBypassedWelcome: Boolean
         get() = sharedPreferences.getBoolean(bypassedWelcomeKey, false)
@@ -33,8 +35,17 @@ class PrefHelper @Inject constructor(
             sharedPreferences.edit { it.put(acquiredCharacterKey to value) }
         }
 
-    val shouldDisplayOnboarding: Boolean
-        get() = !hasBypassedWelcome || !hasBypassedRequest || !hasAcquiredCharacter
+    var allowAnalytics: Boolean
+        get() = sharedPreferences.getBoolean(allowAnalyticsKey, false)
+        set(value) {
+            sharedPreferences.edit { it.put(allowAnalyticsKey to value) }
+        }
+
+    var allowCrashReporting: Boolean
+        get() = sharedPreferences.getBoolean(allowCrashReportingKey, false)
+        set(value) {
+            sharedPreferences.edit { it.put(allowCrashReportingKey to value) }
+        }
 
     fun clear() {
         sharedPreferences.edit().clear().apply()

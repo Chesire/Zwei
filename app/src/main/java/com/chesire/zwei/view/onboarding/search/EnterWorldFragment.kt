@@ -13,7 +13,7 @@ import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEnterWorldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_request.buttonNext
+import kotlinx.android.synthetic.main.fragment_enter_world.buttonNext
 import javax.inject.Inject
 
 class EnterWorldFragment : DaggerFragment() {

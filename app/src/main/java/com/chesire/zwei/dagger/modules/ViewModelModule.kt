@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.chesire.zwei.view.ViewModelFactory
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
+import com.chesire.zwei.view.onboarding.initial.request.RequestViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -17,6 +18,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(OnboardingViewModel::class)
     internal abstract fun bindOnboardingViewModel(viewModel: OnboardingViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RequestViewModel::class)
+    internal abstract fun bindRequestViewModel(viewModel: RequestViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
