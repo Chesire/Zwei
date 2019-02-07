@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.MountModel
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -31,7 +32,7 @@ class MountDaoTests {
     }
 
     @Test
-    fun insertSingleMountSavesData() {
+    fun insertSingleMountSavesData() = runBlocking {
         val newModel = generateMountModel(0)
         db.mountDao().insert(newModel)
 
@@ -39,7 +40,7 @@ class MountDaoTests {
     }
 
     @Test
-    fun insertMultipleMountsSavesData() {
+    fun insertMultipleMountsSavesData() = runBlocking {
         val models = listOf(
             generateMountModel(0),
             generateMountModel(1),
@@ -51,12 +52,12 @@ class MountDaoTests {
     }
 
     @Test
-    fun findByIdWithNoMatchingMountsReturnsNull() {
+    fun findByIdWithNoMatchingMountsReturnsNull() = runBlocking {
         assertNull(db.mountDao().findById(0))
     }
 
     @Test
-    fun findByIdWithMatchingMountsReturnsMatching() {
+    fun findByIdWithMatchingMountsReturnsMatching() = runBlocking {
         val expectedModel = generateMountModel(1)
         val models = listOf(
             generateMountModel(0),
@@ -69,17 +70,17 @@ class MountDaoTests {
     }
 
     @Test
-    fun getAllWithNoItemsReturnsEmptyList() {
+    fun getAllWithNoItemsReturnsEmptyList() = runBlocking {
         assertTrue(db.mountDao().getAll().isEmpty())
     }
 
     @Test
-    fun getAllWithIdsNoItemsReturnsEmptyList() {
+    fun getAllWithIdsNoItemsReturnsEmptyList() = runBlocking {
         assertTrue(db.mountDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
     }
 
     @Test
-    fun getAllWithIdsPartialMatchReturnsMatching() {
+    fun getAllWithIdsPartialMatchReturnsMatching() = runBlocking {
         val models = listOf(
             generateMountModel(0),
             generateMountModel(1),
@@ -90,7 +91,7 @@ class MountDaoTests {
     }
 
     @Test
-    fun getAllWithIdsReturnsAllMatching() {
+    fun getAllWithIdsReturnsAllMatching() = runBlocking {
         val models = listOf(
             generateMountModel(0),
             generateMountModel(1),

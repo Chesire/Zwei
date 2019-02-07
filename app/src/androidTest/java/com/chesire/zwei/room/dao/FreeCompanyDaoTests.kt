@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.FreeCompanyEstateModel
 import com.chesire.zwei.xivapi.model.FreeCompanyModel
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -31,7 +32,7 @@ class FreeCompanyDaoTests {
     }
 
     @Test
-    fun insertFreeCompanySavesData() {
+    fun insertFreeCompanySavesData() = runBlocking {
         val newModel = generateFreeCompanyModel(0)
         db.freeCompanyDao().insert(newModel)
 
@@ -39,7 +40,7 @@ class FreeCompanyDaoTests {
     }
 
     @Test
-    fun insertingMultipleFreeCompanySavesLastOne() {
+    fun insertingMultipleFreeCompanySavesLastOne() = runBlocking {
         val newModel1 = generateFreeCompanyModel(0)
         val newModel2 = generateFreeCompanyModel(0)
 
@@ -51,12 +52,12 @@ class FreeCompanyDaoTests {
     }
 
     @Test
-    fun retrievingFreeCompanyWithoutSettingReturnsNull() {
+    fun retrievingFreeCompanyWithoutSettingReturnsNull() = runBlocking {
         assertNull(db.freeCompanyDao().get())
     }
 
     @Test
-    fun deletingFreeCompanyRemovesData() {
+    fun deletingFreeCompanyRemovesData() = runBlocking {
         val newModel = generateFreeCompanyModel(0)
         db.freeCompanyDao().insert(newModel)
 

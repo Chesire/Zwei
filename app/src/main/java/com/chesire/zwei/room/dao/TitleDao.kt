@@ -9,17 +9,17 @@ import com.chesire.zwei.xivapi.model.TitleModel
 @Dao
 interface TitleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: TitleModel)
+    suspend fun insert(item: TitleModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(items: List<TitleModel>)
+    suspend fun insertAll(items: List<TitleModel>)
 
     @Query("SELECT * FROM titlemodel WHERE id LIKE :id LIMIT 1")
-    fun findById(id: Int): TitleModel?
+    suspend fun findById(id: Int): TitleModel?
 
     @Query("SELECT * FROM titlemodel")
-    fun getAll(): List<TitleModel>
+    suspend fun getAll(): List<TitleModel>
 
     @Query("SELECT * FROM titlemodel WHERE id IN (:ids)")
-    fun getAllByIds(ids: List<Int>): List<TitleModel>
+    suspend fun getAllByIds(ids: List<Int>): List<TitleModel>
 }

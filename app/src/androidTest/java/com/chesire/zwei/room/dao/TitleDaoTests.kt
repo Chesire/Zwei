@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.TitleModel
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -31,7 +32,7 @@ class TitleDaoTests {
     }
 
     @Test
-    fun insertSingleTitleSavesData() {
+    fun insertSingleTitleSavesData() = runBlocking {
         val newModel = generateTitleModel(0)
         db.titleDao().insert(newModel)
 
@@ -39,7 +40,7 @@ class TitleDaoTests {
     }
 
     @Test
-    fun insertMultipleTitlesSavesData() {
+    fun insertMultipleTitlesSavesData() = runBlocking {
         val models = listOf(
             generateTitleModel(0),
             generateTitleModel(1),
@@ -51,12 +52,12 @@ class TitleDaoTests {
     }
 
     @Test
-    fun findByIdWithNoMatchingTitlesReturnsNull() {
+    fun findByIdWithNoMatchingTitlesReturnsNull() = runBlocking {
         assertNull(db.titleDao().findById(0))
     }
 
     @Test
-    fun findByIdWithMatchingTitlesReturnsMatching() {
+    fun findByIdWithMatchingTitlesReturnsMatching() = runBlocking {
         val expectedModel = generateTitleModel(1)
         val models = listOf(
             generateTitleModel(0),
@@ -69,17 +70,17 @@ class TitleDaoTests {
     }
 
     @Test
-    fun getAllWithNoItemsReturnsEmptyList() {
+    fun getAllWithNoItemsReturnsEmptyList() = runBlocking {
         assertTrue(db.titleDao().getAll().isEmpty())
     }
 
     @Test
-    fun getAllWithIdsNoItemsReturnsEmptyList() {
+    fun getAllWithIdsNoItemsReturnsEmptyList() = runBlocking {
         assertTrue(db.titleDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
     }
 
     @Test
-    fun getAllWithIdsPartialMatchReturnsMatching() {
+    fun getAllWithIdsPartialMatchReturnsMatching() = runBlocking {
         val models = listOf(
             generateTitleModel(0),
             generateTitleModel(1),
@@ -90,7 +91,7 @@ class TitleDaoTests {
     }
 
     @Test
-    fun getAllWithIdsReturnsAllMatching() {
+    fun getAllWithIdsReturnsAllMatching() = runBlocking {
         val models = listOf(
             generateTitleModel(0),
             generateTitleModel(1),

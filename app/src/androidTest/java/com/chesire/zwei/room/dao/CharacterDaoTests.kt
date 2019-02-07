@@ -7,6 +7,7 @@ import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
 import com.chesire.zwei.xivapi.model.CharacterDetailModel
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -32,7 +33,7 @@ class CharacterDaoTests {
     }
 
     @Test
-    fun insertSingleCharacterSavesData() {
+    fun insertSingleCharacterSavesData() = runBlocking {
         val newModel = generateCharacterModel()
         db.characterDao().insert(newModel)
 
@@ -40,7 +41,7 @@ class CharacterDaoTests {
     }
 
     @Test
-    fun insertingMultipleCharactersWithSameIdSavesLastOne() {
+    fun insertingMultipleCharactersWithSameIdSavesLastOne() = runBlocking {
         val newModel1 = generateCharacterModel(0)
         val newModel2 = generateCharacterModel(0)
 
@@ -52,12 +53,12 @@ class CharacterDaoTests {
     }
 
     @Test
-    fun retrievingCharacterWithoutSettingReturnsNull() {
+    fun retrievingCharacterWithoutSettingReturnsNull() = runBlocking {
         assertNull(db.characterDao().get())
     }
 
     @Test
-    fun deletingCharacterRemovesData() {
+    fun deletingCharacterRemovesData() = runBlocking {
         val newModel = generateCharacterModel()
         db.characterDao().insert(newModel)
 

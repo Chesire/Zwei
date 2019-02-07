@@ -9,17 +9,17 @@ import com.chesire.zwei.xivapi.model.CompanionModel
 @Dao
 interface CompanionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: CompanionModel)
+    suspend fun insert(item: CompanionModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(items: List<CompanionModel>)
+    suspend fun insertAll(items: List<CompanionModel>)
 
     @Query("SELECT * FROM companionmodel WHERE id LIKE :id LIMIT 1")
-    fun findById(id: Int): CompanionModel?
+    suspend fun findById(id: Int): CompanionModel?
 
     @Query("SELECT * FROM companionmodel")
-    fun getAll(): List<CompanionModel>
+    suspend fun getAll(): List<CompanionModel>
 
     @Query("SELECT * FROM companionmodel WHERE id IN (:ids)")
-    fun getAllByIds(ids: List<Int>): List<CompanionModel>
+    suspend fun getAllByIds(ids: List<Int>): List<CompanionModel>
 }

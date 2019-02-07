@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.chesire.zwei.room.ZweiDatabase
 import com.chesire.zwei.xivapi.model.CompanionModel
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -31,7 +32,7 @@ class CompanionDaoTests {
     }
 
     @Test
-    fun insertSingleCompanionSavesData() {
+    fun insertSingleCompanionSavesData() = runBlocking {
         val newModel = generateCompanionModel(0)
         db.companionDao().insert(newModel)
 
@@ -39,7 +40,7 @@ class CompanionDaoTests {
     }
 
     @Test
-    fun insertMultipleCompanionsSavesData() {
+    fun insertMultipleCompanionsSavesData() = runBlocking {
         val models = listOf(
             generateCompanionModel(0),
             generateCompanionModel(1),
@@ -51,12 +52,12 @@ class CompanionDaoTests {
     }
 
     @Test
-    fun findByIdWithNoMatchingCompanionsReturnsNull() {
+    fun findByIdWithNoMatchingCompanionsReturnsNull() = runBlocking {
         assertNull(db.companionDao().findById(0))
     }
 
     @Test
-    fun findByIdWithMatchingCompanionsReturnsMatching() {
+    fun findByIdWithMatchingCompanionsReturnsMatching() = runBlocking {
         val expectedModel = generateCompanionModel(1)
         val models = listOf(
             generateCompanionModel(0),
@@ -69,17 +70,17 @@ class CompanionDaoTests {
     }
 
     @Test
-    fun getAllWithNoItemsReturnsEmptyList() {
+    fun getAllWithNoItemsReturnsEmptyList() = runBlocking {
         assertTrue(db.companionDao().getAll().isEmpty())
     }
 
     @Test
-    fun getAllWithIdsNoItemsReturnsEmptyList() {
+    fun getAllWithIdsNoItemsReturnsEmptyList() = runBlocking {
         assertTrue(db.companionDao().getAllByIds(listOf(0, 1, 2)).isEmpty())
     }
 
     @Test
-    fun getAllWithIdsPartialMatchReturnsMatching() {
+    fun getAllWithIdsPartialMatchReturnsMatching() = runBlocking {
         val models = listOf(
             generateCompanionModel(0),
             generateCompanionModel(1),
@@ -90,7 +91,7 @@ class CompanionDaoTests {
     }
 
     @Test
-    fun getAllWithIdsReturnsAllMatching() {
+    fun getAllWithIdsReturnsAllMatching() = runBlocking {
         val models = listOf(
             generateCompanionModel(0),
             generateCompanionModel(1),

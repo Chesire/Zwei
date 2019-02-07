@@ -10,11 +10,11 @@ import com.chesire.zwei.xivapi.model.FreeCompanyModel
 @Dao
 interface FreeCompanyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: FreeCompanyModel)
+    suspend fun insert(item: FreeCompanyModel)
 
     @Query("SELECT * FROM freecompanymodel LIMIT 1")
-    fun get(): FreeCompanyModel?
+    suspend fun get(): FreeCompanyModel?
 
     @Delete
-    fun delete(item: FreeCompanyModel)
+    suspend fun delete(item: FreeCompanyModel)
 }
