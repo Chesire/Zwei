@@ -18,13 +18,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 import org.mockito.ArgumentMatchers.anyInt
 import retrofit2.Response
 
 class XIVApiTests {
     @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+    val rule = InstantTaskExecutorRule()
 
     @Test
     fun `when searchForCharacter fails return status error`() = runBlocking {
@@ -40,7 +39,7 @@ class XIVApiTests {
 
         assertEquals(
             Status.Error,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
+            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").status
         )
     }
 
@@ -58,7 +57,7 @@ class XIVApiTests {
 
         assertEquals(
             Status.Error,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
+            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").status
         )
     }
 
@@ -78,7 +77,7 @@ class XIVApiTests {
 
         assertEquals(
             Status.Success,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().status
+            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").status
         )
     }
 
@@ -97,7 +96,7 @@ class XIVApiTests {
 
         assertEquals(
             characterModels,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").await().data
+            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").data
         )
     }
 
@@ -113,7 +112,7 @@ class XIVApiTests {
 
         val classUnderTest = XIVApi(mockService)
 
-        assertEquals(Status.Error, classUnderTest.getCharacter(0).await().status)
+        assertEquals(Status.Error, classUnderTest.getCharacter(0).status)
     }
 
     @Test
@@ -128,7 +127,7 @@ class XIVApiTests {
 
         val classUnderTest = XIVApi(mockService)
 
-        assertEquals(Status.Error, classUnderTest.getCharacter(0).await().status)
+        assertEquals(Status.Error, classUnderTest.getCharacter(0).status)
     }
 
     @Test
@@ -148,7 +147,7 @@ class XIVApiTests {
 
             val classUnderTest = XIVApi(mockService)
 
-            val result = classUnderTest.getCharacter(0).await()
+            val result = classUnderTest.getCharacter(0)
             assertEquals(Status.Success, result.status)
             assertTrue(result.data is InfoModel)
         }
@@ -170,7 +169,7 @@ class XIVApiTests {
 
             val classUnderTest = XIVApi(mockService)
 
-            val result = classUnderTest.getCharacter(0).await()
+            val result = classUnderTest.getCharacter(0)
             assertEquals(Status.Success, result.status)
             assertTrue(result.data is InfoModel)
         }
@@ -192,7 +191,7 @@ class XIVApiTests {
 
             val classUnderTest = XIVApi(mockService)
 
-            val result = classUnderTest.getCharacter(0).await()
+            val result = classUnderTest.getCharacter(0)
             assertEquals(Status.Success, result.status)
             assertTrue(result.data is InfoModel)
         }
@@ -214,7 +213,7 @@ class XIVApiTests {
 
             val classUnderTest = XIVApi(mockService)
 
-            val result = classUnderTest.getCharacter(0).await()
+            val result = classUnderTest.getCharacter(0)
             assertEquals(Status.Success, result.status)
             assertTrue(result.data is CharacterDetailModel)
         }

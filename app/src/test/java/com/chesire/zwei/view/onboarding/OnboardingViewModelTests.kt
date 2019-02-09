@@ -12,34 +12,35 @@ import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import com.chesire.zwei.xivapi.model.StateModel
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 
 class OnboardingViewModelTests {
     @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+    val rule = InstantTaskExecutorRule()
+
+    private val testCoroutineContext = Dispatchers.Unconfined
 
     @Test
     fun `when searchForCharacter, with no name, set search status to error`() = runBlocking {
         val mockApi = mockk<XIVApi> {
-            every {
+            coEvery {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } returns async {
+            } coAnswers {
                 Resource.success(listOf(getSearchCharacterModel()))
             }
         }
 
-        val classUnderTest = OnboardingViewModel(mockApi).apply {
+        val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
             world.value = "Phoenix"
         }
 
-        runBlocking { classUnderTest.searchForCharacter() }.join()
+        classUnderTest.searchForCharacter()
 
         assertEquals(Status.Error, classUnderTest.searchStatus.value)
     }
@@ -47,18 +48,18 @@ class OnboardingViewModelTests {
     @Test
     fun `when searchForCharacter, with no world, set search status to error`() = runBlocking {
         val mockApi = mockk<XIVApi> {
-            every {
+            coEvery {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } returns async {
+            } coAnswers {
                 Resource.success(listOf(getSearchCharacterModel()))
             }
         }
 
-        val classUnderTest = OnboardingViewModel(mockApi).apply {
+        val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
             characterName.value = "Cheshire Cat"
         }
 
-        runBlocking { classUnderTest.searchForCharacter() }.join()
+        classUnderTest.searchForCharacter()
 
         assertEquals(Status.Error, classUnderTest.searchStatus.value)
     }
@@ -66,19 +67,19 @@ class OnboardingViewModelTests {
     @Test
     fun `when searchForCharacter fails, set search status to error`() = runBlocking {
         val mockApi = mockk<XIVApi> {
-            every {
+            coEvery {
                 searchForCharacter("Cheshire Cat", "Phoenix")
-            } returns async {
-                Resource.error<List<SearchCharacterModel>>("Test", mockk())
+            } coAnswers {
+                Resource.error("Test", mockk())
             }
         }
 
-        val classUnderTest = OnboardingViewModel(mockApi).apply {
+        val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
             characterName.value = "Cheshire Cat"
             world.value = "Phoenix"
         }
 
-        runBlocking { classUnderTest.searchForCharacter() }.join()
+        classUnderTest.searchForCharacter()
 
         assertEquals(Status.Error, classUnderTest.searchStatus.value)
     }
@@ -87,19 +88,19 @@ class OnboardingViewModelTests {
     fun `when searchForCharacter succeeds, with no characters, set search status to error`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
-                } returns async {
-                    Resource.success<List<SearchCharacterModel>>(emptyList())
+                } coAnswers {
+                    Resource.success(emptyList())
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
             }
 
-            runBlocking { classUnderTest.searchForCharacter() }.join()
+            classUnderTest.searchForCharacter()
 
             assertEquals(Status.Error, classUnderTest.searchStatus.value)
         }
@@ -108,19 +109,19 @@ class OnboardingViewModelTests {
     fun `when searchForCharacter succeeds, with characters, set search status to success`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
-                } returns async {
+                } coAnswers {
                     Resource.success(listOf(getSearchCharacterModel()))
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
             }
 
-            runBlocking { classUnderTest.searchForCharacter() }.join()
+            classUnderTest.searchForCharacter()
 
             assertEquals(Status.Success, classUnderTest.searchStatus.value)
         }
@@ -130,19 +131,19 @@ class OnboardingViewModelTests {
         runBlocking {
             val expectedCharacters = listOf(getSearchCharacterModel())
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
-                } returns async {
+                } coAnswers {
                     Resource.success(expectedCharacters)
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
             }
 
-            runBlocking { classUnderTest.searchForCharacter() }.join()
+            classUnderTest.searchForCharacter()
 
             assertEquals(expectedCharacters, classUnderTest.foundCharacters.value)
         }
@@ -152,19 +153,19 @@ class OnboardingViewModelTests {
         runBlocking {
             val expectedCharacters = listOf(getSearchCharacterModel(0), getSearchCharacterModel(1))
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
-                } returns async {
+                } coAnswers {
                     Resource.success(expectedCharacters)
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
             }
 
-            runBlocking { classUnderTest.searchForCharacter() }.join()
+            classUnderTest.searchForCharacter()
 
             assertEquals(expectedCharacters.first(), classUnderTest.currentCharacter.value)
         }
@@ -173,19 +174,19 @@ class OnboardingViewModelTests {
     fun `when getCharacter, with no current character, set get character status to error`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     getCharacter(0)
-                } returns async {
+                } coAnswers {
                     Resource.success(getCharacterDetailModel())
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
             }
 
-            runBlocking { classUnderTest.getCharacter() }.join()
+            classUnderTest.getCharacter()
 
             assertEquals(GetCharacterStatus.Error, classUnderTest.getCharacterStatus.value)
         }
@@ -193,20 +194,20 @@ class OnboardingViewModelTests {
     @Test
     fun `when getCharacter fails, set get character status to error`() = runBlocking {
         val mockApi = mockk<XIVApi> {
-            every {
+            coEvery {
                 getCharacter(0)
-            } returns async {
+            } coAnswers {
                 Resource.error<Resource<Any>>("test", mockk())
             }
         }
 
-        val classUnderTest = OnboardingViewModel(mockApi).apply {
+        val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
             characterName.value = "Cheshire Cat"
             world.value = "Phoenix"
             currentCharacter.value = getSearchCharacterModel()
         }
 
-        runBlocking { classUnderTest.getCharacter() }.join()
+        classUnderTest.getCharacter()
 
         assertEquals(GetCharacterStatus.Error, classUnderTest.getCharacterStatus.value)
     }
@@ -215,20 +216,20 @@ class OnboardingViewModelTests {
     fun `when getCharacter reports unexpected branch, set get character status to error`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     getCharacter(0)
-                } returns async {
+                } coAnswers {
                     Resource.loading<Resource<Any>>(mockk())
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
                 currentCharacter.value = getSearchCharacterModel()
             }
 
-            runBlocking { classUnderTest.getCharacter() }.join()
+            classUnderTest.getCharacter()
 
             assertEquals(GetCharacterStatus.Error, classUnderTest.getCharacterStatus.value)
         }
@@ -237,20 +238,20 @@ class OnboardingViewModelTests {
     fun `when getCharacter succeeds, with InfoModel, set get character status to GotInfo`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     getCharacter(0)
-                } returns async {
+                } coAnswers {
                     Resource.success(getInfoModel())
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
                 currentCharacter.value = getSearchCharacterModel()
             }
 
-            runBlocking { classUnderTest.getCharacter() }.join()
+            classUnderTest.getCharacter()
 
             assertEquals(GetCharacterStatus.GotInfo, classUnderTest.getCharacterStatus.value)
         }
@@ -259,20 +260,20 @@ class OnboardingViewModelTests {
     fun `when getCharacter succeeds, with CharacterDetailModel, set get character status to GotCharacter`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
-                every {
+                coEvery {
                     getCharacter(0)
-                } returns async {
+                } coAnswers {
                     Resource.success(getCharacterDetailModel())
                 }
             }
 
-            val classUnderTest = OnboardingViewModel(mockApi).apply {
+            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
                 characterName.value = "Cheshire Cat"
                 world.value = "Phoenix"
                 currentCharacter.value = getSearchCharacterModel()
             }
 
-            runBlocking { classUnderTest.getCharacter() }.join()
+            classUnderTest.getCharacter()
 
             assertEquals(GetCharacterStatus.GotCharacter, classUnderTest.getCharacterStatus.value)
         }
