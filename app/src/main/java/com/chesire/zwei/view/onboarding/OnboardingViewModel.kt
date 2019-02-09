@@ -49,7 +49,7 @@ class OnboardingViewModel @Inject constructor(
         _searchStatus.value = Status.Loading
         uiScope.launch(ioContext) {
             try {
-                val result = xivApi.searchForCharacter(characterName.value!!, world.value!!).await()
+                val result = xivApi.searchForCharacter(characterName.value!!, world.value!!)
 
                 when (result.status) {
                     Status.Error -> _searchStatus.postValue(Status.Error)
@@ -70,7 +70,10 @@ class OnboardingViewModel @Inject constructor(
                     }
                 }
             } catch (e: TimeoutException) {
-                Timber.e("Operation timeout $e")
+                Timber.e("Operation timeout in searchForCharacter: $e")
+                _searchStatus.postValue(Status.Error)
+            } catch (e: Throwable) {
+                Timber.e("Error thrown in searchForCharacter: $e")
                 _searchStatus.postValue(Status.Error)
             }
         }
@@ -86,7 +89,7 @@ class OnboardingViewModel @Inject constructor(
 
         uiScope.launch(ioContext) {
             try {
-                val result = xivApi.getCharacter(currentCharacter.value!!.id).await()
+                val result = xivApi.getCharacter(currentCharacter.value!!.id)
 
                 when (result.status) {
                     Status.Error -> _getCharacterStatus.postValue(GetCharacterStatus.Error)
@@ -106,7 +109,10 @@ class OnboardingViewModel @Inject constructor(
                     }
                 }
             } catch (e: TimeoutException) {
-                Timber.e("Operation timeout $e")
+                Timber.e("Operation timeout in getCharacter: $e")
+                _getCharacterStatus.postValue(GetCharacterStatus.Error)
+            } catch (e: Throwable) {
+                Timber.e("Error thrown in getCharacter: $e")
                 _getCharacterStatus.postValue(GetCharacterStatus.Error)
             }
         }
