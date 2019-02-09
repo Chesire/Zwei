@@ -4,6 +4,7 @@ import android.app.Application
 import com.chesire.zwei.ZweiApplication
 import com.chesire.zwei.dagger.modules.ActivityModule
 import com.chesire.zwei.dagger.modules.ApplicationModule
+import com.chesire.zwei.dagger.modules.CoroutinesModule
 import com.chesire.zwei.dagger.modules.DatabaseModule
 import com.chesire.zwei.dagger.modules.FragmentModule
 import com.chesire.zwei.dagger.modules.ServerModule
@@ -20,6 +21,7 @@ import javax.inject.Singleton
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
         ApplicationModule::class,
+        CoroutinesModule::class,
         DatabaseModule::class,
         FragmentModule::class,
         ServerModule::class,

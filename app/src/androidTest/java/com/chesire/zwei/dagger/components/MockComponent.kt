@@ -3,6 +3,7 @@ package com.chesire.zwei.dagger.components
 import android.app.Application
 import com.chesire.zwei.MockApplication
 import com.chesire.zwei.dagger.modules.ActivityModule
+import com.chesire.zwei.dagger.modules.CoroutinesModule
 import com.chesire.zwei.dagger.modules.FragmentModule
 import com.chesire.zwei.dagger.modules.MockApplicationModule
 import com.chesire.zwei.dagger.modules.MockDatabaseModule
@@ -19,6 +20,7 @@ import javax.inject.Singleton
     modules = [
         ActivityModule::class,
         AndroidSupportInjectionModule::class,
+        CoroutinesModule::class,
         FragmentModule::class,
         MockApplicationModule::class,
         MockDatabaseModule::class,
