@@ -189,7 +189,6 @@ exceptions:
      - NullPointerException
      - IndexOutOfBoundsException
      - RuntimeException
-     - Throwable
   TooGenericExceptionThrown:
     active: true
     exceptionNames:

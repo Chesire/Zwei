@@ -27,6 +27,7 @@ class XIVApi @Inject constructor(
      * Gets the details for the character with id of [id], if it is not yet added to the database
      * then data.second will be null, if it is added then data.second will be populated.
      */
+    @Suppress("PreferToOverPairSyntax")
     suspend fun getCharacter(id: Int): Resource<Pair<InfoModel, CharacterDetailModel?>> {
         val res = xivApiService.getCharacter(id).await()
 

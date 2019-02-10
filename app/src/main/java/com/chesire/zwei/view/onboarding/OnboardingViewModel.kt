@@ -54,16 +54,14 @@ class OnboardingViewModel @Inject constructor(
                         Timber.w("Error searching for character - ${result.msg}")
                         _searchStatus.postValue(LiveDataStatus.Error)
                     }
-                    is Resource.Success -> {
-                        if (result.data.isEmpty()) {
-                            Timber.d("Could not find character - failure no data")
-                            _searchStatus.postValue(LiveDataStatus.Error)
-                        } else {
-                            Timber.d("Found ${result.data.count()} characters")
-                            _searchStatus.postValue(LiveDataStatus.Success)
-                            _foundCharacters.postValue(result.data)
-                            currentCharacter.postValue(result.data.first())
-                        }
+                    is Resource.Success -> if (result.data.isEmpty()) {
+                        Timber.d("Could not find character - failure no data")
+                        _searchStatus.postValue(LiveDataStatus.Error)
+                    } else {
+                        Timber.d("Found ${result.data.count()} characters")
+                        _searchStatus.postValue(LiveDataStatus.Success)
+                        _foundCharacters.postValue(result.data)
+                        currentCharacter.postValue(result.data.first())
                     }
                 }
             } catch (e: TimeoutException) {
@@ -93,11 +91,11 @@ class OnboardingViewModel @Inject constructor(
                         Timber.w("Error getting character - ${result.msg}")
                         _getCharacterStatus.postValue(GetCharacterStatus.Error)
                     }
-                    is Resource.Success -> {
-                        result.data.second?.let {
-                            _getCharacterStatus.postValue(GetCharacterStatus.GotCharacter)
-                        } ?: _getCharacterStatus.postValue(GetCharacterStatus.GotInfo)
-                    }
+                    is Resource.Success -> result
+                        .data
+                        .second
+                        ?.let { _getCharacterStatus.postValue(GetCharacterStatus.GotCharacter) }
+                        ?: _getCharacterStatus.postValue(GetCharacterStatus.GotInfo)
                 }
             } catch (e: TimeoutException) {
                 Timber.e("Operation timeout in getCharacter: $e")
