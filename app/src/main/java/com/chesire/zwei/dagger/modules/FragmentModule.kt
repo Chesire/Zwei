@@ -1,7 +1,7 @@
 package com.chesire.zwei.dagger.modules
 
-import com.chesire.zwei.view.onboarding.character.IsYourCharacterFragment
-import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
+import com.chesire.zwei.view.onboarding.character.isYourCharacter.IsYourCharacterFragment
+import com.chesire.zwei.view.onboarding.character.loadingCharacter.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.request.RequestFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment

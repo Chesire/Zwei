@@ -1,7 +1,7 @@
 package com.chesire.zwei.view.onboarding
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.chesire.zwei.view.onboarding.character.GetCharacterStatus
+import com.chesire.zwei.view.onboarding.character.loadingCharacter.GetCharacterStatus
 import com.chesire.zwei.util.LiveDataStatus
 import com.chesire.zwei.xivapi.Resource
 import com.chesire.zwei.xivapi.XIVApi

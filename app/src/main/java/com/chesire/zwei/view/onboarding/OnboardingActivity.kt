@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
 import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
-import com.chesire.zwei.view.onboarding.character.IsYourCharacterFragment
-import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
+import com.chesire.zwei.view.onboarding.character.isYourCharacter.IsYourCharacterFragment
+import com.chesire.zwei.view.onboarding.character.loadingCharacter.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
 import com.chesire.zwei.view.onboarding.initial.request.RequestFragment
 import com.chesire.zwei.view.onboarding.initial.welcome.WelcomeFragment

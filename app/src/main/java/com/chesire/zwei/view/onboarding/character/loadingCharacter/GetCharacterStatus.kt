@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.character
+package com.chesire.zwei.view.onboarding.character.loadingCharacter
 
 enum class GetCharacterStatus {
     GotCharacter,

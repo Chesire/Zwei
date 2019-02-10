@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.character
+package com.chesire.zwei.view.onboarding.character.loadingCharacter
 
 import android.content.Context
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentLoadingCharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
+import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -81,6 +82,7 @@ class LoadingCharacterFragment : DaggerFragment() {
     companion object {
         const val tag = "LoadingCharacterFragment"
 
-        fun newInstance() = LoadingCharacterFragment()
+        fun newInstance() =
+            LoadingCharacterFragment()
     }
 }

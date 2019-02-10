@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.character
+package com.chesire.zwei.view.onboarding.character.isYourCharacter
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentChooseCharacterBinding
 import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
+import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_choose_character.buttonNo
 import kotlinx.android.synthetic.main.fragment_choose_character.buttonYes
@@ -78,6 +79,7 @@ class IsYourCharacterFragment : DaggerFragment() {
     companion object {
         const val tag = "IsYourCharacterFragment"
 
-        fun newInstance() = IsYourCharacterFragment()
+        fun newInstance() =
+            IsYourCharacterFragment()
     }
 }
