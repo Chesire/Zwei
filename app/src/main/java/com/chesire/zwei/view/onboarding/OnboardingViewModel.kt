@@ -25,7 +25,7 @@ class OnboardingViewModel @Inject constructor(
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
     private val job = Job()
-    private val uiScope = CoroutineScope(job + Dispatchers.Main)
+    private val ioScope = CoroutineScope(job + ioContext)
     private val _searchStatus = SingleLiveEvent<Status>()
     private val _getCharacterStatus = SingleLiveEvent<GetCharacterStatus>()
     private val _foundCharacters = MutableLiveData<List<SearchCharacterModel>>()
@@ -47,7 +47,7 @@ class OnboardingViewModel @Inject constructor(
         }
 
         _searchStatus.value = Status.Loading
-        uiScope.launch(ioContext) {
+        ioScope.launch {
             try {
                 val result = xivApi.searchForCharacter(characterName.value!!, world.value!!)
 
@@ -87,7 +87,7 @@ class OnboardingViewModel @Inject constructor(
 
         _getCharacterStatus.value = GetCharacterStatus.Loading
 
-        uiScope.launch(ioContext) {
+        ioScope.launch {
             try {
                 val result = xivApi.getCharacter(currentCharacter.value!!.id)
 
