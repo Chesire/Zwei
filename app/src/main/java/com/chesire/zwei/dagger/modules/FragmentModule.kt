@@ -2,6 +2,7 @@ package com.chesire.zwei.dagger.modules
 
 import com.chesire.zwei.view.onboarding.character.isYourCharacter.IsYourCharacterFragment
 import com.chesire.zwei.view.onboarding.character.loadingCharacter.LoadingCharacterFragment
+import com.chesire.zwei.view.onboarding.character.selectCharacter.SelectCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.request.RequestFragment
 import com.chesire.zwei.view.onboarding.search.EnterCharacterFragment
 import com.chesire.zwei.view.onboarding.search.EnterWorldFragment
@@ -25,4 +26,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     internal abstract fun contributesRequestFragment(): RequestFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun contributesSelectCharacterFragment(): SelectCharacterFragment
 }

@@ -1,4 +1,4 @@
-package com.chesire.zwei.view.onboarding.character.isYourCharacter
+package com.chesire.zwei.view.onboarding.character.selectCharacter
 
 import android.content.Context
 import android.os.Bundle
@@ -6,24 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
-import com.chesire.zwei.databinding.FragmentChooseCharacterBinding
-import com.chesire.zwei.view.GlideApp
+import com.chesire.zwei.databinding.FragmentSelectCharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_choose_character.buttonNo
-import kotlinx.android.synthetic.main.fragment_choose_character.buttonYes
-import kotlinx.android.synthetic.main.fragment_choose_character.imageAvatar
 import javax.inject.Inject
 
-class IsYourCharacterFragment : DaggerFragment() {
+class SelectCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentChooseCharacterBinding
+    private lateinit var binding: FragmentSelectCharacterBinding
     private var characterInteractor: CharacterInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -43,9 +38,9 @@ class IsYourCharacterFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentChooseCharacterBinding>(
+        return DataBindingUtil.inflate<FragmentSelectCharacterBinding>(
             inflater,
-            R.layout.fragment_choose_character,
+            R.layout.fragment_select_character,
             container,
             false
         ).apply {
@@ -54,32 +49,15 @@ class IsYourCharacterFragment : DaggerFragment() {
         }.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        buttonYes.setOnClickListener { characterInteractor?.onCharacterChosen() }
-        buttonNo.setOnClickListener { characterInteractor?.isYourCharacterIsIncorrect() }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.currentCharacter.observe(
-            viewLifecycleOwner,
-            Observer { characterModel ->
-                GlideApp.with(requireContext())
-                    .load(characterModel.avatar)
-                    .into(imageAvatar)
-            }
-        )
-
-        binding.vm = viewModel
+        //binding.vm = viewModel
     }
 
     companion object {
-        const val tag = "IsYourCharacterFragment"
+        const val tag = "SelectCharacterFragment"
 
-        fun newInstance() =
-            IsYourCharacterFragment()
+        fun newInstance() = SelectCharacterFragment()
     }
 }

@@ -8,6 +8,7 @@ import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import com.chesire.zwei.view.onboarding.character.isYourCharacter.IsYourCharacterFragment
 import com.chesire.zwei.view.onboarding.character.loadingCharacter.LoadingCharacterFragment
+import com.chesire.zwei.view.onboarding.character.selectCharacter.SelectCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
 import com.chesire.zwei.view.onboarding.initial.request.RequestFragment
 import com.chesire.zwei.view.onboarding.initial.welcome.WelcomeFragment
@@ -94,10 +95,11 @@ class OnboardingActivity
     }
 
     override fun isYourCharacterIsIncorrect() {
-        // Load the select character fragment
+        val (tag, fragment) = getFragmentDetails(SelectCharacterFragment.tag)
+        loadFragment(tag, fragment)
     }
 
-    override fun isYourCharacterIsCorrect() {
+    override fun onCharacterChosen() {
         val (tag, fragment) = getFragmentDetails(LoadingCharacterFragment.tag)
         loadFragment(tag, fragment)
     }
@@ -125,6 +127,7 @@ class OnboardingActivity
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
             IsYourCharacterFragment.tag -> IsYourCharacterFragment.tag to IsYourCharacterFragment.newInstance()
+            SelectCharacterFragment.tag -> SelectCharacterFragment.tag to SelectCharacterFragment.newInstance()
             LoadingCharacterFragment.tag -> LoadingCharacterFragment.tag to LoadingCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
@@ -137,6 +140,7 @@ class OnboardingActivity
             is EnterWorldFragment -> EnterWorldFragment.tag
             is EnterCharacterFragment -> EnterCharacterFragment.tag
             is IsYourCharacterFragment -> IsYourCharacterFragment.tag
+            is SelectCharacterFragment -> SelectCharacterFragment.tag
             is LoadingCharacterFragment -> LoadingCharacterFragment.tag
             else -> error("Unexpected fragment tag requested - $fragment")
         }
