@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,13 +14,14 @@ import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_select_character.fragmentSelectCharacterCharacterList
+import kotlinx.android.synthetic.main.fragment_select_character.fragmentSelectCharacterConfirm
 import javax.inject.Inject
 
 class SelectCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var characterInteractor: CharacterInteractor? = null
-    private lateinit var viewAdapter: SelectCharacterViewAdapter
+    private val viewAdapter = SelectCharacterViewAdapter()
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
             .of(requireActivity(), viewModelFactory)
@@ -41,10 +41,8 @@ class SelectCharacterFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_select_character, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewAdapter = SelectCharacterViewAdapter()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         fragmentSelectCharacterCharacterList.apply {
             adapter = viewAdapter
@@ -52,12 +50,13 @@ class SelectCharacterFragment : DaggerFragment() {
             layoutManager = GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
         }
 
-        viewModel.foundCharacters.observe(
-            viewLifecycleOwner,
-            Observer { characters ->
-                viewAdapter.setCharacters(characters)
-            }
-        )
+        fragmentSelectCharacterConfirm.setOnClickListener { characterInteractor?.onCharacterChosen() }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewAdapter.setCharacters(viewModel.foundCharacters.value ?: emptyList())
     }
 
     companion object {

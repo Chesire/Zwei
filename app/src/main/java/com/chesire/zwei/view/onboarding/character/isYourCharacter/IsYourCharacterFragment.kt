@@ -15,8 +15,6 @@ import com.chesire.zwei.view.GlideApp
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_choose_character.buttonNo
-import kotlinx.android.synthetic.main.fragment_choose_character.buttonYes
 import kotlinx.android.synthetic.main.fragment_choose_character.imageAvatar
 import javax.inject.Inject
 
