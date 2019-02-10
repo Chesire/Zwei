@@ -23,7 +23,6 @@ import javax.inject.Inject
 class IsYourCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentChooseCharacterBinding
     private var characterInteractor: CharacterInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -49,16 +48,11 @@ class IsYourCharacterFragment : DaggerFragment() {
             container,
             false
         ).apply {
-            binding = this
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+            buttonYes.setOnClickListener { characterInteractor?.onCharacterChosen() }
+            buttonNo.setOnClickListener { characterInteractor?.isYourCharacterIsIncorrect() }
         }.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        buttonYes.setOnClickListener { characterInteractor?.onCharacterChosen() }
-        buttonNo.setOnClickListener { characterInteractor?.isYourCharacterIsIncorrect() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -72,14 +66,11 @@ class IsYourCharacterFragment : DaggerFragment() {
                     .into(imageAvatar)
             }
         )
-
-        binding.vm = viewModel
     }
 
     companion object {
         const val tag = "IsYourCharacterFragment"
 
-        fun newInstance() =
-            IsYourCharacterFragment()
+        fun newInstance() = IsYourCharacterFragment()
     }
 }

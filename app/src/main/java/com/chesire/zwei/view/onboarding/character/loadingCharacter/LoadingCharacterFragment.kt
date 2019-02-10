@@ -19,7 +19,6 @@ import javax.inject.Inject
 class LoadingCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentLoadingCharacterBinding
     private var characterInteractor: CharacterInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -45,8 +44,8 @@ class LoadingCharacterFragment : DaggerFragment() {
             container,
             false
         ).apply {
-            binding = this
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
         }.root
     }
 
@@ -60,7 +59,6 @@ class LoadingCharacterFragment : DaggerFragment() {
             }
         )
 
-        binding.vm = viewModel
         viewModel.getCharacter()
     }
 
@@ -82,7 +80,6 @@ class LoadingCharacterFragment : DaggerFragment() {
     companion object {
         const val tag = "LoadingCharacterFragment"
 
-        fun newInstance() =
-            LoadingCharacterFragment()
+        fun newInstance() = LoadingCharacterFragment()
     }
 }

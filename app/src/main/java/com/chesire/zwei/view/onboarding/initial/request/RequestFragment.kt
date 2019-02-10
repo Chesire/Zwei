@@ -42,7 +42,7 @@ class RequestFragment : DaggerFragment() {
             container,
             false
         ).apply {
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
             vm = viewModel
             fragmentRequestNext.setOnClickListener {
                 viewModel.saveAnalyticsChoices()

@@ -18,7 +18,6 @@ import javax.inject.Inject
 class SelectCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentSelectCharacterBinding
     private var characterInteractor: CharacterInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -44,15 +43,9 @@ class SelectCharacterFragment : DaggerFragment() {
             container,
             false
         ).apply {
-            binding = this
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
+            //vm = viewModel
         }.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        //binding.vm = viewModel
     }
 
     companion object {

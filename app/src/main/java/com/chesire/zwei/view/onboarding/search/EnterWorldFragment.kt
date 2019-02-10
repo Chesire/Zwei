@@ -13,13 +13,11 @@ import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEnterWorldBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_enter_world.buttonNext
 import javax.inject.Inject
 
 class EnterWorldFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentEnterWorldBinding
     private var searchInteractor: SearchInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -45,21 +43,14 @@ class EnterWorldFragment : DaggerFragment() {
             container,
             false
         ).apply {
-            binding = this
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+            buttonNext.setOnClickListener { searchInteractor?.completeEnterWorld() }
         }.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        buttonNext.setOnClickListener { searchInteractor?.completeEnterWorld() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        binding.vm = viewModel
 
         if (BuildConfig.DEBUG) {
             viewModel.world.value = "Phoenix"

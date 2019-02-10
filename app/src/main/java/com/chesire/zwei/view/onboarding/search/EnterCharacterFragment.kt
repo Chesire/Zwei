@@ -19,7 +19,6 @@ import javax.inject.Inject
 class EnterCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var binding: FragmentEnterCharacterBinding
     private var searchInteractor: SearchInteractor? = null
     private val viewModel: OnboardingViewModel by lazy {
         ViewModelProviders
@@ -45,8 +44,8 @@ class EnterCharacterFragment : DaggerFragment() {
             container,
             false
         ).apply {
-            binding = this
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
         }.root
     }
 
@@ -58,8 +57,6 @@ class EnterCharacterFragment : DaggerFragment() {
                 onSearchStatusChange(it)
             }
         )
-
-        binding.vm = viewModel
     }
 
     private fun onSearchStatusChange(status: LiveDataStatus) {
