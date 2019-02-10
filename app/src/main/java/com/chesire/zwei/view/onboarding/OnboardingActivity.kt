@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.chesire.zwei.R
 import com.chesire.zwei.util.PrefHelper
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
-import com.chesire.zwei.view.onboarding.character.ChooseCharacterFragment
+import com.chesire.zwei.view.onboarding.character.IsYourCharacterFragment
 import com.chesire.zwei.view.onboarding.character.LoadingCharacterFragment
 import com.chesire.zwei.view.onboarding.initial.InitialInteractor
 import com.chesire.zwei.view.onboarding.initial.request.RequestFragment
@@ -89,11 +89,15 @@ class OnboardingActivity
     }
 
     override fun completeEnterCharacter() {
-        val (tag, fragment) = getFragmentDetails(ChooseCharacterFragment.tag)
+        val (tag, fragment) = getFragmentDetails(IsYourCharacterFragment.tag)
         loadFragment(tag, fragment)
     }
 
-    override fun completeChooseCharacter() {
+    override fun isYourCharacterIsIncorrect() {
+        // Load the select character fragment
+    }
+
+    override fun isYourCharacterIsCorrect() {
         val (tag, fragment) = getFragmentDetails(LoadingCharacterFragment.tag)
         loadFragment(tag, fragment)
     }
@@ -120,7 +124,7 @@ class OnboardingActivity
             RequestFragment.tag -> RequestFragment.tag to RequestFragment.newInstance()
             EnterWorldFragment.tag -> EnterWorldFragment.tag to EnterWorldFragment.newInstance()
             EnterCharacterFragment.tag -> EnterCharacterFragment.tag to EnterCharacterFragment.newInstance()
-            ChooseCharacterFragment.tag -> ChooseCharacterFragment.tag to ChooseCharacterFragment.newInstance()
+            IsYourCharacterFragment.tag -> IsYourCharacterFragment.tag to IsYourCharacterFragment.newInstance()
             LoadingCharacterFragment.tag -> LoadingCharacterFragment.tag to LoadingCharacterFragment.newInstance()
             else -> error("Unexpected tag $tag requested")
         }
@@ -132,7 +136,7 @@ class OnboardingActivity
             is RequestFragment -> RequestFragment.tag
             is EnterWorldFragment -> EnterWorldFragment.tag
             is EnterCharacterFragment -> EnterCharacterFragment.tag
-            is ChooseCharacterFragment -> ChooseCharacterFragment.tag
+            is IsYourCharacterFragment -> IsYourCharacterFragment.tag
             is LoadingCharacterFragment -> LoadingCharacterFragment.tag
             else -> error("Unexpected fragment tag requested - $fragment")
         }

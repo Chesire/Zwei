@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_choose_character.buttonYes
 import kotlinx.android.synthetic.main.fragment_choose_character.imageAvatar
 import javax.inject.Inject
 
-class ChooseCharacterFragment : DaggerFragment() {
+class IsYourCharacterFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentChooseCharacterBinding
@@ -56,10 +56,8 @@ class ChooseCharacterFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonYes.setOnClickListener { characterInteractor?.completeChooseCharacter() }
-        buttonNo.setOnClickListener {
-            // load ui to select character
-        }
+        buttonYes.setOnClickListener { characterInteractor?.isYourCharacterIsCorrect() }
+        buttonNo.setOnClickListener { characterInteractor?.isYourCharacterIsIncorrect() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -78,8 +76,8 @@ class ChooseCharacterFragment : DaggerFragment() {
     }
 
     companion object {
-        const val tag = "ChooseCharacterFragment"
+        const val tag = "IsYourCharacterFragment"
 
-        fun newInstance() = ChooseCharacterFragment()
+        fun newInstance() = IsYourCharacterFragment()
     }
 }

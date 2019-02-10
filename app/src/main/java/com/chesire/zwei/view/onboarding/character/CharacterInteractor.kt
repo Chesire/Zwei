@@ -1,6 +1,7 @@
 package com.chesire.zwei.view.onboarding.character
 
 interface CharacterInteractor {
-    fun completeChooseCharacter()
+    fun isYourCharacterIsIncorrect()
+    fun isYourCharacterIsCorrect()
     fun completeLoadingCharacter()
 }
