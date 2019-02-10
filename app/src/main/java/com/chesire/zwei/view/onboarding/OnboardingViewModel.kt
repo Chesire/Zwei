@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.chesire.zwei.util.IOContext
-import com.chesire.zwei.view.SingleLiveEvent
+import com.chesire.zwei.util.LiveDataStatus
+import com.chesire.zwei.util.SingleLiveEvent
 import com.chesire.zwei.view.onboarding.character.GetCharacterStatus
-import com.chesire.zwei.xivapi.LiveDataStatus
 import com.chesire.zwei.xivapi.Resource
 import com.chesire.zwei.xivapi.XIVApi
 import com.chesire.zwei.xivapi.model.SearchCharacterModel

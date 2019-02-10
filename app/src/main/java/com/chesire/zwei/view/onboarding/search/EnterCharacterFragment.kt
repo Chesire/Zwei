@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEnterCharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
-import com.chesire.zwei.xivapi.LiveDataStatus
+import com.chesire.zwei.util.LiveDataStatus
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 

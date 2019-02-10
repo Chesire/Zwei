@@ -1,4 +1,4 @@
-package com.chesire.zwei.view
+package com.chesire.zwei.util
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

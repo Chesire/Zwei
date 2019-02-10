@@ -1,4 +1,4 @@
-package com.chesire.zwei.xivapi
+package com.chesire.zwei.util
 
 enum class LiveDataStatus {
     Success,
