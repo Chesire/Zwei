@@ -11,13 +11,13 @@ import kotlinx.android.synthetic.main.adapter_item_search_character.view.adapter
 import kotlinx.android.synthetic.main.adapter_item_search_character.view.adapterItemSearchCharacterName
 import kotlinx.android.synthetic.main.adapter_item_search_character.view.adapterItemSearchCharacterServer
 
-class SelectCharacterViewAdapter : RecyclerView.Adapter<SelectCharacterViewAdapter.ViewHolder>() {
+class SelectCharacterViewAdapter(
+    private val listener: OnCharacterSelectedListener
+) : RecyclerView.Adapter<SelectCharacterViewAdapter.ViewHolder>() {
+
     private val characters = mutableListOf<SearchCharacterModel>()
 
-    fun setCharacters(newCharacters: List<SearchCharacterModel>) {
-        characters.clear()
-        characters.addAll(newCharacters)
-    }
+    fun setCharacters(newCharacters: List<SearchCharacterModel>) = characters.addAll(newCharacters)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -35,18 +35,25 @@ class SelectCharacterViewAdapter : RecyclerView.Adapter<SelectCharacterViewAdapt
         holder.bind(characters[position])
     }
 
-    inner class ViewHolder(
-        private val view: View
-    ) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        private lateinit var characterModel: SearchCharacterModel
 
         fun bind(model: SearchCharacterModel) {
+            characterModel = model
+
+            view.setOnClickListener { listener.characterSelected(characterModel) }
             view.adapterItemSearchCharacterName.text = model.name
             view.adapterItemSearchCharacterServer.text = model.server
+
             GlideApp.with(view)
                 .load(model.avatar)
                 // .placeholder()
                 // .error()
                 .into(view.adapterItemSearchCharacterAvatar)
         }
+    }
+
+    interface OnCharacterSelectedListener {
+        fun characterSelected(characterModel: SearchCharacterModel)
     }
 }
