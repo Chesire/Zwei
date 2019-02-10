@@ -1,6 +1,6 @@
 package com.chesire.zwei.xivapi
 
-enum class Status {
+enum class LiveDataStatus {
     Success,
     Error,
     Loading

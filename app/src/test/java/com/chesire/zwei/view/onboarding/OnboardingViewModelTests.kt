@@ -2,8 +2,8 @@ package com.chesire.zwei.view.onboarding
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.zwei.view.onboarding.character.GetCharacterStatus
+import com.chesire.zwei.xivapi.LiveDataStatus
 import com.chesire.zwei.xivapi.Resource
-import com.chesire.zwei.xivapi.Status
 import com.chesire.zwei.xivapi.XIVApi
 import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
@@ -32,7 +32,7 @@ class OnboardingViewModelTests {
             coEvery {
                 searchForCharacter("Cheshire Cat", "Phoenix")
             } coAnswers {
-                Resource.success(listOf(getSearchCharacterModel()))
+                Resource.Success(listOf(getSearchCharacterModel()))
             }
         }
 
@@ -42,7 +42,7 @@ class OnboardingViewModelTests {
 
         classUnderTest.searchForCharacter()
 
-        assertEquals(Status.Error, classUnderTest.searchStatus.value)
+        assertEquals(LiveDataStatus.Error, classUnderTest.searchStatus.value)
     }
 
     @Test
@@ -51,7 +51,7 @@ class OnboardingViewModelTests {
             coEvery {
                 searchForCharacter("Cheshire Cat", "Phoenix")
             } coAnswers {
-                Resource.success(listOf(getSearchCharacterModel()))
+                Resource.Success(listOf(getSearchCharacterModel()))
             }
         }
 
@@ -61,7 +61,7 @@ class OnboardingViewModelTests {
 
         classUnderTest.searchForCharacter()
 
-        assertEquals(Status.Error, classUnderTest.searchStatus.value)
+        assertEquals(LiveDataStatus.Error, classUnderTest.searchStatus.value)
     }
 
     @Test
@@ -70,7 +70,7 @@ class OnboardingViewModelTests {
             coEvery {
                 searchForCharacter("Cheshire Cat", "Phoenix")
             } coAnswers {
-                Resource.error("Test", mockk())
+                Resource.Error("Test")
             }
         }
 
@@ -81,7 +81,7 @@ class OnboardingViewModelTests {
 
         classUnderTest.searchForCharacter()
 
-        assertEquals(Status.Error, classUnderTest.searchStatus.value)
+        assertEquals(LiveDataStatus.Error, classUnderTest.searchStatus.value)
     }
 
     @Test
@@ -91,7 +91,7 @@ class OnboardingViewModelTests {
                 coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
                 } coAnswers {
-                    Resource.success(emptyList())
+                    Resource.Success(emptyList())
                 }
             }
 
@@ -102,7 +102,7 @@ class OnboardingViewModelTests {
 
             classUnderTest.searchForCharacter()
 
-            assertEquals(Status.Error, classUnderTest.searchStatus.value)
+            assertEquals(LiveDataStatus.Error, classUnderTest.searchStatus.value)
         }
 
     @Test
@@ -112,7 +112,7 @@ class OnboardingViewModelTests {
                 coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
                 } coAnswers {
-                    Resource.success(listOf(getSearchCharacterModel()))
+                    Resource.Success(listOf(getSearchCharacterModel()))
                 }
             }
 
@@ -123,7 +123,7 @@ class OnboardingViewModelTests {
 
             classUnderTest.searchForCharacter()
 
-            assertEquals(Status.Success, classUnderTest.searchStatus.value)
+            assertEquals(LiveDataStatus.Success, classUnderTest.searchStatus.value)
         }
 
     @Test
@@ -134,7 +134,7 @@ class OnboardingViewModelTests {
                 coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
                 } coAnswers {
-                    Resource.success(expectedCharacters)
+                    Resource.Success(expectedCharacters)
                 }
             }
 
@@ -156,7 +156,7 @@ class OnboardingViewModelTests {
                 coEvery {
                     searchForCharacter("Cheshire Cat", "Phoenix")
                 } coAnswers {
-                    Resource.success(expectedCharacters)
+                    Resource.Success(expectedCharacters)
                 }
             }
 
@@ -177,7 +177,7 @@ class OnboardingViewModelTests {
                 coEvery {
                     getCharacter(0)
                 } coAnswers {
-                    Resource.success(getCharacterDetailModel())
+                    Resource.Success(Pair(getInfoModel(), getCharacterDetailModel()))
                 }
             }
 
@@ -197,7 +197,7 @@ class OnboardingViewModelTests {
             coEvery {
                 getCharacter(0)
             } coAnswers {
-                Resource.error<Resource<Any>>("test", mockk())
+                Resource.Error("Test")
             }
         }
 
@@ -213,35 +213,13 @@ class OnboardingViewModelTests {
     }
 
     @Test
-    fun `when getCharacter reports unexpected branch, set get character status to error`() =
-        runBlocking {
-            val mockApi = mockk<XIVApi> {
-                coEvery {
-                    getCharacter(0)
-                } coAnswers {
-                    Resource.loading<Resource<Any>>(mockk())
-                }
-            }
-
-            val classUnderTest = OnboardingViewModel(mockApi, testCoroutineContext).apply {
-                characterName.value = "Cheshire Cat"
-                world.value = "Phoenix"
-                currentCharacter.value = getSearchCharacterModel()
-            }
-
-            classUnderTest.getCharacter()
-
-            assertEquals(GetCharacterStatus.Error, classUnderTest.getCharacterStatus.value)
-        }
-
-    @Test
     fun `when getCharacter succeeds, with InfoModel, set get character status to GotInfo`() =
         runBlocking {
             val mockApi = mockk<XIVApi> {
                 coEvery {
                     getCharacter(0)
                 } coAnswers {
-                    Resource.success(getInfoModel())
+                    Resource.Success(Pair(getInfoModel(), null))
                 }
             }
 
@@ -263,7 +241,7 @@ class OnboardingViewModelTests {
                 coEvery {
                     getCharacter(0)
                 } coAnswers {
-                    Resource.success(getCharacterDetailModel())
+                    Resource.Success(Pair(getInfoModel(), getCharacterDetailModel()))
                 }
             }
 

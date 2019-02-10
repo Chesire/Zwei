@@ -4,9 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.chesire.zwei.xivapi.flags.Gender
 import com.chesire.zwei.xivapi.flags.Race
 import com.chesire.zwei.xivapi.model.AchievementsModel
-import com.chesire.zwei.xivapi.model.CharacterDetailModel
 import com.chesire.zwei.xivapi.model.CharacterModel
-import com.chesire.zwei.xivapi.model.InfoModel
 import com.chesire.zwei.xivapi.model.SearchCharacterModel
 import com.chesire.zwei.xivapi.response.GetCharacterResponse
 import com.chesire.zwei.xivapi.response.SearchCharacterResponse
@@ -14,8 +12,11 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.CoreMatchers.instanceOf
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -36,11 +37,9 @@ class XIVApiTests {
         }
 
         val classUnderTest = XIVApi(mockService)
+        val actual = classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix")
 
-        assertEquals(
-            Status.Error,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").status
-        )
+        assertThat(actual, instanceOf(Resource.Error::class.java))
     }
 
     @Test
@@ -54,11 +53,9 @@ class XIVApiTests {
         }
 
         val classUnderTest = XIVApi(mockService)
+        val actual = classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix")
 
-        assertEquals(
-            Status.Error,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").status
-        )
+        assertThat(actual, instanceOf(Resource.Error::class.java))
     }
 
     @Test
@@ -74,11 +71,9 @@ class XIVApiTests {
         }
 
         val classUnderTest = XIVApi(mockService)
+        val actual = classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix")
 
-        assertEquals(
-            Status.Success,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").status
-        )
+        assertThat(actual, instanceOf(Resource.Success::class.java))
     }
 
     @Test
@@ -93,11 +88,9 @@ class XIVApiTests {
         }
 
         val classUnderTest = XIVApi(mockService)
+        val actual = classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix")
 
-        assertEquals(
-            characterModels,
-            classUnderTest.searchForCharacter("Cheshire Cat", "Phoenix").data
-        )
+        assertEquals(characterModels, (actual as Resource.Success).data)
     }
 
     @Test
@@ -111,8 +104,9 @@ class XIVApiTests {
         }
 
         val classUnderTest = XIVApi(mockService)
+        val actual = classUnderTest.getCharacter(0)
 
-        assertEquals(Status.Error, classUnderTest.getCharacter(0).status)
+        assertThat(actual, instanceOf(Resource.Error::class.java))
     }
 
     @Test
@@ -126,12 +120,13 @@ class XIVApiTests {
         }
 
         val classUnderTest = XIVApi(mockService)
+        val actual = classUnderTest.getCharacter(0)
 
-        assertEquals(Status.Error, classUnderTest.getCharacter(0).status)
+        assertThat(actual, instanceOf(Resource.Error::class.java))
     }
 
     @Test
-    fun `when getCharacter is successful, with null character, return status success with Info`() =
+    fun `when getCharacter is successful, with null character, return status success`() =
         runBlocking {
             val mockService = mockk<XIVApiService> {
                 every {
@@ -146,10 +141,10 @@ class XIVApiTests {
             }
 
             val classUnderTest = XIVApi(mockService)
+            val actual = classUnderTest.getCharacter(0)
 
-            val result = classUnderTest.getCharacter(0)
-            assertEquals(Status.Success, result.status)
-            assertTrue(result.data is InfoModel)
+            assertThat(actual, instanceOf(Resource.Success::class.java))
+            assertNull((actual as Resource.Success).data.second)
         }
 
     @Test
@@ -168,10 +163,10 @@ class XIVApiTests {
             }
 
             val classUnderTest = XIVApi(mockService)
+            val actual = classUnderTest.getCharacter(0)
 
-            val result = classUnderTest.getCharacter(0)
-            assertEquals(Status.Success, result.status)
-            assertTrue(result.data is InfoModel)
+            assertThat(actual, instanceOf(Resource.Success::class.java))
+            assertNull((actual as Resource.Success).data.second)
         }
 
     @Test
@@ -190,14 +185,14 @@ class XIVApiTests {
             }
 
             val classUnderTest = XIVApi(mockService)
+            val actual = classUnderTest.getCharacter(0)
 
-            val result = classUnderTest.getCharacter(0)
-            assertEquals(Status.Success, result.status)
-            assertTrue(result.data is InfoModel)
+            assertThat(actual, instanceOf(Resource.Success::class.java))
+            assertNull((actual as Resource.Success).data.second)
         }
 
     @Test
-    fun `when getCharacter is successful, with detailed character and achievements, return status success with characterDetailModel`() =
+    fun `when getCharacter is successful, with detailed character and achievements, return status success with non null characterDetailModel`() =
         runBlocking {
             val mockService = mockk<XIVApiService> {
                 every {
@@ -212,10 +207,10 @@ class XIVApiTests {
             }
 
             val classUnderTest = XIVApi(mockService)
+            val actual = classUnderTest.getCharacter(0)
 
-            val result = classUnderTest.getCharacter(0)
-            assertEquals(Status.Success, result.status)
-            assertTrue(result.data is CharacterDetailModel)
+            assertThat(actual, instanceOf(Resource.Success::class.java))
+            assertNotNull((actual as Resource.Success).data.second)
         }
 
     private fun getCharacterModel(): CharacterModel {

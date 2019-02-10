@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.chesire.zwei.R
 import com.chesire.zwei.databinding.FragmentEnterCharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
-import com.chesire.zwei.xivapi.Status
+import com.chesire.zwei.xivapi.LiveDataStatus
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -62,15 +62,15 @@ class EnterCharacterFragment : DaggerFragment() {
         binding.vm = viewModel
     }
 
-    private fun onSearchStatusChange(status: Status) {
+    private fun onSearchStatusChange(status: LiveDataStatus) {
         when (status) {
-            Status.Loading -> {
+            LiveDataStatus.Loading -> {
                 // display loading indicator
             }
-            Status.Error -> {
+            LiveDataStatus.Error -> {
                 // Display appropriate error state
             }
-            Status.Success -> searchInteractor?.completeEnterCharacter()
+            LiveDataStatus.Success -> searchInteractor?.completeEnterCharacter()
         }
     }
 
