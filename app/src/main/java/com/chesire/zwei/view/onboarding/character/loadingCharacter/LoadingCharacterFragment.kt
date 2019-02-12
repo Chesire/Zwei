@@ -14,6 +14,8 @@ import com.chesire.zwei.databinding.FragmentLoadingCharacterBinding
 import com.chesire.zwei.view.onboarding.OnboardingViewModel
 import com.chesire.zwei.view.onboarding.character.CharacterInteractor
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_loading_character.fragmentLoadingCharacterProgress
+import kotlinx.android.synthetic.main.fragment_loading_character.fragmentLoadingCharacterStatus
 import javax.inject.Inject
 
 class LoadingCharacterFragment : DaggerFragment() {
@@ -65,14 +67,20 @@ class LoadingCharacterFragment : DaggerFragment() {
     private fun onGetCharacterStatusChange(status: GetCharacterStatus) {
         when (status) {
             GetCharacterStatus.Loading -> {
-                // Display loading UI
+                fragmentLoadingCharacterProgress.visibility = View.VISIBLE
+                fragmentLoadingCharacterStatus.text =
+                    getString(R.string.onboard_loading_character_state_loading)
             }
             GetCharacterStatus.GotCharacter -> characterInteractor?.completeLoadingCharacter()
             GetCharacterStatus.GotInfo -> {
-                // Request successful, but character is being added to the api
+                fragmentLoadingCharacterStatus.text = getString(
+                    R.string.onboard_loading_character_state_info,
+                    viewModel.characterName
+                )
+                // start a service I guess?
             }
             GetCharacterStatus.Error -> {
-                // Request failed
+                // Request failed - do something in the ui
             }
         }
     }

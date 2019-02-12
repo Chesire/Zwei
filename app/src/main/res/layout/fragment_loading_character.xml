@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textCharacterName"
+            android:id="@+id/fragmentLoadingCharacterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -27,7 +27,7 @@
             tools:text="Cheshire Cat" />
 
         <TextView
-            android:id="@+id/textCharacterWorld"
+            android:id="@+id/fragmentLoadingCharacterWorld"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -35,8 +35,25 @@
             android:text="@{vm.currentCharacter.server}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textCharacterName"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentLoadingCharacterName"
             tools:text="Phoenix" />
+
+        <TextView
+            android:id="@+id/fragmentLoadingCharacterStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentLoadingCharacterWorld" />
+
+        <ProgressBar
+            android:id="@+id/fragmentLoadingCharacterProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,6 +9,8 @@
 
     <string name="onboard_enter_world">Enter World</string>
     <string name="onboard_enter_character">Enter Character Name</string>
+    <string name="onboard_loading_character_state_loading">Getting character details</string>
+    <string name="onboard_loading_character_state_info">%s does not currently exist on XIVApi.com, it will take about 5 minutes until they are ready</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
